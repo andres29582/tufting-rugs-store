@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductType {
+  READY_MADE
+  FULL_CUSTOM
+}
+
+enum SizeCategory {
+  SMALL
+  MEDIUM
+  LARGE
+  CUSTOM
+}
+
+enum RugFormat {
+  RECTANGULAR
+  ROUND
+  ORGANIC
+  CUSTOM
+}
+
+enum OrderStatus {
+  WAITING_ANALYSIS
+  IN_ANALYSIS
+  WAITING_CUSTOMER_APPROVAL
+  APPROVED
+  WAITING_DEPOSIT
+  DEPOSIT_CONFIRMED
+  DESIGN_APPROVED
+  IN_PRODUCTION
+  READY_FOR_DELIVERY
+  DELIVERED
+  CANCELED
+}
+
+enum DesignReferenceKind {
+  CUSTOMER_REFERENCE
+  ADMIN_UPLOAD
+  AI_GENERATED
+}
+
+enum AdminRole {
+  ADMIN
+}
+
+model Product {
+  id              String       @id @default(cuid())
+  name            String
+  slug            String       @unique
+  description     String?
+  type            ProductType  @default(READY_MADE)
+  basePriceCents  Int
+  sizeCategory    SizeCategory
+  sizeLabel       String
+  format          RugFormat
+  isActive        Boolean      @default(true)
+  orders          Order[]
+  customizations  Customization[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@index([type])
+  @@index([isActive])
+}
+
+model Customization {
+  id                String            @id @default(cuid())
+  productId         String?
+  product           Product?          @relation(fields: [productId], references: [id], onDelete: SetNull)
+  customerName      String
+  customerEmail     String
+  customerPhone     String?
+  description       String?
+  preferredColors   String[]          @default([])
+  sizeCategory      SizeCategory      @default(CUSTOM)
+  sizeLabel         String?
+  format            RugFormat         @default(CUSTOM)
+  designReferences  DesignReference[]
+  order             Order?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  @@index([productId])
+  @@index([customerEmail])
+}
+
+model Order {
+  id                  String            @id @default(cuid())
+  customerName        String
+  customerEmail       String
+  customerPhone       String?
+  productId           String?
+  product             Product?          @relation(fields: [productId], references: [id], onDelete: SetNull)
+  customizationId     String?           @unique
+  customization       Customization?     @relation(fields: [customizationId], references: [id], onDelete: SetNull)
+  status              OrderStatus        @default(WAITING_ANALYSIS)
+  estimatedPriceCents Int?
+  finalPriceCents     Int?
+  depositAmountCents  Int?
+  depositPaid         Boolean            @default(false)
+  productionPossible  Boolean            @default(true)
+  notes               String?
+  designReferences    DesignReference[]
+  adminReviews        AdminReview[]
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  @@index([productId])
+  @@index([status])
+  @@index([customerEmail])
+}
+
+model DesignReference {
+  id              String              @id @default(cuid())
+  kind            DesignReferenceKind  @default(CUSTOMER_REFERENCE)
+  url             String
+  storageKey      String?
+  mimeType        String?
+  originalName    String?
+  customizationId String?
+  customization   Customization?       @relation(fields: [customizationId], references: [id], onDelete: Cascade)
+  orderId         String?
+  order           Order?               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  createdAt       DateTime             @default(now())
+
+  @@index([customizationId])
+  @@index([orderId])
+  @@index([kind])
+}
+
+model AdminUser {
+  id            String        @id @default(cuid())
+  email         String        @unique
+  passwordHash  String
+  role          AdminRole     @default(ADMIN)
+  isActive      Boolean       @default(true)
+  reviews       AdminReview[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model AdminReview {
+  id                  String       @id @default(cuid())
+  orderId             String
+  order               Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  adminId             String?
+  admin               AdminUser?   @relation(fields: [adminId], references: [id], onDelete: SetNull)
+  status              OrderStatus?
+  productionPossible  Boolean?
+  estimatedPriceCents Int?
+  finalPriceCents     Int?
+  depositAmountCents  Int?
+  comment             String?
+  createdAt           DateTime     @default(now())
+
+  @@index([orderId])
+  @@index([adminId])
+}
