@@ -1,19 +1,6 @@
 import { BadRequestException, ConflictException } from '@nestjs/common';
-export { ProductType } from '../domain/domain-enums';
-
-export enum OrderStatus {
-  WAITING_ANALYSIS = 'WAITING_ANALYSIS',
-  IN_ANALYSIS = 'IN_ANALYSIS',
-  WAITING_CUSTOMER_APPROVAL = 'WAITING_CUSTOMER_APPROVAL',
-  APPROVED = 'APPROVED',
-  WAITING_DEPOSIT = 'WAITING_DEPOSIT',
-  DEPOSIT_CONFIRMED = 'DEPOSIT_CONFIRMED',
-  DESIGN_APPROVED = 'DESIGN_APPROVED',
-  IN_PRODUCTION = 'IN_PRODUCTION',
-  READY_FOR_DELIVERY = 'READY_FOR_DELIVERY',
-  DELIVERED = 'DELIVERED',
-  CANCELED = 'CANCELED'
-}
+import { OrderStatus } from '@prisma/client';
+export { OrderStatus, ProductType } from '@prisma/client';
 
 export type OrderForStatusRules = {
   id: string;
