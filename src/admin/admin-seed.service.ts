@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { APP_CONFIG } from '../config/app-config.provider';
 import type { AppConfig } from '../config/app-config';
-import type { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { AdminRole } from './admin-domain';
 import { AdminPasswordService } from './admin-password.service';
 

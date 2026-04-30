@@ -4,7 +4,7 @@ import {
   RugFormat,
   SizeCategory
 } from '../domain/domain-enums';
-import type { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 export const FULL_CUSTOM_ANCHOR_SLUG = 'alfombra-100-personalizada';
 

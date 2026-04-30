@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { AdminGuard } from '../admin/admin.guard';
+import { CreateProductDto, UpdateProductDto } from './products.dto';
 import { ProductsService } from './products.service';
-import type { CreateProductInput, UpdateProductInput } from './products.types';
 
 @Controller('products')
 export class ProductsController {
@@ -19,7 +19,7 @@ export class ProductsController {
 
   @Post()
   @UseGuards(AdminGuard)
-  create(@Body() body: CreateProductInput) {
+  create(@Body() body: CreateProductDto) {
     return this.products.create(body);
   }
 
@@ -31,7 +31,7 @@ export class ProductsController {
 
   @Patch(':id')
   @UseGuards(AdminGuard)
-  update(@Param('id') id: string, @Body() body: UpdateProductInput) {
+  update(@Param('id') id: string, @Body() body: UpdateProductDto) {
     return this.products.update(id, body);
   }
 }

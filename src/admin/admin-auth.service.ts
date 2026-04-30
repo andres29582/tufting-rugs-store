@@ -4,7 +4,7 @@ import {
   UnauthorizedException
 } from '@nestjs/common';
 import { createHmac, timingSafeEqual } from 'crypto';
-import type { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { APP_CONFIG } from '../config/app-config.provider';
 import type { AppConfig } from '../config/app-config';
 import { AdminRole } from './admin-domain';

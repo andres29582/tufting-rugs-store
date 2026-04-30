@@ -13,6 +13,6 @@ import { AdminSeedService } from './admin-seed.service';
     AdminPasswordService,
     AdminSeedService
   ],
-  exports: [AdminGuard, AdminSeedService]
+  exports: [AdminAuthService, AdminGuard, AdminSeedService]
 })
 export class AdminModule {}

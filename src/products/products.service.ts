@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import type { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { assertValidMoneyCents } from '../orders/order-domain';
 import { ProductType, RugFormat, SizeCategory } from './product-domain';
 import type { CreateProductInput, UpdateProductInput } from './products.types';

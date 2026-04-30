@@ -1,18 +1,18 @@
 import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { AdminGuard } from '../admin/admin.guard';
+import {
+  CreateOrderDto,
+  UpdateFinalPriceDto,
+  UpdateOrderStatusDto
+} from './orders.dto';
 import { OrdersService } from './orders.service';
-import type {
-  CreateOrderInput,
-  UpdateFinalPriceInput,
-  UpdateOrderStatusInput
-} from './orders.types';
 
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly orders: OrdersService) {}
 
   @Post()
-  create(@Body() body: CreateOrderInput) {
+  create(@Body() body: CreateOrderDto) {
     return this.orders.create(body);
   }
 
@@ -30,7 +30,7 @@ export class OrdersController {
 
   @Patch(':id/status')
   @UseGuards(AdminGuard)
-  updateStatus(@Param('id') id: string, @Body() body: UpdateOrderStatusInput) {
+  updateStatus(@Param('id') id: string, @Body() body: UpdateOrderStatusDto) {
     return this.orders.updateStatus(id, body);
   }
 
@@ -42,7 +42,7 @@ export class OrdersController {
 
   @Patch(':id/final-price')
   @UseGuards(AdminGuard)
-  updateFinalPrice(@Param('id') id: string, @Body() body: UpdateFinalPriceInput) {
+  updateFinalPrice(@Param('id') id: string, @Body() body: UpdateFinalPriceDto) {
     return this.orders.updateFinalPrice(id, body);
   }
 }
