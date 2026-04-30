@@ -104,13 +104,13 @@ C:\Program Files\PostgreSQL\18\bin\createdb.exe
 Para aplicar migraciones en desarrollo:
 
 ```powershell
-npx prisma migrate dev
+npm run db:migrate
 ```
 
 Para revisar el estado de la base:
 
 ```powershell
-npx prisma migrate status
+npm run db:status
 ```
 
 Para regenerar Prisma Client:
@@ -127,7 +127,15 @@ prisma/migrations/20260430033530_init/migration.sql
 
 ## Ejecutar el backend
 
-Primero compila:
+Modo desarrollo con recarga automatica:
+
+```powershell
+npm run dev
+```
+
+Este comando usa `nest start --watch` a traves de `@nestjs/cli`, instalado como dependencia de desarrollo del proyecto. No necesitas instalar Nest CLI globalmente.
+
+Modo compilado:
 
 ```powershell
 npm run build
@@ -199,10 +207,9 @@ npm run build
 Chequeo recomendado antes de subir cambios:
 
 ```powershell
-npm test
-npm run test:e2e
+npm run test:all
 npm run build
-npx prisma migrate status
+npm run db:status
 ```
 
 ## Endpoints principales
@@ -531,9 +538,11 @@ Si no hay `finalPriceCents`, se usa `estimatedPriceCents` para calcular el depos
 
 ```powershell
 npm install
-npx prisma migrate dev
+npm run db:migrate
+npm run dev
 npm test
 npm run test:e2e
+npm run test:all
 npm run build
 npm start
 ```
