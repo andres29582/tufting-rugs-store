@@ -16,6 +16,7 @@ import {
 import type {
   ConfirmDepositResult,
   CreateOrderInput,
+  ReviewOrderInput,
   UpdateFinalPriceInput,
   UpdateOrderStatusInput
 } from './orders.types';
@@ -31,6 +32,12 @@ type OrderRecord = {
   status: OrderStatus;
   depositPaid: boolean;
   productionPossible: boolean;
+};
+
+type OrderReviewRecord = OrderRecord & {
+  estimatedPriceCents: number | null;
+  finalPriceCents: number | null;
+  depositAmountCents: number | null;
 };
 
 @Injectable()
@@ -130,6 +137,84 @@ export class OrdersService {
     });
   }
 
+  async review(id: string, adminId: string, input: ReviewOrderInput) {
+    assertReviewHasContent(input);
+    validateReviewPrices(input);
+
+    return this.prisma.$transaction(async (tx) => {
+      const order = await tx.order.findUnique({
+        where: { id },
+        select: {
+          id: true,
+          status: true,
+          depositPaid: true,
+          productionPossible: true,
+          estimatedPriceCents: true,
+          finalPriceCents: true,
+          depositAmountCents: true
+        }
+      });
+
+      if (!order) {
+        throw new NotFoundException('Order not found.');
+      }
+
+      const currentOrder = order as OrderReviewRecord;
+      const nextStatus = input.status ?? currentOrder.status;
+      const nextProductionPossible =
+        input.productionPossible ?? currentOrder.productionPossible;
+
+      assertReviewStatusRules(currentOrder, nextStatus, nextProductionPossible);
+
+      const nextEstimatedPriceCents =
+        input.estimatedPriceCents ?? currentOrder.estimatedPriceCents;
+      const nextFinalPriceCents =
+        input.finalPriceCents ?? currentOrder.finalPriceCents;
+      const nextDepositAmountCents = calculateReviewDepositAmountCents(
+        currentOrder,
+        input,
+        nextFinalPriceCents
+      );
+      const updateData = buildReviewOrderUpdateData(
+        currentOrder,
+        input,
+        nextDepositAmountCents
+      );
+
+      if (Object.keys(updateData).length > 0) {
+        await tx.order.update({
+          where: { id },
+          data: updateData
+        });
+      }
+
+      await tx.adminReview.create({
+        data: {
+          orderId: id,
+          adminId,
+          status: nextStatus,
+          productionPossible: nextProductionPossible,
+          estimatedPriceCents: nextEstimatedPriceCents,
+          finalPriceCents: nextFinalPriceCents,
+          depositAmountCents: nextDepositAmountCents,
+          comment: normalizeReviewComment(input.comment)
+        }
+      });
+
+      return tx.order.findUniqueOrThrow({
+        where: { id },
+        include: {
+          product: true,
+          customization: true,
+          designReferences: true,
+          adminReviews: {
+            orderBy: { createdAt: 'desc' }
+          }
+        }
+      });
+    });
+  }
+
   async confirmDeposit(id: string): Promise<ConfirmDepositResult> {
     const order = await this.findOrderForRulesOrThrow(id);
     assertDepositStateIsConsistent(order);
@@ -217,4 +302,114 @@ export class OrdersService {
 
     return order as OrderRecord;
   }
+}
+
+function assertReviewHasContent(input: ReviewOrderInput): void {
+  const hasOrderField =
+    input.productionPossible !== undefined ||
+    input.estimatedPriceCents !== undefined ||
+    input.finalPriceCents !== undefined ||
+    input.status !== undefined;
+  const hasComment = Boolean(normalizeReviewComment(input.comment));
+
+  if (!hasOrderField && !hasComment) {
+    throw new BadRequestException('Review must include at least one field or comment.');
+  }
+}
+
+function validateReviewPrices(input: ReviewOrderInput): void {
+  if (input.estimatedPriceCents !== undefined && input.estimatedPriceCents !== null) {
+    assertValidMoneyCents(input.estimatedPriceCents, 'estimatedPriceCents');
+  }
+
+  if (input.finalPriceCents !== undefined && input.finalPriceCents !== null) {
+    assertValidMoneyCents(input.finalPriceCents, 'finalPriceCents');
+  }
+}
+
+function assertReviewStatusRules(
+  order: OrderReviewRecord,
+  nextStatus: OrderStatus,
+  nextProductionPossible: boolean
+): void {
+  assertDepositStateIsConsistent(order);
+
+  if (nextStatus !== order.status) {
+    assertCanUpdateStatus(
+      {
+        ...order,
+        productionPossible: nextProductionPossible
+      },
+      nextStatus
+    );
+  }
+
+  if (
+    !nextProductionPossible &&
+    nextStatus !== OrderStatus.IN_ANALYSIS &&
+    nextStatus !== OrderStatus.CANCELED
+  ) {
+    throw new BadRequestException(
+      'When productionPossible is false, order status must be IN_ANALYSIS or CANCELED.'
+    );
+  }
+}
+
+function calculateReviewDepositAmountCents(
+  currentOrder: OrderReviewRecord,
+  input: ReviewOrderInput,
+  nextFinalPriceCents: number | null
+): number | null {
+  if (input.finalPriceCents !== undefined && input.finalPriceCents !== null) {
+    return calculateDepositAmountCents(input.finalPriceCents);
+  }
+
+  if (
+    input.estimatedPriceCents !== undefined &&
+    input.estimatedPriceCents !== null &&
+    nextFinalPriceCents === null
+  ) {
+    return calculateDepositAmountCents(input.estimatedPriceCents);
+  }
+
+  return currentOrder.depositAmountCents;
+}
+
+function buildReviewOrderUpdateData(
+  currentOrder: OrderReviewRecord,
+  input: ReviewOrderInput,
+  nextDepositAmountCents: number | null
+): Record<string, unknown> {
+  const data: Record<string, unknown> = {};
+
+  if (input.status !== undefined && input.status !== currentOrder.status) {
+    data.status = input.status;
+  }
+
+  if (input.productionPossible !== undefined) {
+    data.productionPossible = input.productionPossible;
+  }
+
+  if (input.estimatedPriceCents !== undefined && input.estimatedPriceCents !== null) {
+    data.estimatedPriceCents = input.estimatedPriceCents;
+  }
+
+  if (input.finalPriceCents !== undefined && input.finalPriceCents !== null) {
+    data.finalPriceCents = input.finalPriceCents;
+  }
+
+  if (nextDepositAmountCents !== currentOrder.depositAmountCents) {
+    data.depositAmountCents = nextDepositAmountCents;
+  }
+
+  return data;
+}
+
+function normalizeReviewComment(value: string | null | undefined): string | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  return trimmed ? trimmed : null;
 }

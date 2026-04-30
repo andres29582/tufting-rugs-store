@@ -1,7 +1,10 @@
 import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { CurrentAdmin } from '../admin/current-admin.decorator';
 import { AdminGuard } from '../admin/admin.guard';
+import type { AdminJwtPayload } from '../admin/admin-auth.types';
 import {
   CreateOrderDto,
+  ReviewOrderDto,
   UpdateFinalPriceDto,
   UpdateOrderStatusDto
 } from './orders.dto';
@@ -32,6 +35,16 @@ export class OrdersController {
   @UseGuards(AdminGuard)
   updateStatus(@Param('id') id: string, @Body() body: UpdateOrderStatusDto) {
     return this.orders.updateStatus(id, body);
+  }
+
+  @Patch(':id/review')
+  @UseGuards(AdminGuard)
+  review(
+    @Param('id') id: string,
+    @CurrentAdmin() admin: AdminJwtPayload,
+    @Body() body: ReviewOrderDto
+  ) {
+    return this.orders.review(id, admin.sub, body);
   }
 
   @Patch(':id/confirm-deposit')

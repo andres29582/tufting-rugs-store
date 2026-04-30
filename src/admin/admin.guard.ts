@@ -5,10 +5,11 @@ import {
   UnauthorizedException
 } from '@nestjs/common';
 import { AdminAuthService } from './admin-auth.service';
+import type { AdminJwtPayload } from './admin-auth.types';
 
 type RequestWithHeaders = {
   headers: Record<string, string | string[] | undefined>;
-  admin?: unknown;
+  admin?: AdminJwtPayload;
 };
 
 @Injectable()

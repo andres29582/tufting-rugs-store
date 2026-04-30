@@ -12,7 +12,6 @@ describe('Backend HTTP flow (e2e)', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let fullCustomProductId: string;
-  let adminToken: string;
 
   const testRunId = Date.now();
   const customerEmail = `e2e-${testRunId}@example.com`;
@@ -145,21 +144,108 @@ describe('Backend HTTP flow (e2e)', () => {
   it('protects admin endpoints and accepts admin login token', async () => {
     await request(app.getHttpServer()).get('/customizations').expect(401);
 
-    const loginResponse = await request(app.getHttpServer())
-      .post('/admin/auth/login')
-      .send({
-        email: 'admin@rugs.local',
-        password: 'admin123'
-      })
-      .expect(201);
-
-    adminToken = loginResponse.body.accessToken;
+    const adminToken = await loginAdmin();
     expect(adminToken).toEqual(expect.any(String));
 
     await request(app.getHttpServer())
       .get('/customizations')
       .set('Authorization', `Bearer ${adminToken}`)
       .expect(200);
+  });
+
+  it('lets an admin review an order and stores AdminReview history', async () => {
+    const adminToken = await loginAdmin();
+    const customizationResponse = await request(app.getHttpServer())
+      .post('/customizations')
+      .send({
+        productId: fullCustomProductId,
+        customerName: 'Review E2E',
+        customerEmail,
+        preferredColors: ['black', 'white']
+      })
+      .expect(201);
+
+    const orderResponse = await request(app.getHttpServer())
+      .post(`/customizations/${customizationResponse.body.id}/order`)
+      .send({
+        estimatedPriceCents: 22000
+      })
+      .expect(201);
+    const orderId = orderResponse.body.id as string;
+
+    const firstReviewResponse = await request(app.getHttpServer())
+      .patch(`/orders/${orderId}/review`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        status: OrderStatus.IN_ANALYSIS,
+        estimatedPriceCents: 24000,
+        comment: 'Admin started production analysis.'
+      })
+      .expect(200);
+
+    expect(firstReviewResponse.body).toEqual(
+      expect.objectContaining({
+        id: orderId,
+        status: OrderStatus.IN_ANALYSIS,
+        estimatedPriceCents: 24000,
+        depositAmountCents: 12000
+      })
+    );
+    expect(firstReviewResponse.body.adminReviews[0]).toEqual(
+      expect.objectContaining({
+        status: OrderStatus.IN_ANALYSIS,
+        estimatedPriceCents: 24000,
+        depositAmountCents: 12000,
+        comment: 'Admin started production analysis.'
+      })
+    );
+
+    const secondReviewResponse = await request(app.getHttpServer())
+      .patch(`/orders/${orderId}/review`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        status: OrderStatus.WAITING_CUSTOMER_APPROVAL,
+        finalPriceCents: 31001,
+        productionPossible: true,
+        comment: 'Final quote ready for customer approval.'
+      })
+      .expect(200);
+
+    expect(secondReviewResponse.body).toEqual(
+      expect.objectContaining({
+        id: orderId,
+        status: OrderStatus.WAITING_CUSTOMER_APPROVAL,
+        finalPriceCents: 31001,
+        depositAmountCents: 15501,
+        productionPossible: true
+      })
+    );
+    expect(secondReviewResponse.body.adminReviews).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          status: OrderStatus.WAITING_CUSTOMER_APPROVAL,
+          productionPossible: true,
+          estimatedPriceCents: 24000,
+          finalPriceCents: 31001,
+          depositAmountCents: 15501,
+          comment: 'Final quote ready for customer approval.'
+        }),
+        expect.objectContaining({
+          status: OrderStatus.IN_ANALYSIS,
+          estimatedPriceCents: 24000,
+          depositAmountCents: 12000
+        })
+      ])
+    );
+
+    await request(app.getHttpServer())
+      .patch(`/orders/${orderId}/review`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        status: OrderStatus.DEPOSIT_CONFIRMED,
+        comment: 'Should use confirm-deposit instead.'
+      })
+      .expect(400);
   });
 
   async function cleanupE2eData(email: string): Promise<void> {
@@ -174,5 +260,17 @@ describe('Backend HTTP flow (e2e)', () => {
     await prisma.customization.deleteMany({
       where: { customerEmail: email }
     });
+  }
+
+  async function loginAdmin(): Promise<string> {
+    const loginResponse = await request(app.getHttpServer())
+      .post('/admin/auth/login')
+      .send({
+        email: 'admin@rugs.local',
+        password: 'admin123'
+      })
+      .expect(201);
+
+    return loginResponse.body.accessToken as string;
   }
 });

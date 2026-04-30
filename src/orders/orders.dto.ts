@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import {
+  IsBoolean,
   IsEnum,
   IsInt,
   IsOptional,
@@ -59,4 +60,30 @@ export class UpdateFinalPriceDto {
   @IsInt()
   @Min(0)
   finalPriceCents!: number;
+}
+
+export class ReviewOrderDto {
+  @IsOptional()
+  @IsBoolean()
+  productionPossible?: boolean;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  estimatedPriceCents?: number | null;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  finalPriceCents?: number | null;
+
+  @IsOptional()
+  @IsEnum(OrderStatus)
+  status?: OrderStatus;
+
+  @IsOptional()
+  @IsString()
+  comment?: string | null;
 }

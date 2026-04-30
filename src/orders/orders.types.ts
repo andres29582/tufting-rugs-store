@@ -19,6 +19,14 @@ export type UpdateFinalPriceInput = {
   finalPriceCents: number;
 };
 
+export type ReviewOrderInput = {
+  productionPossible?: boolean;
+  estimatedPriceCents?: number | null;
+  finalPriceCents?: number | null;
+  status?: OrderStatus;
+  comment?: string | null;
+};
+
 export type ConfirmDepositResult = {
   id: string;
   status: OrderStatus;

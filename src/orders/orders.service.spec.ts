@@ -7,6 +7,7 @@ import { OrderStatus, ProductType } from './order-domain';
 import { OrdersService } from './orders.service';
 
 type MockPrisma = {
+  $transaction: jest.Mock;
   product: {
     findUnique: jest.Mock;
   };
@@ -16,12 +17,17 @@ type MockPrisma = {
   order: {
     create: jest.Mock;
     findUnique: jest.Mock;
+    findUniqueOrThrow: jest.Mock;
     update: jest.Mock;
+  };
+  adminReview: {
+    create: jest.Mock;
   };
 };
 
 function createMockPrisma(): MockPrisma {
-  return {
+  const prisma = {
+    $transaction: jest.fn(),
     product: {
       findUnique: jest.fn()
     },
@@ -31,9 +37,17 @@ function createMockPrisma(): MockPrisma {
     order: {
       create: jest.fn(),
       findUnique: jest.fn(),
+      findUniqueOrThrow: jest.fn(),
       update: jest.fn()
+    },
+    adminReview: {
+      create: jest.fn()
     }
   };
+
+  prisma.$transaction.mockImplementation((callback) => callback(prisma));
+
+  return prisma;
 }
 
 describe('OrdersService business rules', () => {
@@ -352,6 +366,181 @@ describe('OrdersService business rules', () => {
 
       expect(prisma.order.findUnique).not.toHaveBeenCalled();
       expect(prisma.order.update).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('review', () => {
+    it('updates order and writes an AdminReview snapshot in one transaction', async () => {
+      prisma.order.findUnique.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.IN_ANALYSIS,
+        depositPaid: false,
+        productionPossible: true,
+        estimatedPriceCents: 22000,
+        finalPriceCents: null,
+        depositAmountCents: 11000
+      });
+      prisma.order.findUniqueOrThrow.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.WAITING_CUSTOMER_APPROVAL,
+        estimatedPriceCents: 24000,
+        finalPriceCents: 33333,
+        depositAmountCents: 16667,
+        adminReviews: [{ id: 'review-1' }]
+      });
+
+      const order = await service.review('order-1', 'admin-1', {
+        status: OrderStatus.WAITING_CUSTOMER_APPROVAL,
+        estimatedPriceCents: 24000,
+        finalPriceCents: 33333,
+        productionPossible: true,
+        comment: ' Approved with final quote '
+      });
+
+      expect(prisma.$transaction).toHaveBeenCalledTimes(1);
+      expect(prisma.order.update).toHaveBeenCalledWith({
+        where: { id: 'order-1' },
+        data: {
+          status: OrderStatus.WAITING_CUSTOMER_APPROVAL,
+          productionPossible: true,
+          estimatedPriceCents: 24000,
+          finalPriceCents: 33333,
+          depositAmountCents: 16667
+        }
+      });
+      expect(prisma.adminReview.create).toHaveBeenCalledWith({
+        data: {
+          orderId: 'order-1',
+          adminId: 'admin-1',
+          status: OrderStatus.WAITING_CUSTOMER_APPROVAL,
+          productionPossible: true,
+          estimatedPriceCents: 24000,
+          finalPriceCents: 33333,
+          depositAmountCents: 16667,
+          comment: 'Approved with final quote'
+        }
+      });
+      expect(order.adminReviews).toHaveLength(1);
+    });
+
+    it('records comment-only reviews without mutating the order', async () => {
+      prisma.order.findUnique.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.IN_ANALYSIS,
+        depositPaid: false,
+        productionPossible: true,
+        estimatedPriceCents: 22000,
+        finalPriceCents: null,
+        depositAmountCents: 11000
+      });
+      prisma.order.findUniqueOrThrow.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.IN_ANALYSIS,
+        adminReviews: [{ id: 'review-1' }]
+      });
+
+      await service.review('order-1', 'admin-1', {
+        comment: 'Customer sent a clearer reference.'
+      });
+
+      expect(prisma.order.update).not.toHaveBeenCalled();
+      expect(prisma.adminReview.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          orderId: 'order-1',
+          adminId: 'admin-1',
+          status: OrderStatus.IN_ANALYSIS,
+          productionPossible: true,
+          estimatedPriceCents: 22000,
+          finalPriceCents: null,
+          depositAmountCents: 11000,
+          comment: 'Customer sent a clearer reference.'
+        })
+      });
+    });
+
+    it('blocks DEPOSIT_CONFIRMED from the review endpoint', async () => {
+      prisma.order.findUnique.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.WAITING_DEPOSIT,
+        depositPaid: false,
+        productionPossible: true,
+        estimatedPriceCents: 22000,
+        finalPriceCents: null,
+        depositAmountCents: 11000
+      });
+
+      await expect(
+        service.review('order-1', 'admin-1', {
+          status: OrderStatus.DEPOSIT_CONFIRMED,
+          comment: 'Trying to skip confirm-deposit.'
+        })
+      ).rejects.toBeInstanceOf(BadRequestException);
+
+      expect(prisma.order.update).not.toHaveBeenCalled();
+      expect(prisma.adminReview.create).not.toHaveBeenCalled();
+    });
+
+    it('prevents non-producible orders from remaining in active workflow states', async () => {
+      prisma.order.findUnique.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.WAITING_DEPOSIT,
+        depositPaid: false,
+        productionPossible: true,
+        estimatedPriceCents: 22000,
+        finalPriceCents: null,
+        depositAmountCents: 11000
+      });
+
+      await expect(
+        service.review('order-1', 'admin-1', {
+          productionPossible: false,
+          comment: 'Cannot produce this design.'
+        })
+      ).rejects.toBeInstanceOf(BadRequestException);
+
+      expect(prisma.order.update).not.toHaveBeenCalled();
+      expect(prisma.adminReview.create).not.toHaveBeenCalled();
+    });
+
+    it('allows marking an order as not producible when canceling it', async () => {
+      prisma.order.findUnique.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.IN_ANALYSIS,
+        depositPaid: false,
+        productionPossible: true,
+        estimatedPriceCents: 22000,
+        finalPriceCents: null,
+        depositAmountCents: 11000
+      });
+      prisma.order.findUniqueOrThrow.mockResolvedValue({
+        id: 'order-1',
+        status: OrderStatus.CANCELED,
+        productionPossible: false,
+        adminReviews: [{ id: 'review-1' }]
+      });
+
+      const order = await service.review('order-1', 'admin-1', {
+        status: OrderStatus.CANCELED,
+        productionPossible: false,
+        comment: 'Cannot produce this design.'
+      });
+
+      expect(prisma.order.update).toHaveBeenCalledWith({
+        where: { id: 'order-1' },
+        data: {
+          status: OrderStatus.CANCELED,
+          productionPossible: false
+        }
+      });
+      expect(order.status).toBe(OrderStatus.CANCELED);
+    });
+
+    it('rejects empty review payloads', async () => {
+      await expect(service.review('order-1', 'admin-1', {})).rejects.toBeInstanceOf(
+        BadRequestException
+      );
+
+      expect(prisma.$transaction).not.toHaveBeenCalled();
     });
   });
 });
