@@ -1,0 +1,306 @@
+# Tufting Rugs Store API examples
+#
+# Use this file with the VS Code "REST Client" extension or any tool that can
+# read .http request files.
+#
+# Suggested flow:
+# 1. Start the backend with `npm run dev`.
+# 2. Run "Admin login".
+# 3. Run "List public products".
+# 4. Copy the FULL_CUSTOM product id into `fullCustomProductId`.
+# 5. Run the customization/order/admin review requests in order.
+
+@baseUrl = http://localhost:3001
+@adminEmail = admin@rugs.local
+@adminPassword = admin123
+
+# Paste the id from "List public products" where type is FULL_CUSTOM.
+@fullCustomProductId = paste-full-custom-product-id-here
+
+# REST Client can fill these automatically after the named requests run.
+@adminToken = {{adminLogin.response.body.$.accessToken}}
+@customizationId = {{createCustomization.response.body.$.id}}
+@orderId = {{createOrderFromCustomization.response.body.$.id}}
+@createdProductId = {{createReadyMadeProduct.response.body.$.id}}
+
+### Admin login
+# @name adminLogin
+POST {{baseUrl}}/admin/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "{{adminPassword}}"
+}
+
+### Invalid admin login should return 401
+POST {{baseUrl}}/admin/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{adminEmail}}",
+  "password": "wrong-password"
+}
+
+### List public products
+# Look for the product with:
+# slug: alfombra-100-personalizada
+# type: FULL_CUSTOM
+# Copy its `id` into `fullCustomProductId` above.
+# @name listProducts
+GET {{baseUrl}}/products
+
+### Get public product by id
+GET {{baseUrl}}/products/{{fullCustomProductId}}
+
+### Admin creates a READY_MADE product
+# @name createReadyMadeProduct
+POST {{baseUrl}}/products
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Alfombra demo rectangular",
+  "slug": "alfombra-demo-{{$timestamp}}",
+  "description": "Producto demo creado desde docs/api-examples.http",
+  "type": "READY_MADE",
+  "basePriceCents": 18000,
+  "sizeCategory": "SMALL",
+  "sizeLabel": "50 x 70 cm",
+  "format": "RECTANGULAR"
+}
+
+### Admin updates a product
+PATCH {{baseUrl}}/products/{{createdProductId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "basePriceCents": 19000,
+  "description": "Producto demo actualizado desde request manual"
+}
+
+### Admin deactivates a product
+PATCH {{baseUrl}}/products/{{createdProductId}}/deactivate
+Authorization: Bearer {{adminToken}}
+
+### Admin endpoint without token should return 401
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "name": "Should fail",
+  "slug": "should-fail",
+  "type": "READY_MADE",
+  "basePriceCents": 10000,
+  "sizeCategory": "SMALL",
+  "sizeLabel": "40 x 40 cm",
+  "format": "RECTANGULAR"
+}
+
+### Create customization from FULL_CUSTOM product
+# @name createCustomization
+POST {{baseUrl}}/customizations
+Content-Type: application/json
+
+{
+  "productId": "{{fullCustomProductId}}",
+  "customerName": "Ana Manual",
+  "customerEmail": "manual-{{$timestamp}}@example.com",
+  "customerPhone": "555-0100",
+  "description": "Quiero una alfombra personalizada con mi logo.",
+  "preferredColors": ["red", "blue", "RED", "white"],
+  "sizeCategory": "CUSTOM",
+  "sizeLabel": "Sob orcamento",
+  "format": "CUSTOM",
+  "designReferences": [
+    {
+      "url": "https://example.com/reference-logo.png",
+      "originalName": "reference-logo.png"
+    }
+  ]
+}
+
+### Invalid customization DTO should return 400
+POST {{baseUrl}}/customizations
+Content-Type: application/json
+
+{
+  "productId": "{{fullCustomProductId}}",
+  "customerName": "Ana Manual",
+  "customerEmail": "not-an-email",
+  "unexpectedField": true
+}
+
+### Admin lists customizations
+GET {{baseUrl}}/customizations
+Authorization: Bearer {{adminToken}}
+
+### Admin gets customization detail
+GET {{baseUrl}}/customizations/{{customizationId}}
+Authorization: Bearer {{adminToken}}
+
+### Create order from customization
+# @name createOrderFromCustomization
+POST {{baseUrl}}/customizations/{{customizationId}}/order
+Content-Type: application/json
+
+{
+  "estimatedPriceCents": 22000,
+  "notes": "Pedido creado desde docs/api-examples.http"
+}
+
+### Creating a second order from same customization should return 409
+POST {{baseUrl}}/customizations/{{customizationId}}/order
+Content-Type: application/json
+
+{
+  "estimatedPriceCents": 22000
+}
+
+### Direct FULL_CUSTOM order without customization should return 400
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+  "customerName": "Ana Manual",
+  "customerEmail": "direct-full-custom-{{$timestamp}}@example.com",
+  "productId": "{{fullCustomProductId}}"
+}
+
+### Admin lists orders
+GET {{baseUrl}}/orders
+Authorization: Bearer {{adminToken}}
+
+### Admin gets order detail
+GET {{baseUrl}}/orders/{{orderId}}
+Authorization: Bearer {{adminToken}}
+
+### Admin review: move order into analysis
+PATCH {{baseUrl}}/orders/{{orderId}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "IN_ANALYSIS",
+  "estimatedPriceCents": 24000,
+  "comment": "Admin started production analysis."
+}
+
+### Admin review: send final quote to customer approval
+PATCH {{baseUrl}}/orders/{{orderId}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "WAITING_CUSTOMER_APPROVAL",
+  "productionPossible": true,
+  "finalPriceCents": 31001,
+  "comment": "Cotizacion final lista para aprobacion del cliente."
+}
+
+### Admin review cannot set DEPOSIT_CONFIRMED directly; should return 400
+PATCH {{baseUrl}}/orders/{{orderId}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "DEPOSIT_CONFIRMED",
+  "comment": "This must fail. Use confirm-deposit instead."
+}
+
+### Admin review: customer approved quote
+PATCH {{baseUrl}}/orders/{{orderId}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "APPROVED",
+  "comment": "Cliente aprobo la cotizacion."
+}
+
+### Admin review: waiting deposit
+PATCH {{baseUrl}}/orders/{{orderId}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "WAITING_DEPOSIT",
+  "comment": "Pedido listo para recibir adelanto."
+}
+
+### Confirm deposit
+PATCH {{baseUrl}}/orders/{{orderId}}/confirm-deposit
+Authorization: Bearer {{adminToken}}
+
+### updateStatus cannot set DEPOSIT_CONFIRMED; should return 400
+PATCH {{baseUrl}}/orders/{{orderId}}/status
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "DEPOSIT_CONFIRMED"
+}
+
+### Admin review: design approved after deposit
+PATCH {{baseUrl}}/orders/{{orderId}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "DESIGN_APPROVED",
+  "comment": "Diseno aprobado para iniciar produccion."
+}
+
+### Admin review: move to production
+PATCH {{baseUrl}}/orders/{{orderId}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "IN_PRODUCTION",
+  "comment": "Produccion iniciada."
+}
+
+### Cancel after IN_PRODUCTION should return 400
+PATCH {{baseUrl}}/orders/{{orderId}}/status
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "CANCELED"
+}
+
+### New manual order for non-producible review example
+# Use this request only after setting fullCustomProductId.
+# @name createCustomizationNotPossible
+POST {{baseUrl}}/customizations
+Content-Type: application/json
+
+{
+  "productId": "{{fullCustomProductId}}",
+  "customerName": "No Possible Manual",
+  "customerEmail": "not-possible-{{$timestamp}}@example.com",
+  "description": "Referencia demasiado compleja para V1.",
+  "preferredColors": ["black", "gold"]
+}
+
+### Create order for non-producible review example
+# @name createNotPossibleOrder
+POST {{baseUrl}}/customizations/{{createCustomizationNotPossible.response.body.$.id}}/order
+Content-Type: application/json
+
+{
+  "estimatedPriceCents": 22000
+}
+
+### Admin review: mark not producible and cancel
+PATCH {{baseUrl}}/orders/{{createNotPossibleOrder.response.body.$.id}}/review
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "CANCELED",
+  "productionPossible": false,
+  "comment": "No se puede producir con las restricciones actuales."
+}

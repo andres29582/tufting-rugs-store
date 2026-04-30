@@ -198,6 +198,14 @@ Tests HTTP reales contra Nest + PostgreSQL local:
 npm run test:e2e
 ```
 
+Requests manuales:
+
+```text
+docs/api-examples.http
+```
+
+Ese archivo contiene ejemplos ejecutables para probar login admin, productos, personalizaciones, pedidos, review admin, deposito y casos invalidos. Se puede usar con la extension REST Client de VS Code o como referencia para Postman/Insomnia.
+
 Build:
 
 ```powershell
