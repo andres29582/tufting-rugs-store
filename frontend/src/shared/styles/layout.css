@@ -1,0 +1,17 @@
+.showcase-flow {
+  position: relative;
+}
+
+.snap-section {
+  scroll-snap-align: none;
+  scroll-margin-top: 96px;
+}
+
+.feature-strip-section,
+.how-section,
+.catalog-section,
+.custom-cta-section,
+.site-footer {
+  width: min(calc(100% - 36px), var(--max-width));
+  margin: 0 auto;
+}

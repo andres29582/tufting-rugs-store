@@ -1,0 +1,54 @@
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+  scroll-snap-type: none;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--active-a) 74%, transparent), transparent 32rem),
+    radial-gradient(circle at 78% 12%, color-mix(in srgb, var(--active-c) 62%, transparent), transparent 34rem),
+    radial-gradient(circle at 68% 78%, color-mix(in srgb, var(--active-b) 48%, transparent), transparent 30rem),
+    linear-gradient(135deg, #05101d 0%, #160d21 46%, #07182a 100%);
+  background-attachment: scroll;
+  overflow-x: hidden;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, transparent, black 18%, black 76%, transparent);
+  opacity: 0.14;
+}
+
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  background: rgba(1, 5, 12, 0.42);
+}
+
+:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.84);
+  outline-offset: 4px;
+}
+
+.noscript-message {
+  width: min(92vw, 640px);
+  margin: 2rem auto;
+  padding: 1rem 1.2rem;
+  color: #171717;
+  background: #fffaf3;
+  border-radius: var(--radius-sm);
+}

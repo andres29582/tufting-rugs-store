@@ -1,0 +1,257 @@
+@media (max-width: 1080px) {
+  .header-shell {
+    grid-template-columns: 1fr auto;
+  }
+
+  .main-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .showcase-inner,
+  .showcase-inner-reverse {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .showcase-inner-reverse .rug-info-card,
+  .showcase-inner-reverse .showcase-visual {
+    order: unset;
+  }
+
+  .showcase-visual,
+  .showcase-inner-reverse .showcase-visual {
+    order: 1;
+  }
+
+  .rug-info-card,
+  .showcase-inner-reverse .rug-info-card {
+    order: 2;
+  }
+
+  .rug-info-card {
+    width: min(100%, 620px);
+    justify-self: center;
+  }
+
+  .showcase-visual {
+    min-height: 430px;
+  }
+
+  .how-panel,
+  .custom-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid,
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .feature-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature-item:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .feature-item:nth-child(4) {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  html {
+    scroll-snap-type: none;
+  }
+
+  .site-header {
+    position: relative;
+    top: auto;
+    width: min(calc(100% - 18px), 1240px);
+    margin-top: 8px;
+  }
+
+  .header-shell {
+    gap: 12px;
+    padding: 10px;
+    border-radius: 20px;
+    backdrop-filter: none;
+  }
+
+  .brand-copy small,
+  .header-actions .icon-button:not(.menu-toggle) {
+    display: none;
+  }
+
+  .order-link {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+  }
+
+  .main-nav a {
+    padding: 9px 10px;
+    font-size: 0.82rem;
+  }
+
+  .main-nav,
+  .category-filters {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding-bottom: 0;
+    mask-image: none;
+  }
+
+  .main-nav {
+    gap: 6px;
+  }
+
+  .main-nav a {
+    flex: 1 1 calc(33.333% - 6px);
+    min-width: 98px;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .category-filters {
+    gap: 8px;
+  }
+
+  .search-bar input {
+    backdrop-filter: none;
+  }
+
+  .category-filter {
+    flex: 1 1 calc(33.333% - 8px);
+    min-width: 118px;
+    padding: 10px 14px;
+    font-size: 0.86rem;
+  }
+
+  .filter-menu {
+    right: auto;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .filter-menu .category-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-menu .category-filter {
+    min-width: 0;
+  }
+
+  .showcase-section {
+    min-height: auto;
+    padding: 28px 14px 42px;
+  }
+
+  .showcase-section::before,
+  .showcase-section::after {
+    filter: blur(14px);
+    opacity: 0.26;
+  }
+
+  .showcase-inner {
+    gap: 8px;
+  }
+
+  .showcase-visual {
+    order: 1;
+    min-height: 270px;
+  }
+
+  .rug-info-card {
+    order: 2;
+    border-radius: 22px;
+    backdrop-filter: none;
+  }
+
+  .rug-info-card h1,
+  .rug-info-card h2 {
+    max-width: 100%;
+    font-size: clamp(2.15rem, 10vw, 3.2rem);
+    line-height: 1.03;
+  }
+
+  .rug-description {
+    font-size: 0.98rem;
+  }
+
+  .button-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .floating-spec {
+    display: none;
+  }
+
+  .feature-strip-section,
+  .how-section,
+  .catalog-section,
+  .custom-cta-section,
+  .site-footer {
+    width: min(calc(100% - 24px), var(--max-width));
+  }
+
+  .feature-strip,
+  .steps-grid,
+  .catalog-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-item + .feature-item,
+  .feature-item:nth-child(3),
+  .feature-item:nth-child(4) {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    border-left: 0;
+  }
+
+  .catalog-heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .catalog-heading .button {
+    width: 100%;
+  }
+
+  .rug-card-media {
+    height: 260px;
+  }
+
+  .custom-cta {
+    text-align: left;
+  }
+
+  .glass-panel {
+    backdrop-filter: none;
+  }
+
+  .rug-glow {
+    filter: blur(10px);
+    opacity: 0.42;
+  }
+
+  .rug-shadow,
+  .rug-svg {
+    filter: none;
+  }
+}

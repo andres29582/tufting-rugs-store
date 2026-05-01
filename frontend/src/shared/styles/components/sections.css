@@ -1,0 +1,150 @@
+.feature-strip-section {
+  padding: 28px 0 34px;
+}
+
+.feature-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.feature-item {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  min-width: 0;
+  padding: 26px;
+}
+
+.feature-item + .feature-item {
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.feature-item svg,
+.step-card svg,
+.magic-icon svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.feature-item svg {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+}
+
+.feature-item h3,
+.step-card h3,
+.rug-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.feature-item p,
+.step-card p,
+.catalog-heading p,
+.section-copy p,
+.custom-cta p,
+.site-footer p,
+.rug-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.how-section {
+  padding: 34px 0 58px;
+}
+
+.how-panel {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.5fr);
+  gap: 28px;
+  padding: clamp(24px, 4vw, 44px);
+  border-radius: 26px;
+}
+
+.section-copy h2,
+.catalog-heading h2,
+.custom-cta h2 {
+  max-width: 18ch;
+  font-size: clamp(2rem, 4vw, 3.3rem);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.step-card {
+  position: relative;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.step-index {
+  color: rgba(255, 250, 243, 0.34);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.step-card svg {
+  width: 34px;
+  height: 34px;
+  margin: 18px 0;
+}
+
+.custom-cta-section {
+  padding: 8px 0 56px;
+}
+
+.custom-cta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 26px;
+  align-items: center;
+  padding: clamp(24px, 4vw, 34px);
+  border-radius: 24px;
+}
+
+.magic-icon {
+  display: grid;
+  width: 74px;
+  height: 74px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.magic-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+.site-footer {
+  padding: 24px 0 42px;
+  color: rgba(255, 250, 243, 0.76);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr repeat(3, 1fr);
+  gap: 24px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.footer-grid strong,
+.footer-grid span {
+  color: var(--ink);
+  font-weight: 760;
+}

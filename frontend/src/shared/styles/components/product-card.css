@@ -1,0 +1,102 @@
+.catalog-section {
+  padding: 42px 0 56px;
+}
+
+.catalog-heading {
+  display: flex;
+  gap: 22px;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.result-summary {
+  min-height: 24px;
+  margin: 0 0 18px;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.rug-card {
+  overflow: hidden;
+  border-radius: 18px;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.rug-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.4);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.09)),
+    rgba(10, 16, 28, 0.2);
+}
+
+.rug-card-media {
+  display: grid;
+  height: 220px;
+  padding: 14px;
+  place-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2), transparent 42%),
+    rgba(0, 0, 0, 0.18);
+}
+
+.rug-card-media .rug-visual-shell {
+  width: 130%;
+}
+
+.rug-card-media .floating-spec,
+.rug-card-media .rug-shadow {
+  display: none;
+}
+
+.rug-card-media .rug-svg {
+  transform: rotate(-2deg) scale(1.04);
+}
+
+.rug-card-body {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+}
+
+.card-category {
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+}
+
+.card-bottom {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mini-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.mini-actions .icon-button {
+  width: 36px;
+  height: 36px;
+}
+
+.mini-actions svg {
+  width: 18px;
+  height: 18px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 30px;
+  border-radius: 18px;
+}
