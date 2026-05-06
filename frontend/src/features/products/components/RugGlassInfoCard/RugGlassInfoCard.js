@@ -1,4 +1,5 @@
 import { formatPrice } from '../../../../utils/money.js';
+import { renderButtonLink } from '../../../../shared/components/Button/Button.js';
 
 export function renderRugGlassInfoCard(rug, options) {
   const headingTag = options && options.hero ? 'h1' : 'h2';
@@ -52,7 +53,7 @@ export function renderRugGlassInfoCard(rug, options) {
 
   const buttonRow = document.createElement('div');
   buttonRow.className = 'button-row';
-  buttonRow.appendChild(renderActionButton('Ver detalles', 'details', rug.slug, 'button button-dark'));
+  buttonRow.appendChild(renderDetailLink(rug.slug));
   buttonRow.appendChild(renderActionButton('Personalizar', 'customize', rug.slug, 'button button-light'));
   buttonRow.appendChild(renderActionButton('Quiero una parecida', 'similar', rug.slug, 'button button-ghost'));
 
@@ -74,6 +75,14 @@ function renderColorSwatch(color) {
   swatch.setAttribute('aria-label', color);
 
   return swatch;
+}
+
+function renderDetailLink(slug) {
+  return renderButtonLink({
+    href: '#/producto/' + encodeURIComponent(slug),
+    label: 'Ver detalles',
+    variant: 'secondary'
+  }).element;
 }
 
 function renderActionButton(label, action, slug, className) {

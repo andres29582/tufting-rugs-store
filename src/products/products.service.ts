@@ -11,13 +11,49 @@ export class ProductsService {
   findActive() {
     return this.prisma.product.findMany({
       where: { isActive: true },
-      orderBy: { createdAt: 'desc' }
+      orderBy: [
+        { isFeatured: 'desc' },
+        { createdAt: 'desc' }
+      ]
+    });
+  }
+
+  findAllForAdmin() {
+    return this.prisma.product.findMany({
+      orderBy: [
+        { updatedAt: 'desc' },
+        { createdAt: 'desc' }
+      ]
     });
   }
 
   async findActiveById(id: string) {
     const product = await this.prisma.product.findFirst({
       where: { id, isActive: true }
+    });
+
+    if (!product) {
+      throw new NotFoundException('Product not found.');
+    }
+
+    return product;
+  }
+
+  async findActiveBySlug(slug: string) {
+    const product = await this.prisma.product.findFirst({
+      where: { slug, isActive: true }
+    });
+
+    if (!product) {
+      throw new NotFoundException('Product not found.');
+    }
+
+    return product;
+  }
+
+  async findByIdForAdmin(id: string) {
+    const product = await this.prisma.product.findUnique({
+      where: { id }
     });
 
     if (!product) {
@@ -58,6 +94,19 @@ export class ProductsService {
     });
   }
 
+  async publish(id: string) {
+    await this.ensureProductExists(id);
+
+    return this.prisma.product.update({
+      where: { id },
+      data: { isActive: true }
+    });
+  }
+
+  async unpublish(id: string) {
+    return this.deactivate(id);
+  }
+
   private async ensureProductExists(id: string): Promise<void> {
     const product = await this.prisma.product.findUnique({
       where: { id },
@@ -93,6 +142,14 @@ function buildCreateProductData(input: CreateProductInput) {
     sizeCategory,
     sizeLabel,
     format,
+    category: optionalTrimmedString(input.category),
+    imageUrl: optionalTrimmedString(input.imageUrl),
+    colors: normalizeStringList(input.colors, 'colors'),
+    features: normalizeStringList(input.features, 'features'),
+    material: optionalTrimmedString(input.material),
+    productionTime: optionalTrimmedString(input.productionTime),
+    isCustomizable: input.isCustomizable ?? true,
+    isFeatured: input.isFeatured ?? false,
     isActive: input.isActive ?? true
   };
 }
@@ -133,6 +190,38 @@ function buildUpdateProductData(input: UpdateProductInput) {
     data.format = requiredEnum(input.format, RugFormat, 'format');
   }
 
+  if (input.category !== undefined) {
+    data.category = optionalTrimmedString(input.category);
+  }
+
+  if (input.imageUrl !== undefined) {
+    data.imageUrl = optionalTrimmedString(input.imageUrl);
+  }
+
+  if (input.colors !== undefined) {
+    data.colors = normalizeStringList(input.colors, 'colors');
+  }
+
+  if (input.features !== undefined) {
+    data.features = normalizeStringList(input.features, 'features');
+  }
+
+  if (input.material !== undefined) {
+    data.material = optionalTrimmedString(input.material);
+  }
+
+  if (input.productionTime !== undefined) {
+    data.productionTime = optionalTrimmedString(input.productionTime);
+  }
+
+  if (input.isCustomizable !== undefined) {
+    data.isCustomizable = input.isCustomizable;
+  }
+
+  if (input.isFeatured !== undefined) {
+    data.isFeatured = input.isFeatured;
+  }
+
   if (input.isActive !== undefined) {
     data.isActive = input.isActive;
   }
@@ -155,6 +244,44 @@ function optionalTrimmedString(value: string | null | undefined): string | null 
 
   const trimmed = value.trim();
   return trimmed ? trimmed : null;
+}
+
+function normalizeStringList(value: string[] | undefined, fieldName: string): string[] {
+  if (value === undefined) {
+    return [];
+  }
+
+  if (!Array.isArray(value)) {
+    throw new BadRequestException(`${fieldName} must be an array.`);
+  }
+
+  const seen = new Set<string>();
+  const normalizedValues: string[] = [];
+
+  for (const item of value) {
+    if (typeof item !== 'string') {
+      throw new BadRequestException(`${fieldName} must contain only strings.`);
+    }
+
+    const normalized = item.trim();
+
+    if (!normalized) {
+      continue;
+    }
+
+    const key = normalized.toLowerCase();
+
+    if (!seen.has(key)) {
+      seen.add(key);
+      normalizedValues.push(normalized);
+    }
+  }
+
+  if (normalizedValues.length > 12) {
+    throw new BadRequestException(`${fieldName} cannot contain more than 12 items.`);
+  }
+
+  return normalizedValues;
 }
 
 function requiredEnum<T extends Record<string, string>>(

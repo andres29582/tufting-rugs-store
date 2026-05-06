@@ -25,6 +25,13 @@ export class ProductsSeedService {
         sizeCategory: SizeCategory.CUSTOM,
         sizeLabel: 'Sob orçamento',
         format: RugFormat.CUSTOM,
+        category: 'Personalizadas',
+        colors: ['#1d2b53', '#f97316', '#db5c91'],
+        features: ['100% personalizable', 'Aprobacion previa', 'Medidas flexibles'],
+        material: 'Lana acrilica',
+        productionTime: 'Bajo analisis',
+        isCustomizable: true,
+        isFeatured: true,
         isActive: true
       }
     });

@@ -60,6 +60,14 @@ model Product {
   sizeCategory    SizeCategory
   sizeLabel       String
   format          RugFormat
+  category        String?
+  imageUrl        String?
+  colors          String[]     @default([])
+  features        String[]     @default([])
+  material        String?
+  productionTime  String?
+  isCustomizable  Boolean      @default(true)
+  isFeatured      Boolean      @default(false)
   isActive        Boolean      @default(true)
   orders          Order[]
   customizations  Customization[]
@@ -68,6 +76,8 @@ model Product {
 
   @@index([type])
   @@index([isActive])
+  @@index([category])
+  @@index([isFeatured])
 }
 
 model Customization {
@@ -93,6 +103,7 @@ model Customization {
 
 model Order {
   id                  String            @id @default(cuid())
+  publicCode          String            @unique
   customerName        String
   customerEmail       String
   customerPhone       String?

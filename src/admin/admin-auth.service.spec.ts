@@ -11,7 +11,8 @@ const config: AppConfig = {
   jwtSecret: 'test-secret-with-more-than-thirty-two-characters',
   adminEmail: 'Admin@Rugs.Local',
   adminPassword: 'admin123',
-  port: 3001
+  port: 3001,
+  corsOrigins: ['http://localhost:5173']
 };
 
 type MockPrisma = {

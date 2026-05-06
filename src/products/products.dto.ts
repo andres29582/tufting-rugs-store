@@ -1,5 +1,7 @@
 import { Type } from 'class-transformer';
 import {
+  ArrayMaxSize,
+  IsArray,
   IsBoolean,
   IsEnum,
   IsInt,
@@ -40,6 +42,42 @@ export class CreateProductDto {
 
   @IsEnum(RugFormat)
   format!: RugFormat;
+
+  @IsOptional()
+  @IsString()
+  category?: string | null;
+
+  @IsOptional()
+  @IsString()
+  imageUrl?: string | null;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(12)
+  @IsString({ each: true })
+  colors?: string[];
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(12)
+  @IsString({ each: true })
+  features?: string[];
+
+  @IsOptional()
+  @IsString()
+  material?: string | null;
+
+  @IsOptional()
+  @IsString()
+  productionTime?: string | null;
+
+  @IsOptional()
+  @IsBoolean()
+  isCustomizable?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isFeatured?: boolean;
 
   @IsOptional()
   @IsBoolean()
@@ -83,6 +121,42 @@ export class UpdateProductDto {
   @IsOptional()
   @IsEnum(RugFormat)
   format?: RugFormat;
+
+  @IsOptional()
+  @IsString()
+  category?: string | null;
+
+  @IsOptional()
+  @IsString()
+  imageUrl?: string | null;
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(12)
+  @IsString({ each: true })
+  colors?: string[];
+
+  @IsOptional()
+  @IsArray()
+  @ArrayMaxSize(12)
+  @IsString({ each: true })
+  features?: string[];
+
+  @IsOptional()
+  @IsString()
+  material?: string | null;
+
+  @IsOptional()
+  @IsString()
+  productionTime?: string | null;
+
+  @IsOptional()
+  @IsBoolean()
+  isCustomizable?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isFeatured?: boolean;
 
   @IsOptional()
   @IsBoolean()

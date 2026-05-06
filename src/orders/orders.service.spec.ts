@@ -145,6 +145,7 @@ describe('OrdersService business rules', () => {
       expect(order.depositAmountCents).toBe(11000);
       expect(order.depositPaid).toBe(false);
       expect(order.status).toBe(OrderStatus.WAITING_ANALYSIS);
+      expect(order.publicCode).toMatch(/^RUG-\d{8}-[A-Z0-9]{4}$/);
     });
 
     it('uses finalPriceCents over estimatedPriceCents when calculating deposit', async () => {
@@ -186,6 +187,7 @@ describe('OrdersService business rules', () => {
 
       expect(order.productId).toBe('product-full-custom');
       expect(order.customizationId).toBe('customization-1');
+      expect(order.publicCode).toMatch(/^RUG-\d{8}-[A-Z0-9]{4}$/);
     });
   });
 

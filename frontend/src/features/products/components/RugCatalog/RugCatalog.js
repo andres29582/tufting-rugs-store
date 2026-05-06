@@ -1,23 +1,43 @@
+import { renderButtonLink } from '../../../../shared/components/Button/Button.js';
 import { renderRugCard } from '../RugCard/RugCard.js';
 
 export function renderRugCatalog(initialRugs) {
   const section = document.createElement('section');
   section.id = 'catalogo';
   section.className = 'catalog-section';
-  section.innerHTML = [
-    '<div class="catalog-heading">',
-    '  <div>',
-    '    <p class="eyebrow">Catálogo destacado</p>',
-    '    <h2>Alfombras únicas, hechas para inspirar</h2>',
-    '  </div>',
-    '  <a class="button button-ghost" href="#personalizadas">Quiero personalizar la mía</a>',
-    '</div>',
-    '<p class="result-summary" aria-live="polite"></p>',
-    '<div class="catalog-grid"></div>'
-  ].join('');
 
-  const grid = section.querySelector('.catalog-grid');
-  const summary = section.querySelector('.result-summary');
+  const heading = document.createElement('div');
+  heading.className = 'catalog-heading';
+
+  const headingCopy = document.createElement('div');
+
+  const eyebrow = document.createElement('p');
+  eyebrow.className = 'eyebrow';
+  eyebrow.textContent = 'Catálogo destacado';
+
+  const title = document.createElement('h2');
+  title.textContent = 'Alfombras únicas, hechas para inspirar';
+
+  const customLink = renderButtonLink({
+    href: '#/personalizar',
+    label: 'Quiero personalizar la mía',
+    variant: 'ghost'
+  });
+
+  const summary = document.createElement('p');
+  summary.className = 'result-summary';
+  summary.setAttribute('aria-live', 'polite');
+
+  const grid = document.createElement('div');
+  grid.className = 'catalog-grid';
+
+  headingCopy.appendChild(eyebrow);
+  headingCopy.appendChild(title);
+  heading.appendChild(headingCopy);
+  heading.appendChild(customLink.element);
+  section.appendChild(heading);
+  section.appendChild(summary);
+  section.appendChild(grid);
 
   function update(rugs, query, category) {
     grid.replaceChildren();

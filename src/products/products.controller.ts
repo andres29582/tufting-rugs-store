@@ -12,6 +12,11 @@ export class ProductsController {
     return this.products.findActive();
   }
 
+  @Get('slug/:slug')
+  findActiveBySlug(@Param('slug') slug: string) {
+    return this.products.findActiveBySlug(slug);
+  }
+
   @Get(':id')
   findActiveById(@Param('id') id: string) {
     return this.products.findActiveById(id);

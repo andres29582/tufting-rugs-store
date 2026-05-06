@@ -4,6 +4,7 @@ export function mapProductFromApi(product) {
   return {
     id: product.id,
     slug: product.slug || product.id,
+    type: product.type || null,
     name: product.name,
     category: product.category || getCategoryFromType(product.type),
     description: product.description || 'Alfombra tufting hecha a mano con acabado premium.',

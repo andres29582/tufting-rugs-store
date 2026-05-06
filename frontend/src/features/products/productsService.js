@@ -1,5 +1,5 @@
 import { appConfig } from '../../app/config.js';
-import { getProductById, getProducts } from './productsApi.js';
+import { getProductById, getProducts, getProductBySlug } from './productsApi.js';
 import { mockProducts, productCategories } from './mockProducts.js';
 
 let productsCachePromise = null;
@@ -15,7 +15,12 @@ export async function loadProducts(options = {}) {
     productsCachePromise = resolveProducts();
   }
 
-  return cloneProducts(await productsCachePromise);
+  try {
+    return cloneProducts(await productsCachePromise);
+  } catch (error) {
+    clearProductsCache();
+    throw error;
+  }
 }
 
 export async function loadFeaturedProducts(options = {}) {
@@ -38,21 +43,47 @@ export async function loadProductCategories(options = {}) {
   return Array.from(categories);
 }
 
-export async function loadProductBySlug(slugOrId, options = {}) {
-  if (!slugOrId) {
+export async function loadProductById(id, options = {}) {
+  if (!id) {
     return null;
   }
 
   if (appConfig.useMocks) {
-    return findProductInList(mockProducts, slugOrId);
+    return findProductById(mockProducts, id);
   }
 
   try {
-    const product = await getProductById(slugOrId);
+    const product = await getProductById(id);
     return product ? cloneProduct(product) : null;
   } catch (error) {
+    if (!shouldFallbackToProductList(error)) {
+      throw error;
+    }
+
     const products = await loadProducts(options);
-    return findProductInList(products, slugOrId);
+    return findProductById(products, id);
+  }
+}
+
+export async function loadProductBySlug(slug, options = {}) {
+  if (!slug) {
+    return null;
+  }
+
+  if (appConfig.useMocks) {
+    return findProductBySlug(mockProducts, slug);
+  }
+
+  try {
+    const product = await getProductBySlug(slug);
+    return product ? cloneProduct(product) : null;
+  } catch (error) {
+    if (!shouldFallbackToProductList(error)) {
+      throw error;
+    }
+
+    const products = await loadProducts(options);
+    return findProductBySlug(products, slug);
   }
 }
 
@@ -65,20 +96,31 @@ async function resolveProducts() {
     return cloneProducts(mockProducts);
   }
 
-  try {
-    return await getProducts();
-  } catch (error) {
-    console.warn('No se pudieron cargar productos desde la API. Usando mocks temporales.', error);
-    return cloneProducts(mockProducts);
-  }
+  return getProducts();
 }
 
-function findProductInList(products, slugOrId) {
+function findProductById(products, id) {
+  return findProductInList(products, function (product) {
+    return product.id === id;
+  });
+}
+
+function findProductBySlug(products, slug) {
+  return findProductInList(products, function (product) {
+    return product.slug === slug;
+  });
+}
+
+function findProductInList(products, predicate) {
   const product = products.find(function (item) {
-    return item.slug === slugOrId || item.id === slugOrId;
+    return predicate(item);
   });
 
   return product ? cloneProduct(product) : null;
+}
+
+function shouldFallbackToProductList(error) {
+  return error && error.name === 'ApiError' && error.status === 404;
 }
 
 function cloneProducts(products) {

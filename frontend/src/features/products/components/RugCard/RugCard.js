@@ -1,4 +1,5 @@
 import { formatPrice } from '../../../../utils/money.js';
+import { renderIconLink } from '../../../../shared/components/Button/Button.js';
 import { renderRugVisualMockup } from '../RugVisualMockup/RugVisualMockup.js';
 
 export function renderRugCard(rug) {
@@ -62,14 +63,9 @@ function createFavoriteButton(rug) {
 }
 
 function createDetailsButton(rug) {
-  const button = document.createElement('button');
-  button.className = 'icon-button';
-  button.type = 'button';
-  button.dataset.action = 'details';
-  button.dataset.rugSlug = rug.slug;
-  button.setAttribute('aria-label', 'Ver detalles de ' + rug.name);
-  button.innerHTML =
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-2 8H8L6 6Zm0 0-.7-3H3v2h.7l3 13H19v-2H8.3l-.5-2H19l2.7-10H5.6Z"/><circle cx="9" cy="21" r="1.7"/><circle cx="18" cy="21" r="1.7"/></svg>';
-
-  return button;
+  return renderIconLink({
+    href: '#/producto/' + encodeURIComponent(rug.slug),
+    icon: 'shoppingCart',
+    ariaLabel: 'Ver detalles de ' + rug.name
+  }).element;
 }

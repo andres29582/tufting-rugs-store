@@ -1,6 +1,7 @@
 import {
   Inject,
   Injectable,
+  Logger,
   UnauthorizedException
 } from '@nestjs/common';
 import { createHmac, timingSafeEqual } from 'crypto';
@@ -27,6 +28,8 @@ const TOKEN_TTL_SECONDS = 60 * 60 * 8;
 
 @Injectable()
 export class AdminAuthService {
+  private readonly logger = new Logger(AdminAuthService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly passwords: AdminPasswordService,
@@ -38,6 +41,7 @@ export class AdminAuthService {
     const password = input.password;
 
     if (!email || !password) {
+      this.logger.warn(`Failed login attempt: missing credentials`);
       throw new UnauthorizedException('Invalid admin credentials.');
     }
 
@@ -53,15 +57,18 @@ export class AdminAuthService {
     });
 
     if (!admin || !admin.isActive) {
+      this.logger.warn(`Failed login attempt: invalid credentials for email ${email}`);
       throw new UnauthorizedException('Invalid admin credentials.');
     }
 
     const typedAdmin = admin as AdminUserRecord;
 
     if (!this.passwords.verify(password, typedAdmin.passwordHash)) {
+      this.logger.warn(`Failed login attempt: wrong password for email ${email}`);
       throw new UnauthorizedException('Invalid admin credentials.');
     }
 
+    this.logger.log(`Successful login for admin ${email}`);
     return {
       accessToken: this.signAdminToken(typedAdmin),
       admin: {
