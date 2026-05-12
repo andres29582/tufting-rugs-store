@@ -40,7 +40,23 @@ describe('ProductsService', () => {
 
     expect(prisma.product.findMany).toHaveBeenCalledWith({
       where: { isActive: true },
-      orderBy: { createdAt: 'desc' }
+      orderBy: [
+        { isFeatured: 'desc' },
+        { createdAt: 'desc' }
+      ]
+    });
+  });
+
+  it('returns every product for admin management', async () => {
+    prisma.product.findMany.mockResolvedValue([]);
+
+    await service.findAllForAdmin();
+
+    expect(prisma.product.findMany).toHaveBeenCalledWith({
+      orderBy: [
+        { updatedAt: 'desc' },
+        { createdAt: 'desc' }
+      ]
     });
   });
 
@@ -48,6 +64,29 @@ describe('ProductsService', () => {
     prisma.product.findFirst.mockResolvedValue(null);
 
     await expect(service.findActiveById('product-1')).rejects.toBeInstanceOf(
+      NotFoundException
+    );
+  });
+
+  it('loads active public products by slug', async () => {
+    prisma.product.findFirst.mockResolvedValue({
+      id: 'product-1',
+      slug: 'ondas-abstractas',
+      isActive: true
+    });
+
+    const product = await service.findActiveBySlug('ondas-abstractas');
+
+    expect(product.slug).toBe('ondas-abstractas');
+    expect(prisma.product.findFirst).toHaveBeenCalledWith({
+      where: { slug: 'ondas-abstractas', isActive: true }
+    });
+  });
+
+  it('returns 404 for inactive or missing public product slug', async () => {
+    prisma.product.findFirst.mockResolvedValue(null);
+
+    await expect(service.findActiveBySlug('inactive-rug')).rejects.toBeInstanceOf(
       NotFoundException
     );
   });
@@ -69,6 +108,8 @@ describe('ProductsService', () => {
 
     expect(product.type).toBe(ProductType.FULL_CUSTOM);
     expect(product.basePriceCents).toBe(22000);
+    expect(product.isCustomizable).toBe(true);
+    expect(product.isFeatured).toBe(false);
     expect(product.isActive).toBe(true);
   });
 
@@ -93,10 +134,14 @@ describe('ProductsService', () => {
     );
 
     const product = await service.update('product-1', {
-      basePriceCents: 30000
+      basePriceCents: 30000,
+      colors: ['red', 'blue', 'red', ' '],
+      features: ['Hecha a mano', 'Hecha a mano', 'Base firme']
     });
 
     expect(product.basePriceCents).toBe(30000);
+    expect(product.colors).toEqual(['red', 'blue']);
+    expect(product.features).toEqual(['Hecha a mano', 'Base firme']);
   });
 
   it('rejects empty product updates', async () => {
@@ -116,5 +161,16 @@ describe('ProductsService', () => {
     const product = await service.deactivate('product-1');
 
     expect(product.isActive).toBe(false);
+  });
+
+  it('publishes products by setting them active', async () => {
+    prisma.product.findUnique.mockResolvedValue({ id: 'product-1' });
+    prisma.product.update.mockImplementation(({ data }) =>
+      Promise.resolve({ id: 'product-1', ...data })
+    );
+
+    const product = await service.publish('product-1');
+
+    expect(product.isActive).toBe(true);
   });
 });

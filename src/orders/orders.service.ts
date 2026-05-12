@@ -4,7 +4,9 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { generateOrderPublicCode } from './order-code';
 import {
   OrderStatus,
   ProductType,
@@ -34,6 +36,8 @@ type OrderRecord = {
   productionPossible: boolean;
 };
 
+const PUBLIC_CODE_GENERATION_MAX_ATTEMPTS = 5;
+
 type OrderReviewRecord = OrderRecord & {
   estimatedPriceCents: number | null;
   finalPriceCents: number | null;
@@ -49,7 +53,17 @@ export class OrdersService {
       orderBy: { createdAt: 'desc' },
       include: {
         product: true,
-        customization: true
+        customization: {
+          include: {
+            product: true,
+            designReferences: true
+          }
+        },
+        designReferences: true,
+        adminReviews: {
+          orderBy: { createdAt: 'desc' },
+          take: 3
+        }
       }
     });
   }
@@ -108,22 +122,39 @@ export class OrdersService {
 
     const depositPricingBaseCents = finalPriceCents ?? estimatedPriceCents;
 
-    return this.prisma.order.create({
-      data: {
-        customerName: input.customerName,
-        customerEmail: input.customerEmail,
-        customerPhone: input.customerPhone ?? null,
-        productId,
-        customizationId,
-        status: OrderStatus.WAITING_ANALYSIS,
-        estimatedPriceCents,
-        finalPriceCents,
-        depositAmountCents: calculateDepositAmountCents(depositPricingBaseCents),
-        depositPaid: false,
-        productionPossible: true,
-        notes: input.notes ?? null
+    const orderData = {
+      customerName: input.customerName,
+      customerEmail: input.customerEmail,
+      customerPhone: input.customerPhone ?? null,
+      productId,
+      customizationId,
+      status: OrderStatus.WAITING_ANALYSIS,
+      estimatedPriceCents,
+      finalPriceCents,
+      depositAmountCents: calculateDepositAmountCents(depositPricingBaseCents),
+      depositPaid: false,
+      productionPossible: true,
+      notes: input.notes ?? null
+    };
+
+    for (let attempt = 0; attempt < PUBLIC_CODE_GENERATION_MAX_ATTEMPTS; attempt += 1) {
+      try {
+        return await this.prisma.order.create({
+          data: {
+            ...orderData,
+            publicCode: generateOrderPublicCode()
+          }
+        });
+      } catch (error) {
+        if (isPublicCodeUniqueConstraintError(error)) {
+          continue;
+        }
+
+        throw error;
       }
-    });
+    }
+
+    throw new ConflictException('Could not generate a unique order public code.');
   }
 
   async updateStatus(id: string, input: UpdateOrderStatusInput) {
@@ -412,4 +443,18 @@ function normalizeReviewComment(value: string | null | undefined): string | null
 
   const trimmed = value.trim();
   return trimmed ? trimmed : null;
+}
+
+function isPublicCodeUniqueConstraintError(error: unknown): boolean {
+  if (!(error instanceof Prisma.PrismaClientKnownRequestError)) {
+    return false;
+  }
+
+  if (error.code !== 'P2002') {
+    return false;
+  }
+
+  const target = error.meta?.target;
+
+  return Array.isArray(target) && target.includes('publicCode');
 }

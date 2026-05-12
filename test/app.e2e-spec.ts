@@ -1,5 +1,7 @@
 import '../src/config/load-env';
 import { type INestApplication } from '@nestjs/common';
+import { unlink } from 'node:fs/promises';
+import { join } from 'node:path';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { configureApp, seedAppData } from '../src/app.setup';
@@ -7,6 +9,7 @@ import { AppModule } from '../src/app.module';
 import { OrderStatus } from '../src/orders/order-domain';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { FULL_CUSTOM_ANCHOR_SLUG } from '../src/products/products-seed.service';
+import { PRODUCT_IMAGE_UPLOAD_DIR } from '../src/uploads/upload-paths';
 
 describe('Backend HTTP flow (e2e)', () => {
   let app: INestApplication;
@@ -15,6 +18,8 @@ describe('Backend HTTP flow (e2e)', () => {
 
   const testRunId = Date.now();
   const customerEmail = `e2e-${testRunId}@example.com`;
+  const productSlugPrefix = `e2e-product-${testRunId}`;
+  const uploadedProductImages: string[] = [];
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -38,7 +43,14 @@ describe('Backend HTTP flow (e2e)', () => {
   afterAll(async () => {
     if (prisma) {
       await cleanupE2eData(customerEmail);
+      await cleanupE2eProducts(productSlugPrefix);
     }
+
+    await Promise.all(
+      uploadedProductImages.map((filename) =>
+        unlink(join(PRODUCT_IMAGE_UPLOAD_DIR, filename)).catch(() => undefined)
+      )
+    );
 
     if (app) {
       await app.close();
@@ -116,6 +128,7 @@ describe('Backend HTTP flow (e2e)', () => {
         productId: fullCustomProductId,
         customizationId,
         customerEmail,
+        publicCode: expect.stringMatching(/^RUG-\d{8}-[A-Z0-9]{4}$/),
         status: OrderStatus.WAITING_ANALYSIS,
         depositAmountCents: 11000,
         depositPaid: false
@@ -151,6 +164,114 @@ describe('Backend HTTP flow (e2e)', () => {
       .get('/customizations')
       .set('Authorization', `Bearer ${adminToken}`)
       .expect(200);
+  });
+
+  it('lets an admin upload a product image', async () => {
+    const adminToken = await loginAdmin();
+
+    await request(app.getHttpServer())
+      .post('/admin/uploads/product-images')
+      .attach('file', Buffer.from('not-a-real-image-but-valid-test-by-mime'), {
+        filename: 'test-rug.png',
+        contentType: 'image/png'
+      })
+      .expect(401);
+
+    const uploadResponse = await request(app.getHttpServer())
+      .post('/admin/uploads/product-images')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .attach('file', Buffer.from('not-a-real-image-but-valid-test-by-mime'), {
+        filename: 'test-rug.png',
+        contentType: 'image/png'
+      })
+      .expect(201);
+
+    expect(uploadResponse.body).toEqual(
+      expect.objectContaining({
+        url: expect.stringMatching(/^\/uploads\/product-images\/.+\.png$/),
+        storageKey: expect.stringMatching(/^product-images\/.+\.png$/),
+        originalName: 'test-rug.png',
+        mimeType: 'image/png'
+      })
+    );
+
+    const filename = String(uploadResponse.body.url).split('/').pop();
+
+    if (filename) {
+      uploadedProductImages.push(filename);
+    }
+
+    await request(app.getHttpServer())
+      .get(uploadResponse.body.url)
+      .expect(200);
+  });
+
+  it('lets an admin create, publish and unpublish a product', async () => {
+    const adminToken = await loginAdmin();
+    const slug = `${productSlugPrefix}-catalog`;
+
+    await cleanupE2eProducts(productSlugPrefix);
+
+    const createResponse = await request(app.getHttpServer())
+      .post('/admin/products')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        name: 'E2E Catalog Rug',
+        slug,
+        description: 'Created from e2e admin flow.',
+        type: 'READY_MADE',
+        basePriceCents: 18000,
+        sizeCategory: 'MEDIUM',
+        sizeLabel: '80 x 60 cm',
+        format: 'RECTANGULAR',
+        category: 'Decorativas',
+        imageUrl: '/uploads/product-images/e2e-rug.png',
+        colors: ['black', 'blue'],
+        features: ['Hecha a mano'],
+        material: 'Lana acrilica',
+        productionTime: '12 a 18 dias',
+        isCustomizable: true,
+        isFeatured: true,
+        isActive: false
+      })
+      .expect(201);
+
+    expect(createResponse.body).toEqual(
+      expect.objectContaining({
+        slug,
+        isActive: false,
+        imageUrl: '/uploads/product-images/e2e-rug.png'
+      })
+    );
+
+    await request(app.getHttpServer())
+      .get(`/products/slug/${slug}`)
+      .expect(404);
+
+    const publishResponse = await request(app.getHttpServer())
+      .patch(`/admin/products/${createResponse.body.id}/publish`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .expect(200);
+
+    expect(publishResponse.body).toEqual(
+      expect.objectContaining({
+        slug,
+        isActive: true
+      })
+    );
+
+    await request(app.getHttpServer())
+      .get(`/products/slug/${slug}`)
+      .expect(200);
+
+    await request(app.getHttpServer())
+      .patch(`/admin/products/${createResponse.body.id}/unpublish`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .expect(200);
+
+    await request(app.getHttpServer())
+      .get(`/products/slug/${slug}`)
+      .expect(404);
   });
 
   it('lets an admin review an order and stores AdminReview history', async () => {
@@ -259,6 +380,16 @@ describe('Backend HTTP flow (e2e)', () => {
     });
     await prisma.customization.deleteMany({
       where: { customerEmail: email }
+    });
+  }
+
+  async function cleanupE2eProducts(slugPrefix: string): Promise<void> {
+    await prisma.product.deleteMany({
+      where: {
+        slug: {
+          startsWith: slugPrefix
+        }
+      }
     });
   }
 

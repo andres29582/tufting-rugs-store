@@ -1,0 +1,45 @@
+.app-state {
+  display: grid;
+  min-height: 100vh;
+  padding: 24px;
+  place-items: center;
+}
+
+.app-state-panel {
+  display: grid;
+  width: min(100%, 520px);
+  gap: 16px;
+  justify-items: start;
+  padding: clamp(24px, 5vw, 42px);
+  border-radius: 24px;
+}
+
+.app-state-panel h1 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(2.1rem, 5vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.app-state-panel p {
+  max-width: 42ch;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.app-spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid rgba(255, 255, 255, 0.22);
+  border-top-color: rgba(255, 250, 243, 0.92);
+  border-radius: 50%;
+  animation: app-spin 800ms linear infinite;
+}
+
+@keyframes app-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

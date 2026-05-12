@@ -7,10 +7,19 @@ export type AppConfig = {
   adminEmail: string;
   adminPassword: string;
   port: number;
+  corsOrigins: string[];
 };
 
 export const DEFAULT_DEV_ADMIN_EMAIL = 'admin@rugs.local';
 export const DEFAULT_DEV_ADMIN_PASSWORD = 'admin123';
+export const DEFAULT_DEV_CORS_ORIGINS = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:5174',
+  'http://127.0.0.1:5174',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173'
+];
 
 const WEAK_JWT_SECRETS = new Set([
   'change-me',
@@ -29,6 +38,7 @@ export function validateAppConfig(env: NodeJS.ProcessEnv): AppConfig {
   const adminEmail = env.ADMIN_EMAIL || DEFAULT_DEV_ADMIN_EMAIL;
   const adminPassword = env.ADMIN_PASSWORD || DEFAULT_DEV_ADMIN_PASSWORD;
   const port = parsePort(env.PORT);
+  const corsOrigins = parseCorsOrigins(env.CORS_ORIGINS || env.FRONTEND_ORIGIN, nodeEnv);
 
   if (nodeEnv === 'production') {
     if (!env.ADMIN_EMAIL) {
@@ -54,6 +64,10 @@ export function validateAppConfig(env: NodeJS.ProcessEnv): AppConfig {
     if (isWeakJwtSecret(jwtSecret)) {
       throw new Error('JWT_SECRET is weak and cannot be used in production.');
     }
+
+    if (!corsOrigins.length) {
+      throw new Error('CORS_ORIGINS is required in production.');
+    }
   }
 
   return {
@@ -62,7 +76,8 @@ export function validateAppConfig(env: NodeJS.ProcessEnv): AppConfig {
     jwtSecret,
     adminEmail,
     adminPassword,
-    port
+    port,
+    corsOrigins
   };
 }
 
@@ -91,6 +106,17 @@ function parsePort(value: string | undefined): number {
   }
 
   return port;
+}
+
+function parseCorsOrigins(value: string | undefined, nodeEnv: AppEnvironment): string[] {
+  if (!value?.trim()) {
+    return nodeEnv === 'production' ? [] : DEFAULT_DEV_CORS_ORIGINS;
+  }
+
+  return value
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
 }
 
 function requireEnv(value: string | undefined, name: string): string {

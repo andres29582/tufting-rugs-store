@@ -1,0 +1,132 @@
+.page-main {
+  min-height: 60vh;
+}
+
+.page-section {
+  width: min(calc(100% - 36px), var(--max-width));
+  margin: 0 auto;
+  padding: 112px 0 44px;
+}
+
+.page-section + .catalog-section,
+.page-section + .customization-section {
+  padding-top: 12px;
+}
+
+.page-panel {
+  display: grid;
+  gap: 16px;
+  padding: clamp(24px, 5vw, 44px);
+  border-radius: 24px;
+}
+
+.page-panel h1,
+.product-detail-content h1 {
+  max-width: 16ch;
+  margin: 0;
+  font-size: clamp(2.35rem, 5.5vw, 4.6rem);
+  line-height: 0.98;
+  letter-spacing: 0;
+}
+
+.page-panel p,
+.product-detail-content p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.request-code {
+  width: fit-content;
+  padding: 10px 13px;
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 0.9rem;
+}
+
+.product-detail-section {
+  padding-bottom: 64px;
+}
+
+.product-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: clamp(24px, 5vw, 58px);
+  align-items: center;
+  padding: clamp(24px, 5vw, 44px);
+  border-radius: 26px;
+}
+
+.product-detail-media {
+  display: grid;
+  min-height: 420px;
+  place-items: center;
+}
+
+.product-detail-content {
+  display: grid;
+  gap: 18px;
+}
+
+.product-detail-price {
+  font-size: 1.35rem;
+}
+
+.product-detail-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 14px;
+  margin: 0;
+  color: rgba(255, 250, 243, 0.82);
+}
+
+.product-detail-meta dt {
+  color: var(--dim);
+}
+
+.product-detail-meta dd {
+  margin: 0;
+}
+
+.product-detail-features {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 4px 0 0;
+  list-style: none;
+}
+
+.product-detail-features li {
+  color: rgba(255, 250, 243, 0.86);
+}
+
+@media (max-width: 900px) {
+  .product-detail-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-section {
+    width: min(calc(100% - 24px), var(--max-width));
+    padding-top: 28px;
+  }
+
+  .page-actions .button {
+    width: 100%;
+  }
+
+  .product-detail-media {
+    min-height: 260px;
+  }
+}
