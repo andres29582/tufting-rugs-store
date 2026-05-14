@@ -4,62 +4,67 @@
 
 .search-bar input {
   width: 100%;
-  min-height: 48px;
-  padding: 0 52px 0 18px;
-  color: var(--ink);
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  border-radius: 16px;
-  background: rgba(8, 14, 28, 0.28);
+  min-height: var(--space-10);
+  padding: 0 var(--search-padding-inline-end) 0 var(--search-padding-inline-start);
+  color: var(--color-text);
+  border: 1px solid var(--color-search-line);
+  border-radius: var(--radius-control-lg);
+  background: var(--color-search-surface);
   outline: none;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-inset-highlight);
   backdrop-filter: blur(12px);
 }
 
 .search-bar input::placeholder {
-  color: rgba(255, 250, 243, 0.65);
+  color: var(--color-text-filter-placeholder);
 }
 
 .search-bar input:focus {
-  border-color: rgba(255, 255, 255, 0.68);
-  background: rgba(8, 14, 28, 0.4);
+  border-color: var(--color-search-line-focus);
+  background: var(--color-search-surface-focus);
 }
 
 .search-submit {
   position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 42px;
-  height: 42px;
+  top: var(--search-submit-offset);
+  right: var(--search-submit-offset);
+  width: var(--control-size-icon);
+  height: var(--control-size-icon);
   border: 0;
   background: transparent;
 }
 
 .category-filters {
   display: flex;
-  gap: 10px;
+  gap: var(--filter-gap);
   align-items: center;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
 
+.category-filters::-webkit-scrollbar {
+  display: none;
+}
+
 .category-filter {
   flex: 0 0 auto;
-  padding: 12px 18px;
-  color: rgba(255, 250, 243, 0.86);
-  border-color: rgba(255, 255, 255, 0.17);
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  padding: var(--filter-padding);
+  color: var(--color-text-emphasis);
+  border: 1px solid var(--color-filter-line);
+  border-radius: var(--radius-filter);
+  background: var(--color-filter-surface);
+  box-shadow: var(--shadow-inset-soft);
+  transition: var(--transition-interactive);
 }
 
 .category-filter:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--color-filter-surface-hover);
 }
 
 .category-filter.is-active {
-  color: #151515;
-  background: rgba(255, 250, 243, 0.92);
-  border-color: rgba(255, 250, 243, 0.96);
+  color: var(--color-text-inverse-strong);
+  background: var(--color-filter-active-surface);
+  border-color: var(--color-filter-active-line);
 }

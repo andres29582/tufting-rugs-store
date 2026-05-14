@@ -95,10 +95,6 @@ export function validateCustomizationDraft(draft: Partial<CustomizationDraft>): 
     errors.description = 'Describe tu idea con un poco más de detalle.';
   }
 
-  if (!normalizedDraft.preferredColors.length) {
-    errors.preferredColors = 'Elige al menos un color.';
-  }
-
   return {
     draft: normalizedDraft,
     errors,

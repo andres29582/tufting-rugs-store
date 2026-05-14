@@ -1,30 +1,39 @@
 import type { Product } from '../../../../shared/types';
 import { ButtonLink } from '../../../../shared/components/Button/Button';
+import { useTranslation } from '../../../../shared/i18n';
+import { localizeCategory } from '../../productLocalization';
 import { RugCard } from '../RugCard/RugCard';
 
 type RugCatalogProps = {
   rugs: Product[];
   query: string;
   category: string;
+  showCustomizationCta?: boolean;
 };
 
-export function RugCatalog({ rugs, query, category }: RugCatalogProps) {
-  const categoryText = category && category !== 'Todas' ? ' en ' + category : '';
-  const queryText = query ? ' para "' + query + '"' : '';
+export function RugCatalog({ rugs, query, category, showCustomizationCta = true }: RugCatalogProps) {
+  const { language, t } = useTranslation();
+  const categoryText =
+    category && category !== 'Todas'
+      ? t('rugCatalog.categorySuffix', { category: localizeCategory(category, language) })
+      : '';
+  const queryText = query ? t('rugCatalog.querySuffix', { query }) : '';
 
   return (
     <section id="catalogo" className="catalog-section">
       <div className="catalog-heading">
         <div>
-          <p className="eyebrow">Catálogo destacado</p>
-          <h2>Alfombras únicas, hechas para inspirar</h2>
+          <p className="eyebrow">{t('rugCatalog.eyebrow')}</p>
+          <h2>{t('rugCatalog.title')}</h2>
         </div>
-        <ButtonLink to="/personalizar" variant="ghost">
-          Quiero personalizar la mía
-        </ButtonLink>
+        {showCustomizationCta ? (
+          <ButtonLink to="/personalizar" variant="ghost">
+            {t('rugCatalog.cta')}
+          </ButtonLink>
+        ) : null}
       </div>
       <p className="result-summary" aria-live="polite">
-        {rugs.length} resultado{rugs.length === 1 ? '' : 's'}
+        {t(rugs.length === 1 ? 'rugCatalog.result' : 'rugCatalog.results', { count: rugs.length })}
         {categoryText}
         {queryText}
       </p>
@@ -36,10 +45,12 @@ export function RugCatalog({ rugs, query, category }: RugCatalogProps) {
 }
 
 function EmptyState() {
+  const { t } = useTranslation();
+
   return (
     <div className="empty-state glass-panel">
-      <h3>No encontramos una alfombra con esos filtros</h3>
-      <p>Prueba con otra categoría o busca por un nombre más corto.</p>
+      <h3>{t('rugCatalog.emptyTitle')}</h3>
+      <p>{t('rugCatalog.emptyText')}</p>
     </div>
   );
 }

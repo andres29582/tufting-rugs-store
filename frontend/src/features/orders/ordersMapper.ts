@@ -1,8 +1,11 @@
 import type { AdminReview, ApiOrder, Order } from '../../shared/types';
 import { mapCustomizationFromApi } from '../customizations/customizationsMapper';
-import { mapProductFromApi } from '../products/productsMapper';
+import { mapProductFromApi, type ProductMapperOptions } from '../products/productsMapper';
 
-export function mapOrderFromApi(order: ApiOrder): Order {
+export function mapOrderFromApi(
+  order: ApiOrder,
+  options: ProductMapperOptions = {}
+): Order {
   return {
     id: order.id,
     publicCode: order.publicCode || order.id,
@@ -19,19 +22,22 @@ export function mapOrderFromApi(order: ApiOrder): Order {
     productionPossible: order.productionPossible ?? true,
     notes: order.notes || '',
     createdAt: order.createdAt || null,
-    product: order.product ? mapProductFromApi(order.product) : null,
+    product: order.product ? mapProductFromApi(order.product, options) : null,
     customization: order.customization ? mapCustomizationFromApi(order.customization) : null,
     designReferences: Array.isArray(order.designReferences) ? order.designReferences : [],
     adminReviews: normalizeReviews(order.adminReviews)
   };
 }
 
-export function mapOrdersFromApi(orders: ApiOrder[] | unknown): Order[] {
+export function mapOrdersFromApi(
+  orders: ApiOrder[] | unknown,
+  options: ProductMapperOptions = {}
+): Order[] {
   if (!Array.isArray(orders)) {
     return [];
   }
 
-  return orders.map((order) => mapOrderFromApi(order as ApiOrder));
+  return orders.map((order) => mapOrderFromApi(order as ApiOrder, options));
 }
 
 function normalizeReviews(reviews: ApiOrder['adminReviews']): AdminReview[] {

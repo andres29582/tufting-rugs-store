@@ -3,19 +3,23 @@ import { resolveApiAssetUrl } from '../../shared/api/assets';
 import { apiFormRequest, apiRequest } from '../../shared/api/httpClient';
 import { mapProductFromApi, mapProductsFromApi } from './productsMapper';
 
+const productMapperOptions = {
+  resolveAssetUrl: resolveApiAssetUrl
+};
+
 export async function getProducts(): Promise<Product[]> {
   const products = await apiRequest<ApiProduct[]>('/products');
-  return mapProductsFromApi(products);
+  return mapProductsFromApi(products, productMapperOptions);
 }
 
 export async function getProductById(id: string): Promise<Product> {
   const product = await apiRequest<ApiProduct>('/products/' + encodeURIComponent(id));
-  return mapProductFromApi(product);
+  return mapProductFromApi(product, productMapperOptions);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product> {
   const product = await apiRequest<ApiProduct>('/products/slug/' + encodeURIComponent(slug));
-  return mapProductFromApi(product);
+  return mapProductFromApi(product, productMapperOptions);
 }
 
 export async function getAdminProducts(token: string): Promise<Product[]> {
@@ -23,7 +27,7 @@ export async function getAdminProducts(token: string): Promise<Product[]> {
     headers: getAdminHeaders(token)
   });
 
-  return mapProductsFromApi(products);
+  return mapProductsFromApi(products, productMapperOptions);
 }
 
 export async function getAdminProductById(id: string, token: string): Promise<Product> {
@@ -31,7 +35,7 @@ export async function getAdminProductById(id: string, token: string): Promise<Pr
     headers: getAdminHeaders(token)
   });
 
-  return mapProductFromApi(product);
+  return mapProductFromApi(product, productMapperOptions);
 }
 
 export async function createAdminProduct(payload: AdminProductPayload, token: string): Promise<Product> {
@@ -41,7 +45,7 @@ export async function createAdminProduct(payload: AdminProductPayload, token: st
     body: JSON.stringify(payload)
   });
 
-  return mapProductFromApi(product);
+  return mapProductFromApi(product, productMapperOptions);
 }
 
 export async function updateAdminProduct(
@@ -55,7 +59,7 @@ export async function updateAdminProduct(
     body: JSON.stringify(payload)
   });
 
-  return mapProductFromApi(product);
+  return mapProductFromApi(product, productMapperOptions);
 }
 
 export async function publishAdminProduct(id: string, token: string): Promise<Product> {
@@ -64,7 +68,7 @@ export async function publishAdminProduct(id: string, token: string): Promise<Pr
     headers: getAdminHeaders(token)
   });
 
-  return mapProductFromApi(product);
+  return mapProductFromApi(product, productMapperOptions);
 }
 
 export async function unpublishAdminProduct(id: string, token: string): Promise<Product> {
@@ -73,7 +77,7 @@ export async function unpublishAdminProduct(id: string, token: string): Promise<
     headers: getAdminHeaders(token)
   });
 
-  return mapProductFromApi(product);
+  return mapProductFromApi(product, productMapperOptions);
 }
 
 export async function uploadAdminProductImage(file: File, token: string): Promise<{

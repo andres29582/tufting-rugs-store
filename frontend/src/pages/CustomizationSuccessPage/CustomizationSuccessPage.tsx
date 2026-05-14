@@ -1,8 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { AppShell } from '../../app/AppShell';
 import { ButtonLink } from '../../shared/components/Button/Button';
+import { useTranslation } from '../../shared/i18n';
 
 export function CustomizationSuccessPage() {
+  const { t } = useTranslation();
   const params = useParams<{ id: string }>();
   const requestId = params.id || '';
 
@@ -10,16 +12,18 @@ export function CustomizationSuccessPage() {
     <AppShell mainClassName="page-main">
       <section className="page-section">
         <div className="page-panel glass-panel">
-          <p className="eyebrow">Solicitud enviada</p>
-          <h1>Tu idea ya está en camino</h1>
-          <p>Revisaremos los detalles para preparar una propuesta visual y próximos pasos.</p>
-          <strong className="request-code">{requestId ? 'Código: ' + requestId : 'Solicitud registrada'}</strong>
+          <p className="eyebrow">{t('success.eyebrow')}</p>
+          <h1>{t('success.title')}</h1>
+          <p>{t('success.copy')}</p>
+          <strong className="request-code">
+            {requestId ? t('success.code', { id: requestId }) : t('success.registered')}
+          </strong>
           <div className="page-actions">
             <ButtonLink to="/" variant="primary">
-              Volver al inicio
+              {t('success.backHome')}
             </ButtonLink>
             <ButtonLink to="/catalogo" variant="ghost">
-              Ver catálogo
+              {t('success.viewCatalog')}
             </ButtonLink>
           </div>
         </div>

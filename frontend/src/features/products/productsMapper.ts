@@ -1,5 +1,8 @@
 import type { ApiProduct, ColorPalette, Product, RugMotif } from '../../shared/types';
-import { resolveApiAssetUrl } from '../../shared/api/assets';
+
+export type ProductMapperOptions = {
+  resolveAssetUrl?: (url: string) => string;
+};
 
 const fallbackColors: ColorPalette = ['#1d2b53', '#f97316', '#db5c91'];
 const allowedMotifs = new Set<RugMotif>([
@@ -11,9 +14,12 @@ const allowedMotifs = new Set<RugMotif>([
   'soft'
 ]);
 
-export function mapProductFromApi(product: ApiProduct): Product {
+export function mapProductFromApi(
+  product: ApiProduct,
+  options: ProductMapperOptions = {}
+): Product {
   const basePriceCents = product.basePriceCents || product.priceFromCents || 0;
-  const imageUrl = resolveApiAssetUrl(product.imageUrl || product.image || '');
+  const imageUrl = normalizeProductImageUrl(product.imageUrl || product.image || '', options);
   const isCustomizable = product.isCustomizable ?? product.customizable !== false;
 
   return {
@@ -42,12 +48,24 @@ export function mapProductFromApi(product: ApiProduct): Product {
   };
 }
 
-export function mapProductsFromApi(products: ApiProduct[] | unknown): Product[] {
+export function mapProductsFromApi(
+  products: ApiProduct[] | unknown,
+  options: ProductMapperOptions = {}
+): Product[] {
   if (!Array.isArray(products)) {
     return [];
   }
 
-  return products.map((product) => mapProductFromApi(product as ApiProduct));
+  return products.map((product) => mapProductFromApi(product as ApiProduct, options));
+}
+
+export function normalizeProductImageUrl(
+  url: string | null | undefined,
+  options: ProductMapperOptions = {}
+): string {
+  const value = String(url || '').trim();
+
+  return options.resolveAssetUrl ? options.resolveAssetUrl(value) : value;
 }
 
 function centsToDisplayPrice(value: number): number {

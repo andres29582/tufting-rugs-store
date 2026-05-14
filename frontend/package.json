@@ -6,6 +6,9 @@
   "scripts": {
     "check:encoding": "node scripts/check-encoding.mjs",
     "dev": "vite",
+    "dev:qa": "vite --mode qa",
+    "test": "vitest",
+    "test:run": "vitest run",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "build": "vite build",
     "preview": "vite preview"
@@ -15,7 +18,8 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^6.0.3",
-    "vite": "^5.4.0"
+    "vite": "^5.4.0",
+    "vitest": "^4.1.5"
   },
   "dependencies": {
     "react": "^19.2.5",

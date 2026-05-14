@@ -6,6 +6,7 @@ import type {
   CustomizationDraft,
   Order
 } from '../../shared/types';
+import { resolveApiAssetUrl } from '../../shared/api/assets';
 import { apiRequest } from '../../shared/api/httpClient';
 import {
   mapAdminCustomizationFromApi,
@@ -13,6 +14,10 @@ import {
   mapCustomizationFromApi
 } from './customizationsMapper';
 import { mapOrderFromApi } from '../orders/ordersMapper';
+
+const productMapperOptions = {
+  resolveAssetUrl: resolveApiAssetUrl
+};
 
 export async function createCustomization(draft: CustomizationDraft): Promise<Customization> {
   const customization = await apiRequest<ApiCustomization>('/customizations', {
@@ -37,7 +42,7 @@ export async function createOrderFromCustomization(
     body: JSON.stringify(orderPayload)
   });
 
-  return mapOrderFromApi(order);
+  return mapOrderFromApi(order, productMapperOptions);
 }
 
 export async function getAdminCustomizations(token: string): Promise<AdminCustomization[]> {
@@ -48,6 +53,8 @@ export async function getAdminCustomizations(token: string): Promise<AdminCustom
   });
 
   return Array.isArray(customizations)
-    ? customizations.map(mapAdminCustomizationFromApi)
+    ? customizations.map((customization) =>
+        mapAdminCustomizationFromApi(customization, productMapperOptions)
+      )
     : [];
 }

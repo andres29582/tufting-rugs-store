@@ -1,4 +1,5 @@
 import { IconButton } from '../../../../shared/components/Button/Button';
+import { useTranslation } from '../../../../shared/i18n';
 
 type ProductSearchProps = {
   query: string;
@@ -7,6 +8,8 @@ type ProductSearchProps = {
 };
 
 export function ProductSearch({ query, onSearch, onSubmit }: ProductSearchProps) {
+  const { t } = useTranslation();
+
   return (
     <form
       className="search-bar"
@@ -18,17 +21,17 @@ export function ProductSearch({ query, onSearch, onSubmit }: ProductSearchProps)
       }}
     >
       <label className="sr-only" htmlFor="rug-search">
-        Buscar alfombra por nombre
+        {t('search.label')}
       </label>
       <input
         id="rug-search"
         type="search"
         autoComplete="off"
-        placeholder="Buscar por nombre..."
+        placeholder={t('search.placeholder')}
         value={query}
         onChange={(event) => onSearch(event.currentTarget.value)}
       />
-      <IconButton icon="search" type="submit" className="search-submit" aria-label="Buscar" />
+      <IconButton icon="search" type="submit" className="search-submit" aria-label={t('search.submit')} />
     </form>
   );
 }
