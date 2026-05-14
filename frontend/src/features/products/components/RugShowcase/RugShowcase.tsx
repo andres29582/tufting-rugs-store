@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { Product } from '../../../../shared/types';
 import { ButtonLink, IconButton } from '../../../../shared/components/Button/Button';
+import { useTranslation } from '../../../../shared/i18n';
 import { formatPrice } from '../../../../utils/money';
+import { localizeProduct } from '../../productLocalization';
 import { RugGlassInfoCard } from '../RugGlassInfoCard/RugGlassInfoCard';
 import { RugVisualMockup } from '../RugVisualMockup/RugVisualMockup';
 
@@ -33,6 +35,8 @@ export function applyShowcaseTheme(rug: Product): void {
 }
 
 export function RugShowcase({ rug, hero = false, index = 0, onAction }: RugShowcaseProps) {
+  const { language } = useTranslation();
+  const displayRug = localizeProduct(rug, language);
   const sectionStyle: RugVars = {
     '--rug-a': rug.colors[0],
     '--rug-b': rug.colors[1],
@@ -54,7 +58,7 @@ export function RugShowcase({ rug, hero = false, index = 0, onAction }: RugShowc
       <div className={innerClassName}>
         <RugGlassInfoCard rug={rug} hero={hero} onAction={onAction} />
         <div className="showcase-visual">
-          <RugVisualMockup rug={rug} />
+          <RugVisualMockup rug={displayRug} />
           <FloatingSpec rug={rug} />
         </div>
       </div>
@@ -64,6 +68,7 @@ export function RugShowcase({ rug, hero = false, index = 0, onAction }: RugShowc
 }
 
 export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps) {
+  const { language, t } = useTranslation();
   const showcaseItems = rugs.slice(0, 6);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -104,6 +109,7 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
     return null;
   }
 
+  const displayRug = localizeProduct(activeRug, language);
   const sectionStyle: RugVars = {
     '--rug-a': activeRug.colors[0],
     '--rug-b': activeRug.colors[1],
@@ -115,7 +121,7 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
     <section
       className="showcase-flow"
       id="inicio"
-      aria-label="Alfombras destacadas"
+      aria-label={t('product.featuredAria')}
       style={sectionStyle}
       onMouseEnter={() => {
         setIsPaused(true);
@@ -133,11 +139,11 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
       <div className="showcase-flow__background" aria-hidden="true" />
       <div className="showcase-flow__content">
         <article className="showcase-flow__text-card" key={'copy-' + activeRug.id} aria-live="polite">
-          <p className="eyebrow">{activeRug.category} · Tufting hecho a mano</p>
-          <h1 className="showcase-flow__title">{activeRug.name}</h1>
-          <p className="showcase-flow__description">{activeRug.description}</p>
+          <p className="eyebrow">{t('product.handmadeEyebrow', { category: displayRug.category })}</p>
+          <h1 className="showcase-flow__title">{displayRug.name}</h1>
+          <p className="showcase-flow__description">{displayRug.description}</p>
           <ul className="showcase-flow__features">
-            {activeRug.features.slice(0, 4).map((feature) => (
+            {displayRug.features.slice(0, 4).map((feature) => (
               <li key={feature}>
                 <span aria-hidden="true" />
                 {feature}
@@ -145,28 +151,30 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
             ))}
           </ul>
           <div className="showcase-flow__price-box">
-            <span>Desde</span>
+            <span>{t('product.from')}</span>
             <strong>{formatPrice(activeRug.priceFrom)}</strong>
-            <small>{activeRug.size}</small>
+            <small>{displayRug.size}</small>
           </div>
           <div className="showcase-flow__actions">
             <ButtonLink to={'/producto/' + encodeURIComponent(activeRug.slug)} variant="secondary">
-              Ver detalles
+              {t('product.details')}
             </ButtonLink>
-            <button
-              className="button button-light"
-              type="button"
-              data-action="customize"
-              data-rug-slug={activeRug.slug}
-              onClick={onAction}
-            >
-              Personalizar
-            </button>
+            {onAction ? (
+              <button
+                className="button button-light"
+                type="button"
+                data-action="customize"
+                data-rug-slug={activeRug.slug}
+                onClick={onAction}
+              >
+                {t('product.customize')}
+              </button>
+            ) : null}
           </div>
         </article>
 
         <div className="showcase-flow__rug-area" key={'visual-' + activeRug.id}>
-          <RugVisualMockup rug={activeRug} />
+          <RugVisualMockup rug={displayRug} />
         </div>
 
         <aside className="showcase-flow__info-card" key={'info-' + activeRug.id}>
@@ -174,19 +182,19 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
             icon="favorite"
             className="showcase-flow__favorite"
             type="button"
-            aria-label={'Agregar ' + activeRug.name + ' a favoritos'}
+            aria-label={t('product.favorite', { name: displayRug.name })}
           />
           <div>
-            <span>Diseño</span>
-            <strong>{activeRug.name}</strong>
+            <span>{t('product.design')}</span>
+            <strong>{displayRug.name}</strong>
           </div>
           <div>
-            <span>Tamaño</span>
-            <strong>{activeRug.size}</strong>
+            <span>{t('product.size')}</span>
+            <strong>{displayRug.size}</strong>
           </div>
           <div>
-            <span>Colores</span>
-            <div className="showcase-flow__colors" aria-label="Colores principales">
+            <span>{t('product.colors')}</span>
+            <div className="showcase-flow__colors" aria-label={t('product.colorsAria')}>
               {activeRug.colors.map((color) => (
                 <i
                   style={{ '--swatch-color': color } as CSSProperties}
@@ -200,36 +208,38 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
 
         <div className="showcase-flow__mobile-summary" key={'mobile-' + activeRug.id}>
           <div className="showcase-flow__mobile-price">
-            <span>Desde</span>
+            <span>{t('product.from')}</span>
             <strong>{formatPrice(activeRug.priceFrom)}</strong>
-            <small>{activeRug.size}</small>
+            <small>{displayRug.size}</small>
           </div>
           <div className="showcase-flow__mobile-actions">
             <ButtonLink to={'/producto/' + encodeURIComponent(activeRug.slug)} variant="secondary">
-              Ver detalles
+              {t('product.details')}
             </ButtonLink>
-            <button
-              className="button button-light"
-              type="button"
-              data-action="customize"
-              data-rug-slug={activeRug.slug}
-              onClick={onAction}
-            >
-              Personalizar
-            </button>
+            {onAction ? (
+              <button
+                className="button button-light"
+                type="button"
+                data-action="customize"
+                data-rug-slug={activeRug.slug}
+                onClick={onAction}
+              >
+                {t('product.customize')}
+              </button>
+            ) : null}
           </div>
-          <div className="showcase-flow__mobile-details" aria-label="Detalles de la alfombra destacada">
+          <div className="showcase-flow__mobile-details" aria-label={t('product.mobileDetailsAria')}>
             <div>
-              <span>Diseño</span>
-              <strong>{activeRug.name}</strong>
+              <span>{t('product.design')}</span>
+              <strong>{displayRug.name}</strong>
             </div>
             <div>
-              <span>Tamaño</span>
-              <strong>{activeRug.size}</strong>
+              <span>{t('product.size')}</span>
+              <strong>{displayRug.size}</strong>
             </div>
             <div>
-              <span>Colores</span>
-              <div className="showcase-flow__colors" aria-label="Colores principales">
+              <span>{t('product.colors')}</span>
+              <div className="showcase-flow__colors" aria-label={t('product.colorsAria')}>
                 {activeRug.colors.map((color) => (
                   <i
                     style={{ '--swatch-color': color } as CSSProperties}
@@ -243,37 +253,44 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
         </div>
       </div>
 
-      <div className="showcase-flow__pagination" aria-label="Navegación del showcase">
-        {showcaseItems.map((rug, index) => (
-          <button
-            className={
-              index === activeIndex
-                ? 'showcase-flow__indicator is-active'
-                : 'showcase-flow__indicator'
-            }
-            type="button"
-            aria-label={'Ver alfombra ' + (index + 1) + ': ' + rug.name}
-            aria-current={index === activeIndex ? 'true' : undefined}
-            onClick={() => {
-              setActiveIndex(index);
-            }}
-            key={rug.id}
-          />
-        ))}
+      <div className="showcase-flow__pagination" aria-label={t('product.paginationAria')}>
+        {showcaseItems.map((rug, index) => {
+          const displayItem = localizeProduct(rug, language);
+
+          return (
+            <button
+              className={
+                index === activeIndex
+                  ? 'showcase-flow__indicator is-active'
+                  : 'showcase-flow__indicator'
+              }
+              type="button"
+              aria-label={t('product.paginationItem', { index: index + 1, name: displayItem.name })}
+              aria-current={index === activeIndex ? 'true' : undefined}
+              onClick={() => {
+                setActiveIndex(index);
+              }}
+              key={rug.id}
+            />
+          );
+        })}
       </div>
     </section>
   );
 }
 
 function FloatingSpec({ rug }: { rug: Product }) {
+  const { language, t } = useTranslation();
+  const displayRug = localizeProduct(rug, language);
+
   return (
-    <aside className="floating-spec glass-panel" aria-label={'Ficha rápida de ' + rug.name}>
-      <span>Diseño</span>
-      <strong>{rug.name}</strong>
-      <span>Tamaño</span>
-      <strong>{rug.size}</strong>
-      <span>Categoría</span>
-      <strong>{rug.category}</strong>
+    <aside className="floating-spec glass-panel" aria-label={t('product.quickSpec', { name: displayRug.name })}>
+      <span>{t('product.design')}</span>
+      <strong>{displayRug.name}</strong>
+      <span>{t('product.size')}</span>
+      <strong>{displayRug.size}</strong>
+      <span>{t('product.category')}</span>
+      <strong>{displayRug.category}</strong>
     </aside>
   );
 }

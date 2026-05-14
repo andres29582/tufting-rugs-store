@@ -1,42 +1,50 @@
-const steps = [
+import { useTranslation, type TranslationKey } from '../shared/i18n';
+
+const steps: Array<{
+  titleKey: TranslationKey;
+  textKey: TranslationKey;
+  icon: string;
+}> = [
   {
-    title: 'Cuéntanos tu idea',
-    text: 'Describe medidas, colores y referencias visuales.',
+    titleKey: 'how.idea.title',
+    textKey: 'how.idea.text',
     icon: '<path d="m4 17 1 3 3-1L19 8l-4-4L4 15v2Z"/><path d="m13 6 4 4"/>'
   },
   {
-    title: 'Preparamos el diseño',
-    text: 'Convertimos tu idea en una propuesta clara.',
+    titleKey: 'how.design.title',
+    textKey: 'how.design.text',
     icon: '<path d="M4 4h16v16H4z"/><path d="m8 16 8-8"/><path d="M8 8h.01M16 16h.01"/>'
   },
   {
-    title: 'Apruebas detalles',
-    text: 'Revisas forma, paleta, tamaño y precio estimado.',
+    titleKey: 'how.approval.title',
+    textKey: 'how.approval.text',
     icon: '<path d="m5 12 4 4L19 6"/>'
   },
   {
-    title: 'Creamos la alfombra',
-    text: 'La producimos a mano y la preparamos para envío.',
+    titleKey: 'how.production.title',
+    textKey: 'how.production.text',
     icon: '<path d="M12 21s-8-4.7-8-11a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.3-8 11-10 11Z"/>'
   }
 ];
 
 export function HowItWorks() {
+  const { t } = useTranslation();
+
   return (
     <section id="como-funciona" className="how-section">
       <div className="how-panel glass-panel">
         <div className="section-copy">
-          <p className="eyebrow">Proceso artesanal</p>
-          <h2>¿Cómo funciona?</h2>
-          <p>Una ruta simple para transformar una idea en una alfombra personalizada y aprobada antes de producir.</p>
+          <p className="eyebrow">{t('how.eyebrow')}</p>
+          <h2>{t('how.title')}</h2>
+          <p>{t('how.copy')}</p>
         </div>
         <div className="steps-grid">
           {steps.map((step, index) => (
-            <article className="step-card" key={step.title}>
+            <article className="step-card" key={step.titleKey}>
               <span className="step-index">0{index + 1}</span>
               <svg viewBox="0 0 24 24" aria-hidden="true" dangerouslySetInnerHTML={{ __html: step.icon }} />
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
+              <h3>{t(step.titleKey)}</h3>
+              <p>{t(step.textKey)}</p>
             </article>
           ))}
         </div>

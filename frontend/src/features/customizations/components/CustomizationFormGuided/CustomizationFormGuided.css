@@ -1,0 +1,253 @@
+.customization-form-guided {
+  width: 100%;
+}
+
+/* Section Structure */
+.customization-guided-section {
+  padding: 2rem 1rem;
+}
+
+.customization-guided-section .page-panel {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Section Title and Description */
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #111;
+}
+
+.section-description {
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.section-description.optional-label {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Option Scroll Container */
+.option-scroll-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  scroll-behavior: smooth;
+}
+
+.option-scroll-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.option-scroll-container::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+.option-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.option-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Option Button */
+.option-button {
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.75rem;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #111;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  text-align: center;
+  min-width: max-content;
+}
+
+.option-button:hover {
+  border-color: #f97316;
+  background: rgba(249, 115, 22, 0.05);
+  transform: translateY(-2px);
+}
+
+.option-button.selected {
+  border-color: #f97316;
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  font-weight: 600;
+}
+
+/* Size Button (with subtitle) */
+.option-scroll-container.size-options {
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+.option-button.size-button {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 160px;
+  white-space: normal;
+  flex-shrink: 1;
+}
+
+.option-button.size-button strong {
+  display: block;
+}
+
+.option-button.size-button span {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+}
+
+.option-button.size-button.selected span {
+  color: #f97316;
+}
+
+/* Form Fields */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field-hint {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* Warning Panel */
+.warning-panel {
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.warning-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 0.25rem;
+  color: #d97706;
+  font-size: 1.5rem;
+}
+
+.warning-panel h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #d97706;
+}
+
+.warning-panel p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.5;
+}
+
+/* Form Actions */
+.form-actions {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.form-actions button {
+  min-width: 250px;
+}
+
+/* Form Status */
+.form-status {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  animation: slideIn 0.3s ease;
+}
+
+.form-status.success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.form-status.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.form-status.submitting {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .customization-guided-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+  }
+
+  .option-button {
+    padding: 0.85rem 1.2rem;
+    font-size: 0.85rem;
+  }
+
+  .option-button.size-button {
+    min-width: 140px;
+  }
+
+  .warning-panel {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}

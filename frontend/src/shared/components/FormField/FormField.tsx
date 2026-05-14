@@ -8,6 +8,7 @@ type BaseProps = {
   error?: string;
   placeholder?: string;
   autoComplete?: string;
+  required?: boolean;
 };
 
 type InputProps = BaseProps & {
@@ -46,6 +47,7 @@ export function FormField(props: FormFieldProps) {
           rows={props.rows || 5}
           placeholder={props.placeholder}
           autoComplete={props.autoComplete}
+          required={props.required}
           aria-invalid={props.error ? true : undefined}
           aria-describedby={props.error ? errorId : undefined}
           onChange={props.onChange}
@@ -59,6 +61,7 @@ export function FormField(props: FormFieldProps) {
           value={props.value}
           placeholder={props.placeholder}
           autoComplete={props.autoComplete}
+          required={props.required}
           aria-invalid={props.error ? true : undefined}
           aria-describedby={props.error ? errorId : undefined}
           onChange={props.onChange}

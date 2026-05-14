@@ -15,13 +15,14 @@ import {
   loadProductCategories,
   loadProducts
 } from '../../features/products/productsService';
-import { CustomizationForm } from '../../features/customizations/components/CustomizationForm/CustomizationForm';
+import { localizeProduct } from '../../features/products/productLocalization';
 import {
   AppErrorState,
   AppLoadingState,
   getFriendlyErrorMessage
 } from '../../shared/components/AppState/AppState';
 import type { HeaderToolsControls } from '../../components/Header';
+import { useTranslation, type Language } from '../../shared/i18n';
 
 type HomePageProps = {
   scrollTo?: string;
@@ -33,6 +34,7 @@ type CatalogState = {
 };
 
 export function HomePage({ scrollTo }: HomePageProps) {
+  const { language, t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [catalogState, setCatalogState] = useState<CatalogState>({
@@ -42,8 +44,7 @@ export function HomePage({ scrollTo }: HomePageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
   const showcaseProducts = useMemo(() => getShowcaseProducts(products), [products]);
-  const customProduct = getCustomProduct(products);
-  const filteredProducts = useFilteredProducts(products, catalogState);
+  const filteredProducts = useFilteredProducts(products, catalogState, language);
 
   const loadPage = useCallback(() => {
     let isCurrent = true;
@@ -101,35 +102,47 @@ export function HomePage({ scrollTo }: HomePageProps) {
   });
 
   if (isLoading) {
-    return <AppLoadingState title="Preparando inicio" />;
+    return <AppLoadingState title={t('home.loading')} />;
   }
 
   if (error) {
-    return <AppErrorState message={getFriendlyErrorMessage(error)} onAction={loadPage} />;
+    return <AppErrorState message={getFriendlyErrorMessage(error, t)} onAction={loadPage} />;
   }
 
   return (
     <AppShell renderHeaderTools={renderHeaderTools}>
-      <RugShowcaseCarousel rugs={showcaseProducts} onAction={scrollToCustomization} />
+      <RugShowcaseCarousel rugs={showcaseProducts} />
       <FeatureStrip />
       <HowItWorks />
-      <RugCatalog rugs={filteredProducts} query={catalogState.query} category={catalogState.category} />
-      <CustomizationForm product={customProduct} />
+      <RugCatalog
+        rugs={filteredProducts}
+        query={catalogState.query}
+        category={catalogState.category}
+        showCustomizationCta={false}
+      />
     </AppShell>
   );
 }
 
-export function useFilteredProducts(products: Product[], catalogState: CatalogState): Product[] {
+export function useFilteredProducts(
+  products: Product[],
+  catalogState: CatalogState,
+  language: Language = 'es'
+): Product[] {
   return useMemo(() => {
     const normalizedQuery = catalogState.query.trim().toLowerCase();
 
     return products.filter((rug) => {
-      const matchesName = !normalizedQuery || rug.name.toLowerCase().includes(normalizedQuery);
+      const localizedRug = localizeProduct(rug, language);
+      const matchesName =
+        !normalizedQuery ||
+        rug.name.toLowerCase().includes(normalizedQuery) ||
+        localizedRug.name.toLowerCase().includes(normalizedQuery);
       const matchesCategory = catalogState.category === 'Todas' || rug.category === catalogState.category;
 
       return matchesName && matchesCategory;
     });
-  }, [catalogState.category, catalogState.query, products]);
+  }, [catalogState.category, catalogState.query, language, products]);
 }
 
 export function useCatalogHeaderTools({
@@ -186,8 +199,4 @@ export function getShowcaseProducts(products: Product[]): Product[] {
   const remainingProducts = products.filter((rug) => !featuredIds.has(rug.id));
 
   return [...featuredProducts, ...remainingProducts].slice(0, 6);
-}
-
-function scrollToCustomization() {
-  document.getElementById('personalizadas')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }

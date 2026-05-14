@@ -1,13 +1,18 @@
 import type { ApiOrder, Order, OrderReviewPayload } from '../../shared/types';
+import { resolveApiAssetUrl } from '../../shared/api/assets';
 import { apiRequest } from '../../shared/api/httpClient';
 import { mapOrderFromApi, mapOrdersFromApi } from './ordersMapper';
+
+const productMapperOptions = {
+  resolveAssetUrl: resolveApiAssetUrl
+};
 
 export async function getAdminOrders(token: string): Promise<Order[]> {
   const orders = await apiRequest<ApiOrder[]>('/orders', {
     headers: getAdminHeaders(token)
   });
 
-  return mapOrdersFromApi(orders);
+  return mapOrdersFromApi(orders, productMapperOptions);
 }
 
 export async function getAdminOrderById(id: string, token: string): Promise<Order> {
@@ -15,7 +20,7 @@ export async function getAdminOrderById(id: string, token: string): Promise<Orde
     headers: getAdminHeaders(token)
   });
 
-  return mapOrderFromApi(order);
+  return mapOrderFromApi(order, productMapperOptions);
 }
 
 export async function reviewAdminOrder(
@@ -29,7 +34,7 @@ export async function reviewAdminOrder(
     body: JSON.stringify(payload)
   });
 
-  return mapOrderFromApi(order);
+  return mapOrderFromApi(order, productMapperOptions);
 }
 
 export async function confirmAdminOrderDeposit(id: string, token: string): Promise<Order> {
@@ -38,7 +43,7 @@ export async function confirmAdminOrderDeposit(id: string, token: string): Promi
     headers: getAdminHeaders(token)
   });
 
-  return mapOrderFromApi(order);
+  return mapOrderFromApi(order, productMapperOptions);
 }
 
 function getAdminHeaders(token: string): HeadersInit {

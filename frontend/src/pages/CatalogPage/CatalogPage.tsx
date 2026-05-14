@@ -8,10 +8,12 @@ import {
   AppLoadingState,
   getFriendlyErrorMessage
 } from '../../shared/components/AppState/AppState';
+import { useTranslation } from '../../shared/i18n';
 import { PageIntro } from '../shared/PageIntro';
 import { useCatalogHeaderTools, useFilteredProducts } from '../HomePage/HomePage';
 
 export function CatalogPage() {
+  const { language, t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [catalogState, setCatalogState] = useState({
@@ -20,7 +22,7 @@ export function CatalogPage() {
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
-  const filteredProducts = useFilteredProducts(products, catalogState);
+  const filteredProducts = useFilteredProducts(products, catalogState, language);
   const renderHeaderTools = useCatalogHeaderTools({
     categories,
     catalogState,
@@ -61,19 +63,19 @@ export function CatalogPage() {
   useEffect(() => loadPage(), [loadPage]);
 
   if (isLoading) {
-    return <AppLoadingState title="Preparando catálogo" />;
+    return <AppLoadingState title={t('catalog.loading')} />;
   }
 
   if (error) {
-    return <AppErrorState message={getFriendlyErrorMessage(error)} onAction={loadPage} />;
+    return <AppErrorState message={getFriendlyErrorMessage(error, t)} onAction={loadPage} />;
   }
 
   return (
     <AppShell mainClassName="page-main" renderHeaderTools={renderHeaderTools}>
       <PageIntro
-        eyebrow="Catálogo"
-        title="Explora alfombras listas para inspirar"
-        copy="Busca por nombre, filtra por estilo y elige una base visual para tu próxima pieza personalizada."
+        eyebrow={t('catalog.eyebrow')}
+        title={t('catalog.title')}
+        copy={t('catalog.copy')}
       />
       <RugCatalog rugs={filteredProducts} query={catalogState.query} category={catalogState.category} />
     </AppShell>

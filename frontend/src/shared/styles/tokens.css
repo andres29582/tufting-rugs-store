@@ -1,20 +1,751 @@
+/* ==========================================================================
+   Design tokens
+   Tufting Rugs Store frontend
+
+   This file is the visual source of truth. New styles should prefer semantic
+   tokens, while the legacy aliases at the end keep existing CSS stable during
+   the incremental migration.
+   ========================================================================== */
+
 :root {
   color-scheme: dark;
-  --active-a: #1d2b53;
-  --active-b: #f97316;
-  --active-c: #db5c91;
-  --ink: #fffaf3;
-  --muted: rgba(255, 250, 243, 0.72);
-  --dim: rgba(255, 250, 243, 0.54);
-  --line: rgba(255, 255, 255, 0.22);
-  --glass: rgba(255, 255, 255, 0.13);
-  --glass-strong: rgba(255, 255, 255, 0.19);
-  --shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
-  --radius-lg: 28px;
-  --radius-md: 18px;
+
+  /* --------------------------------------------------------------------------
+     Primitives
+     Keep raw brand values here and consume them through semantic tokens below.
+  -------------------------------------------------------------------------- */
+
+  --_navy: #1d2b53;
+  --_orange: #f97316;
+  --_pink: #db5c91;
+  --_cream: #fffaf3;
+  --_surface: #050506;
+  --_surface-deep: #01050c;
+
+  /* --------------------------------------------------------------------------
+     Semantic colors
+  -------------------------------------------------------------------------- */
+
+  --color-text: var(--_cream);
+  --color-text-soft: rgba(255, 250, 243, 0.82);
+  --color-text-secondary: rgba(255, 250, 243, 0.78);
+  --color-text-muted: rgba(255, 250, 243, 0.72);
+  --color-text-filter-placeholder: rgba(255, 250, 243, 0.65);
+  --color-text-dim: rgba(255, 250, 243, 0.54);
+  --color-text-placeholder: rgba(255, 250, 243, 0.44);
+  --color-text-subtle: rgba(255, 250, 243, 0.34);
+  --color-text-inverse: #171717;
+  --color-text-inverse-strong: #151515;
+  --color-text-emphasis: rgba(255, 250, 243, 0.86);
+
+  --color-surface: var(--_surface);
+  --color-surface-deep: var(--_surface-deep);
+  --color-surface-inverse: rgba(255, 250, 243, 0.94);
+  --color-surface-raised: rgba(255, 255, 255, 0.08);
+  --color-surface-overlay: rgba(1, 5, 12, 0.42);
+
+  --color-line: rgba(255, 255, 255, 0.22);
+  --color-line-soft: rgba(255, 255, 255, 0.14);
+  --color-line-strong: rgba(255, 255, 255, 0.36);
+
+  --color-glass: rgba(255, 255, 255, 0.13);
+  --color-glass-strong: rgba(255, 255, 255, 0.19);
+  --color-glass-medium: rgba(255, 255, 255, 0.11);
+  --color-glass-soft: rgba(255, 255, 255, 0.08);
+
+  --color-interactive-surface: rgba(255, 255, 255, 0.09);
+  --color-interactive-surface-soft-hover: rgba(255, 255, 255, 0.12);
+  --color-interactive-surface-hover: rgba(255, 255, 255, 0.15);
+  --color-interactive-surface-strong-hover: rgba(255, 255, 255, 0.18);
+  --color-interactive-border-soft: rgba(255, 255, 255, 0.2);
+  --color-interactive-border-muted: rgba(255, 255, 255, 0.24);
+  --color-interactive-border: rgba(255, 255, 255, 0.28);
+  --color-interactive-border-hover: rgba(255, 255, 255, 0.48);
+
+  --color-control-surface: rgba(7, 15, 28, 0.4);
+  --color-control-surface-focus: rgba(7, 15, 28, 0.5);
+  --color-control-line: rgba(255, 255, 255, 0.18);
+  --color-control-line-focus: rgba(255, 255, 255, 0.62);
+  --color-control-ring: rgba(255, 255, 255, 0.08);
+
+  --color-search-surface: rgba(8, 14, 28, 0.28);
+  --color-search-surface-focus: rgba(8, 14, 28, 0.4);
+  --color-search-line: rgba(255, 255, 255, 0.24);
+  --color-search-line-focus: rgba(255, 255, 255, 0.68);
+
+  --color-filter-surface: rgba(255, 255, 255, 0.1);
+  --color-filter-surface-hover: rgba(255, 255, 255, 0.16);
+  --color-filter-line: rgba(255, 255, 255, 0.17);
+  --color-filter-active-surface: rgba(255, 250, 243, 0.92);
+  --color-filter-active-line: rgba(255, 250, 243, 0.96);
+
+  --color-card-hover-line: rgba(255, 255, 255, 0.4);
+  --color-card-hover-surface:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.09)),
+    rgba(10, 16, 28, 0.2);
+  --color-card-media-surface:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2), transparent 42%),
+    rgba(0, 0, 0, 0.18);
+
+  --color-admin-main-background:
+    linear-gradient(180deg, rgba(255, 250, 243, 0.04), rgba(255, 250, 243, 0)),
+    #101820;
+  --color-admin-text-strong: rgba(255, 250, 243, 0.9);
+  --color-admin-surface: rgba(255, 255, 255, 0.06);
+  --color-admin-surface-strong: rgba(255, 255, 255, 0.08);
+  --color-admin-surface-subtle: rgba(255, 255, 255, 0.05);
+  --color-admin-line: rgba(255, 255, 255, 0.14);
+  --color-admin-line-soft: rgba(255, 255, 255, 0.12);
+  --color-admin-line-subtle: rgba(255, 255, 255, 0.1);
+  --color-admin-success-text: #102f25;
+  --color-admin-success-surface: #bcebd6;
+  --color-admin-warning-text: #12211c;
+  --color-admin-warning-surface: #f5d58d;
+  --color-admin-warning-line: rgba(245, 213, 141, 0.8);
+  --color-admin-warning-surface-soft: rgba(245, 213, 141, 0.12);
+
+  --color-accent-a: var(--_navy);
+  --color-accent-b: var(--_orange);
+  --color-accent-c: var(--_pink);
+
+  --color-focus: rgba(255, 255, 255, 0.84);
+  --color-focus-soft: color-mix(in srgb, var(--color-text) 70%, transparent);
+  --color-danger: rgba(255, 120, 120, 0.9);
+  --color-danger-text: #ffd5d5;
+  --color-danger-line: rgba(255, 213, 213, 0.72);
+  --color-danger-ring: rgba(255, 120, 120, 0.1);
+  --color-danger-soft: var(--color-danger-ring);
+  --color-warning: rgba(245, 213, 141, 0.9);
+  --color-warning-soft: rgba(245, 213, 141, 0.12);
+
+  /* --------------------------------------------------------------------------
+     Shadows
+  -------------------------------------------------------------------------- */
+
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.22);
+  --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.28);
+  --shadow-lg: 0 24px 80px rgba(0, 0, 0, 0.32);
+
+  --shadow-glow-sm: 0 18px 38px rgba(255, 255, 255, 0.12);
+  --shadow-glow-dark: 0 18px 38px rgba(0, 0, 0, 0.32);
+  --shadow-inset-soft: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --shadow-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  /* --------------------------------------------------------------------------
+     Spacing scale
+     Base 4px scale for predictable density changes.
+  -------------------------------------------------------------------------- */
+
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 40px;
+  --space-10: 48px;
+  --space-11: 56px;
+  --space-12: 64px;
+
+  /* --------------------------------------------------------------------------
+     Typography scale
+  -------------------------------------------------------------------------- */
+
+  --text-2xs: 0.68rem;
+  --text-caption: 0.72rem;
+  --text-xs: 0.76rem;
+  --text-sm: 0.86rem;
+  --text-base: 1rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.45rem;
+  --text-2xl: clamp(1.86rem, 3.2vw, 3rem);
+  --text-3xl: clamp(2.2rem, 4.4vw, 4.2rem);
+  --text-4xl: clamp(3rem, 7vw, 6rem);
+
+  --weight-normal: 400;
+  --weight-medium: 600;
+  --weight-bold: 760;
+  --weight-black: 780;
+
+  --leading-tight: 0.98;
+  --leading-snug: 1.15;
+  --leading-normal: 1.55;
+  --leading-loose: 1.6;
+
+  /* --------------------------------------------------------------------------
+     Radii
+  -------------------------------------------------------------------------- */
+
+  --radius-xs: 4px;
   --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-xl: 999px;
+
+  --radius-header: 24px;
+  --radius-header-compact: 20px;
+  --radius-menu: 22px;
+  --radius-control-lg: 16px;
+  --radius-filter: 14px;
+  --radius-card: var(--radius-md);
+  --radius-card-lg: var(--radius-lg);
+  --radius-panel: 26px;
+  --radius-button: var(--radius-xl);
+  --radius-tag: var(--radius-sm);
+  --radius-choice: 16px;
+  --radius-input: var(--radius-sm);
+
+  /* --------------------------------------------------------------------------
+     Motion
+  -------------------------------------------------------------------------- */
+
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --duration-slow: 320ms;
+  --duration-enter: 420ms;
+
+  --ease-base: ease;
+  --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --transition-base:
+    transform var(--duration-base) var(--ease-base),
+    border-color var(--duration-base) var(--ease-base),
+    background var(--duration-base) var(--ease-base),
+    opacity var(--duration-base) var(--ease-base);
+
+  --transition-shadow:
+    transform var(--duration-base) var(--ease-base),
+    box-shadow var(--duration-base) var(--ease-base),
+    border-color var(--duration-base) var(--ease-base),
+    background var(--duration-base) var(--ease-base),
+    opacity var(--duration-base) var(--ease-base);
+
+  --transition-enter:
+    transform var(--duration-enter) var(--ease-enter),
+    opacity var(--duration-enter) var(--ease-enter);
+
+  --transition-interactive:
+    transform var(--duration-base) var(--ease-base),
+    border-color var(--duration-base) var(--ease-base),
+    background var(--duration-base) var(--ease-base),
+    color var(--duration-base) var(--ease-base),
+    opacity var(--duration-base) var(--ease-base);
+
+  /* --------------------------------------------------------------------------
+     Layout
+  -------------------------------------------------------------------------- */
+
   --max-width: 1180px;
+  --header-max-width: 1240px;
+  --header-gutter: 28px;
+  --header-gutter-compact: 18px;
+  --header-offset: var(--space-3);
+  --header-nav-gap-compact: 6px;
+  --header-nav-padding: 10px var(--space-3);
+  --header-nav-padding-compact: 9px 10px;
+  --header-order-padding: 11px var(--space-4);
+  --header-order-padding-compact: 10px var(--space-3);
+  --header-order-max-width-compact: 104px;
+  --header-shell-padding-compact: 10px;
+  --header-text-brand: 0.96rem;
+  --header-text-link: 0.88rem;
+  --header-text-link-compact: 0.82rem;
+  --filter-menu-max-width: 560px;
+  --filter-menu-head-space: 14px;
+  --filter-menu-tools-gap: 14px;
+  --filter-gap: 10px;
+  --filter-gap-compact: var(--space-2);
+  --filter-padding: var(--space-3) 18px;
+  --filter-padding-compact: 10px var(--space-4);
+  --filter-min-width-compact: 118px;
+  --search-padding-inline-start: 18px;
+  --search-padding-inline-end: 52px;
+  --search-submit-offset: 3px;
+  --catalog-section-padding: 42px 0 56px;
+  --catalog-heading-gap: 22px;
+  --catalog-heading-space: 10px;
+  --catalog-summary-min-height: var(--space-6);
+  --catalog-summary-space: 18px;
+  --catalog-grid-gap: 18px;
+  --product-card-hover-y: -4px;
+  --product-card-media-height: 220px;
+  --product-card-media-height-compact: 260px;
+  --product-card-media-padding: 14px;
+  --product-card-visual-width: 130%;
+  --product-card-visual-transform: rotate(-2deg) scale(1.04);
+  --product-card-body-gap: var(--space-4);
+  --product-card-body-padding: 18px;
+  --card-category-space: var(--space-1);
+  --empty-state-padding: 30px;
+  --page-section-width-offset: 36px;
+  --page-section-padding: 112px 0 44px;
+  --page-section-padding-top-compact: var(--space-7);
+  --page-adjacent-section-padding-top: var(--space-3);
+  --page-panel-gap: var(--space-4);
+  --page-panel-padding: clamp(24px, 5vw, 44px);
+  --page-title-max-width: 16ch;
+  --page-title-size: clamp(2.35rem, 5.5vw, 4.6rem);
+  --page-copy-max-width: 58ch;
+  --page-copy-leading: 1.65;
+  --page-actions-gap: var(--space-3);
+  --page-actions-space: var(--space-2);
+  --request-code-padding: 10px 13px;
+  --request-code-size: 0.9rem;
+  --product-detail-section-padding-bottom: var(--space-12);
+  --product-detail-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  --product-detail-gap: clamp(24px, 5vw, 58px);
+  --product-detail-padding: var(--page-panel-padding);
+  --product-detail-media-min-height: 420px;
+  --product-detail-media-min-height-compact: 260px;
+  --product-detail-content-gap: 18px;
+  --product-detail-price-size: 1.35rem;
+  --product-detail-meta-gap: 6px 14px;
+  --product-detail-features-gap: 10px;
+  --product-detail-features-space: var(--space-1);
+  --admin-main-min-height: 70vh;
+  --admin-section-width-offset: 36px;
+  --admin-section-padding: 112px 0 56px;
+  --admin-section-padding-top-compact: 30px;
+  --admin-auth-min-height: 78vh;
+  --admin-auth-card-max-width: 480px;
+  --admin-auth-card-padding: clamp(24px, 5vw, 40px);
+  --admin-title-size: clamp(2rem, 4vw, 3.5rem);
+  --admin-title-leading: 1;
+  --admin-copy-max-width: 62ch;
+  --admin-page-header-gap: var(--space-6);
+  --admin-page-header-space: var(--space-6);
+  --admin-page-header-inner-gap: 10px;
+  --admin-action-gap: 10px;
+  --admin-status-min-height: 1.4em;
+  --admin-status-space: var(--space-4);
+  --admin-table-wrap-padding: var(--space-2);
+  --admin-table-min-width: 820px;
+  --admin-table-cell-padding: var(--space-4);
+  --admin-table-header-size: var(--text-xs);
+  --admin-table-detail-size: 0.9rem;
+  --admin-badge-padding: 6px 10px;
+  --admin-badge-size: 0.82rem;
+  --admin-form-gap: 18px;
+  --admin-form-padding: clamp(20px, 4vw, 34px);
+  --admin-form-grid-gap: var(--space-4);
+  --admin-check-grid-gap: var(--space-3);
+  --admin-checkbox-gap: 10px;
+  --admin-checkbox-min-height: var(--control-size-icon);
+  --admin-checkbox-padding: 10px var(--space-3);
+  --admin-checkbox-size: 18px;
+  --admin-upload-columns: minmax(0, 1fr) minmax(220px, 320px);
+  --admin-upload-field-padding: var(--space-3);
+  --admin-preview-gap: 10px;
+  --admin-preview-aspect: 4 / 3;
+  --admin-tabs-gap: 6px;
+  --admin-tabs-space: 18px;
+  --admin-tabs-padding: 6px;
+  --admin-tab-min-height: var(--control-size-icon);
+  --admin-tab-padding: 0 var(--space-4);
+  --admin-orders-columns: minmax(280px, 0.9fr) minmax(0, 1.7fr);
+  --admin-orders-gap: 18px;
+  --admin-order-panel-padding: 14px;
+  --admin-order-list-gap: 10px;
+  --admin-order-card-gap: var(--space-2);
+  --admin-order-card-padding: 14px;
+  --admin-card-meta-size: 0.9rem;
+  --admin-order-detail-gap: var(--space-5);
+  --admin-order-detail-head-gap: var(--space-4);
+  --admin-detail-grid-gap: 10px;
+  --admin-detail-item-gap: var(--space-1);
+  --admin-detail-item-padding: var(--space-3);
+  --admin-detail-label-size: 0.82rem;
+  --admin-detail-section-gap: var(--space-3);
+  --admin-reference-gap: var(--space-2);
+  --admin-reference-min-height: 34px;
+  --admin-reference-min-height-compact: 30px;
+  --admin-reference-padding: 0 10px;
+  --admin-reference-text-compact: 0.85rem;
+  --admin-review-history-gap: 10px;
+  --admin-review-item-gap: var(--space-1);
+  --admin-review-item-padding: var(--space-3);
+  --admin-review-border-width: 3px;
+  --admin-review-text-size: 0.85rem;
+  --section-divider-line: rgba(255, 255, 255, 0.18);
+  --section-title-max-width: 18ch;
+  --section-title-size: clamp(2rem, 4vw, 3.3rem);
+  --section-copy-space: 6px;
+  --section-copy-leading: var(--leading-normal);
+  --section-icon-stroke-width: 1.7;
+  --feature-section-padding: var(--space-7) 0 34px;
+  --feature-strip-columns: repeat(4, 1fr);
+  --feature-strip-columns-medium: repeat(2, 1fr);
+  --feature-item-gap: var(--space-4);
+  --feature-item-padding: 26px;
+  --feature-icon-size: var(--control-size-sm);
+  --how-section-padding: 34px 0 58px;
+  --how-panel-columns: minmax(220px, 0.82fr) minmax(0, 1.5fr);
+  --how-panel-gap: var(--space-7);
+  --how-panel-padding: clamp(24px, 4vw, 44px);
+  --steps-grid-columns: repeat(4, 1fr);
+  --steps-grid-columns-medium: repeat(2, minmax(0, 1fr));
+  --steps-grid-gap: 14px;
+  --step-card-padding: var(--space-5);
+  --step-icon-size: 34px;
+  --step-icon-space: 18px 0;
+  --step-index-weight: 800;
+  --custom-cta-section-padding: var(--space-2) 0 var(--space-11);
+  --custom-cta-columns: auto minmax(0, 1fr) auto;
+  --custom-cta-gap: 26px;
+  --custom-cta-padding: clamp(24px, 4vw, 34px);
+  --magic-icon-size: 74px;
+  --magic-icon-border: rgba(255, 255, 255, 0.26);
+  --magic-icon-surface: var(--color-filter-surface);
+  --magic-icon-svg-size: var(--space-9);
+  --footer-padding: var(--space-6) 0 42px;
+  --footer-text-color: rgba(255, 250, 243, 0.76);
+  --footer-grid-columns: 1.2fr repeat(3, 1fr);
+  --footer-grid-columns-medium: repeat(2, 1fr);
+  --footer-grid-gap: var(--space-6);
+  --footer-grid-padding-top: var(--space-7);
+  --showcase-flow-min-height: clamp(430px, calc(100svh - 150px), 520px);
+  --showcase-flow-padding: clamp(16px, 2.5vh, 28px) max(22px, calc((100vw - var(--max-width)) / 2)) 36px;
+  --showcase-flow-padding-medium-inline: var(--space-4);
+  --showcase-flow-padding-compact: var(--space-3) var(--space-3) 42px;
+  --showcase-flow-background-inset: -4%;
+  --showcase-flow-background-inset-compact: -12%;
+  --showcase-flow-background:
+    radial-gradient(circle at 64% 18%, color-mix(in srgb, var(--rug-b) 78%, transparent), transparent 30%),
+    radial-gradient(circle at 86% 70%, color-mix(in srgb, var(--rug-c) 72%, transparent), transparent 34%),
+    radial-gradient(circle at 18% 40%, color-mix(in srgb, var(--rug-a) 82%, transparent), transparent 38%),
+    linear-gradient(135deg, #071226 0%, #261032 46%, #611d32 100%);
+  --showcase-flow-background-overlay: rgba(0, 0, 0, 0.2);
+  --showcase-flow-background-blur: blur(26px);
+  --showcase-flow-content-columns: minmax(230px, 276px) minmax(260px, 1fr) minmax(150px, 184px);
+  --showcase-flow-content-columns-medium: minmax(280px, 0.82fr) minmax(320px, 1.18fr);
+  --showcase-flow-content-gap: clamp(12px, 2vw, 24px);
+  --showcase-flow-content-min-height: clamp(340px, calc(100svh - 250px), 420px);
+  --showcase-glass-line: var(--color-interactive-border);
+  --showcase-glass-surface:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
+    rgba(255, 255, 255, 0.1);
+  --showcase-glass-blur: blur(24px);
+  --showcase-slide-animation: showcase-slide-enter 520ms var(--ease-base) both;
+  --showcase-rug-animation: showcase-rug-enter 560ms var(--ease-base) both;
+  --showcase-text-card-padding: clamp(16px, 1.8vw, 22px);
+  --showcase-text-card-padding-compact: var(--space-4);
+  --showcase-title-max-width: 14ch;
+  --showcase-title-size: clamp(1.86rem, 3.2vw, 3rem);
+  --showcase-title-leading: 1;
+  --showcase-title-size-compact: clamp(1.65rem, 7.5vw, 2.2rem);
+  --showcase-title-leading-compact: 1.03;
+  --showcase-description-space: 10px;
+  --showcase-description-space-compact: 6px;
+  --showcase-description-color: var(--color-text-secondary);
+  --showcase-description-size: clamp(0.86rem, 0.95vw, 0.96rem);
+  --showcase-description-size-compact: 0.84rem;
+  --showcase-description-leading: 1.48;
+  --showcase-description-leading-compact: 1.38;
+  --showcase-feature-gap: 7px;
+  --showcase-feature-gap-inline: 9px;
+  --showcase-feature-gap-compact: 7px 10px;
+  --showcase-feature-space: 14px 0;
+  --showcase-feature-space-compact: var(--space-3) 0 0;
+  --showcase-feature-text-size: 0.8rem;
+  --showcase-feature-text-size-compact: 0.74rem;
+  --showcase-check-size: 14px;
+  --showcase-check-size-compact: var(--space-3);
+  --showcase-check-line: rgba(255, 255, 255, 0.72);
+  --showcase-check-surface:
+    linear-gradient(135deg, transparent 45%, rgba(255, 255, 255, 0.9) 46% 56%, transparent 57%),
+    rgba(255, 255, 255, 0.08);
+  --showcase-price-gap: 3px;
+  --showcase-price-padding: 10px var(--space-3);
+  --showcase-price-padding-compact: 10px;
+  --showcase-price-space: 0 0 10px;
+  --showcase-price-line: var(--section-divider-line);
+  --showcase-price-surface: var(--color-filter-surface);
+  --showcase-price-shadow: inset 0 1px 0 var(--section-divider-line);
+  --showcase-price-meta-size: var(--showcase-feature-text-size);
+  --showcase-price-meta-size-compact: var(--text-caption);
+  --showcase-price-size: 1.08rem;
+  --showcase-mobile-price-size: var(--text-base);
+  --showcase-actions-gap: 10px;
+  --showcase-actions-gap-compact: var(--space-2);
+  --showcase-action-min-height: 38px;
+  --showcase-action-min-height-compact: var(--control-size-sm);
+  --showcase-action-padding: 0 var(--space-3);
+  --showcase-action-padding-compact: 0 10px;
+  --showcase-action-text-size: 0.84rem;
+  --showcase-action-text-size-compact: var(--text-xs);
+  --showcase-rug-area-min-height: clamp(280px, calc(100svh - 310px), 350px);
+  --showcase-rug-area-min-height-medium: 300px;
+  --showcase-rug-area-min-height-compact: 96px;
+  --showcase-rug-shell-width: min(86%, 460px);
+  --showcase-rug-shell-width-compact: min(56%, 210px);
+  --showcase-rug-image-width: min(70%, 390px);
+  --showcase-rug-image-max-height: 72%;
+  --showcase-rug-image-shadow: drop-shadow(0 26px 36px rgba(0, 0, 0, 0.32));
+  --showcase-rug-image-transition:
+    opacity 450ms var(--ease-base),
+    transform 550ms var(--ease-base);
+  --showcase-flow-rug-transform: rotate(-3deg) scale(0.76);
+  --showcase-flow-rug-transform-compact: rotate(-4deg) scale(0.62);
+  --showcase-flow-rug-shadow: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.28));
+  --showcase-info-gap: var(--space-3);
+  --showcase-info-space: var(--space-6);
+  --showcase-info-padding: var(--space-9) 15px 15px;
+  --showcase-info-padding-medium: 14px;
+  --showcase-favorite-offset: var(--space-3);
+  --showcase-favorite-offset-medium: 18px;
+  --showcase-favorite-size: 30px;
+  --showcase-info-label-space: var(--space-1);
+  --showcase-info-label-size: var(--text-2xs);
+  --showcase-info-value-size: var(--showcase-feature-text-size);
+  --showcase-info-value-leading: 1.25;
+  --showcase-colors-gap: 7px;
+  --showcase-swatch-size: 17px;
+  --showcase-swatch-size-compact: 14px;
+  --showcase-swatch-line: rgba(255, 255, 255, 0.58);
+  --showcase-swatch-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  --showcase-pagination-bottom: var(--space-4);
+  --showcase-pagination-bottom-compact: 14px;
+  --showcase-pagination-gap: 9px;
+  --showcase-indicator-width: 30px;
+  --showcase-indicator-width-compact: var(--space-6);
+  --showcase-indicator-width-active: 46px;
+  --showcase-indicator-width-active-compact: var(--control-size-sm);
+  --showcase-indicator-height: 3px;
+  --showcase-indicator-surface: rgba(255, 255, 255, 0.34);
+  --showcase-indicator-surface-hover: rgba(255, 255, 255, 0.68);
+  --showcase-indicator-surface-active: rgba(255, 255, 255, 0.94);
+  --showcase-indicator-transition:
+    width 220ms var(--ease-base),
+    background 220ms var(--ease-base),
+    opacity 220ms var(--ease-base);
+  --showcase-section-min-height: clamp(640px, 88vh, 820px);
+  --showcase-section-padding: 112px 22px 66px;
+  --showcase-section-padding-compact: var(--space-7) 14px 42px;
+  --showcase-section-background:
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--rug-a) 78%, transparent), transparent 34rem),
+    radial-gradient(circle at 76% 24%, color-mix(in srgb, var(--rug-c) 70%, transparent), transparent 33rem),
+    radial-gradient(circle at 70% 72%, color-mix(in srgb, var(--rug-b) 58%, transparent), transparent 34rem),
+    linear-gradient(130deg, rgba(2, 8, 20, 0.58), rgba(8, 12, 26, 0.52));
+  --showcase-orb-blur: blur(24px);
+  --showcase-orb-blur-compact: blur(14px);
+  --showcase-orb-opacity: 0.42;
+  --showcase-orb-opacity-compact: 0.26;
+  --showcase-orb-a-size: min(42vw, 520px);
+  --showcase-orb-b-size: min(38vw, 440px);
+  --showcase-inner-columns: minmax(280px, 0.78fr) minmax(420px, 1.22fr);
+  --showcase-inner-columns-reverse: minmax(420px, 1.22fr) minmax(280px, 0.78fr);
+  --showcase-inner-gap: clamp(28px, 5vw, 72px);
+  --showcase-inner-gap-medium: 22px;
+  --showcase-inner-gap-compact: var(--space-2);
+  --rug-info-card-width: min(100%, 430px);
+  --rug-info-card-width-medium: min(100%, 620px);
+  --rug-info-card-padding: clamp(22px, 3vw, 34px);
+  --rug-info-card-radius-compact: var(--radius-menu);
+  --eyebrow-space: 0 0 10px;
+  --eyebrow-space-compact: 0 0 6px;
+  --eyebrow-weight: 700;
+  --eyebrow-size-compact: 0.62rem;
+  --eyebrow-leading-compact: 1.2;
+  --rug-title-max-width: 13ch;
+  --rug-title-hero-size: clamp(3rem, 7vw, 6rem);
+  --rug-title-size: clamp(2.3rem, 5vw, 4.8rem);
+  --rug-title-size-compact: clamp(2.15rem, 10vw, 3.2rem);
+  --rug-description-space: 18px;
+  --rug-description-size: clamp(1rem, 1.4vw, 1.16rem);
+  --rug-description-size-compact: 0.98rem;
+  --rug-description-leading: var(--leading-loose);
+  --feature-list-gap: var(--space-3);
+  --feature-list-space: var(--space-6) 0;
+  --feature-list-item-gap: 10px;
+  --feature-list-text-size: 0.94rem;
+  --feature-list-check-size: 18px;
+  --price-panel-gap: var(--space-1);
+  --price-panel-padding: var(--space-4) 18px;
+  --price-panel-space: 0 0 var(--space-4);
+  --price-panel-radius: var(--radius-card);
+  --price-panel-size: var(--text-xl);
+  --color-row-gap: var(--space-2);
+  --color-row-space: var(--space-5);
+  --color-swatch-size: var(--space-6);
+  --button-row-gap: var(--space-3);
+  --showcase-visual-min-height: 520px;
+  --showcase-visual-min-height-medium: 430px;
+  --showcase-visual-min-height-compact: 270px;
+  --rug-visual-shell-width: min(100%, 760px);
+  --rug-visual-aspect: 1.28 / 1;
+  --rug-glow-inset: 10% 8% 2%;
+  --rug-glow-radius: 44%;
+  --rug-glow-filter: blur(18px);
+  --rug-glow-filter-compact: blur(10px);
+  --showcase-flow-rug-glow-filter-compact: blur(8px);
+  --rug-glow-opacity: 0.62;
+  --rug-glow-opacity-compact: 0.42;
+  --showcase-flow-rug-glow-opacity-compact: 0.36;
+  --rug-shadow-background: rgba(0, 0, 0, 0.42);
+  --rug-shadow-filter: blur(14px);
+  --rug-image-width: min(88%, 520px);
+  --rug-image-max-height: 78%;
+  --rug-image-shadow: drop-shadow(0 28px 34px rgba(0, 0, 0, 0.32));
+  --rug-svg-shadow: drop-shadow(0 22px 24px rgba(0, 0, 0, 0.28));
+  --rug-svg-transform: rotate(-4deg);
+  --rug-svg-transform-reverse: rotate(4deg);
+  --rug-outline-stroke: rgba(255, 255, 255, 0.32);
+  --rug-outline-stroke-width: 4;
+  --floating-spec-right: clamp(0px, 1vw, 18px);
+  --floating-spec-bottom: clamp(18px, 6vw, 56px);
+  --floating-spec-gap: 6px;
+  --floating-spec-min-width: 178px;
+  --floating-spec-padding: 18px;
+  --floating-spec-strong-space: 6px;
+  --floating-spec-strong-size: 0.9rem;
+  --scroll-hint-bottom: var(--space-8);
+  --scroll-hint-gap: var(--space-2);
+  --scroll-hint-width: 30px;
+  --scroll-hint-height: 3px;
+  --scroll-hint-surface: rgba(255, 255, 255, 0.38);
+  --scroll-hint-active-surface: rgba(255, 255, 255, 0.86);
+  --customization-section-width-offset: var(--space-10);
+  --customization-section-width-offset-compact: var(--space-6);
+  --customization-section-padding: 18px 0 var(--space-12);
+  --customization-section-padding-bottom-compact: 46px;
+  --customization-panel-columns: minmax(220px, 0.7fr) minmax(0, 1.18fr) minmax(260px, 0.72fr);
+  --customization-panel-gap: clamp(18px, 3vw, 34px);
+  --customization-panel-padding: clamp(22px, 4vw, 38px);
+  --customization-panel-padding-compact: 18px;
+  --customization-panel-radius: var(--radius-panel);
+  --customization-panel-radius-compact: var(--radius-menu);
+  --customization-intro-gap: 14px;
+  --customization-title-max-width: 11ch;
+  --customization-title-size: var(--text-3xl);
+  --customization-copy-leading: var(--leading-loose);
+  --customization-base-padding: 9px var(--space-3);
+  --customization-base-text-size: var(--text-sm);
+  --customization-base-weight: 750;
+  --customization-base-line: var(--section-divider-line);
+  --customization-base-surface: var(--color-glass-soft);
+  --customization-form-gap: 18px;
+  --customization-contact-columns: repeat(2, minmax(0, 1fr));
+  --customization-contact-gap: 14px;
+  --customization-field-gap: 9px;
+  --customization-legend-color: var(--color-text-soft);
+  --customization-legend-size: var(--text-xs);
+  --customization-legend-weight: var(--weight-black);
+  --customization-size-format-gap: var(--space-4);
+  --customization-option-grid-columns: repeat(2, minmax(0, 1fr));
+  --customization-option-grid-gap: 10px;
+  --customization-option-line: rgba(255, 255, 255, 0.16);
+  --customization-option-surface: var(--color-glass-soft);
+  --customization-option-hover-y: -1px;
+  --customization-option-line-hover: rgba(255, 255, 255, 0.32);
+  --customization-option-surface-hover: var(--color-interactive-surface-soft-hover);
+  --customization-option-active-text: #16131b;
+  --customization-option-active-line: rgba(255, 255, 255, 0.86);
+  --customization-option-active-surface: var(--color-filter-active-surface);
+  --customization-choice-gap: var(--space-1);
+  --customization-choice-min-height: 76px;
+  --customization-choice-padding: 14px;
+  --customization-choice-detail-size: var(--text-sm);
+  --customization-format-grid-columns: repeat(4, minmax(0, 1fr));
+  --customization-format-grid-columns-compact: repeat(2, minmax(0, 1fr));
+  --customization-format-min-height: var(--control-size-icon);
+  --customization-format-padding: 10px;
+  --customization-color-grid-columns: repeat(3, minmax(0, 1fr));
+  --customization-color-option-gap: 10px;
+  --customization-color-option-padding: 10px;
+  --customization-swatch-size: var(--space-6);
+  --customization-swatch-border-width: 2px;
+  --customization-swatch-line: rgba(255, 255, 255, 0.62);
+  --customization-swatch-shadow: 0 8px 20px rgba(0, 0, 0, 0.26);
+  --customization-color-name-size: var(--text-sm);
+  --customization-message-size: var(--text-sm);
+  --customization-message-leading: 1.45;
+  --customization-action-min-width: 220px;
+  --customization-disabled-opacity: 0.7;
+  --customization-status-min-height: 1.2em;
+  --customization-status-space: calc(var(--space-1) * -1) 0 0;
+  --customization-summary-top: 110px;
+  --customization-summary-gap: var(--space-4);
+  --customization-summary-padding: 22px;
+  --customization-summary-line: var(--section-divider-line);
+  --customization-summary-radius: var(--radius-menu);
+  --customization-summary-background:
+    radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--color-accent-b) 32%, transparent), transparent 16rem),
+    var(--color-glass-soft);
+  --customization-summary-copy-leading: var(--leading-normal);
+  --customization-summary-list-columns: 0.82fr 1fr;
+  --customization-summary-list-gap: 10px 14px;
+  --customization-summary-list-size: 0.9rem;
+  --customization-summary-value-weight: var(--weight-bold);
+  --customization-summary-colors-gap: 9px;
+  --page-gutter: 18px;
+  --page-gutter-compact: 12px;
+  --brand-mark-size: 44px;
+  --brand-mark-icon-size: 30px;
+  --control-size-icon: 42px;
+  --control-size-sm: 36px;
+  --icon-size-md: 21px;
+  --icon-size-sm: 18px;
+
+  /* --------------------------------------------------------------------------
+     Typography family
+  -------------------------------------------------------------------------- */
+
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
+
+  /* --------------------------------------------------------------------------
+     Legacy aliases
+     Existing styles still use these names. Keep them until each component has
+     migrated to the semantic tokens above.
+  -------------------------------------------------------------------------- */
+
+  --active-a: var(--color-accent-a);
+  --active-b: var(--color-accent-b);
+  --active-c: var(--color-accent-c);
+  --ink: var(--color-text);
+  --muted: var(--color-text-muted);
+  --dim: var(--color-text-dim);
+  --line: var(--color-line);
+  --glass: var(--color-glass);
+  --glass-strong: var(--color-glass-strong);
+  --shadow: var(--shadow-lg);
 }
+
+/* ==========================================================================
+   Migration map
+
+   Prefer these tokens when touching component CSS:
+
+   Spacing:
+     4px   -> var(--space-1)
+     8px   -> var(--space-2)
+     12px  -> var(--space-3)
+     16px  -> var(--space-4)
+     20px  -> var(--space-5)
+     24px  -> var(--space-6)
+     28px  -> var(--space-7)
+     32px  -> var(--space-8)
+     40px  -> var(--space-9)
+     48px  -> var(--space-10)
+     56px  -> var(--space-11)
+     64px  -> var(--space-12)
+
+   Typography:
+     0.68rem -> var(--text-2xs)
+     0.72rem -> var(--text-caption)
+     0.76rem -> var(--text-xs)
+     0.82rem -> var(--text-sm)
+     0.86rem -> var(--text-sm)
+     1rem    -> var(--text-base)
+     1.1rem  -> var(--text-lg)
+     1.45rem -> var(--text-xl)
+
+   Motion:
+     transition with transform/background/opacity -> var(--transition-base)
+     transition with box-shadow                   -> var(--transition-shadow)
+   ========================================================================== */

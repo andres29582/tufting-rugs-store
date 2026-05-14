@@ -8,10 +8,11 @@ import {
   AppLoadingState,
   getFriendlyErrorMessage
 } from '../../shared/components/AppState/AppState';
-import { PageIntro } from '../shared/PageIntro';
+import { useTranslation } from '../../shared/i18n';
 import { getCustomProduct } from '../HomePage/HomePage';
 
 export function CustomizePage() {
+  const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
@@ -47,20 +48,15 @@ export function CustomizePage() {
   useEffect(() => loadPage(), [loadPage]);
 
   if (isLoading) {
-    return <AppLoadingState title="Preparando personalización" />;
+    return <AppLoadingState title={t('customize.loading')} />;
   }
 
   if (error) {
-    return <AppErrorState message={getFriendlyErrorMessage(error)} onAction={loadPage} />;
+    return <AppErrorState message={getFriendlyErrorMessage(error, t)} onAction={loadPage} />;
   }
 
   return (
     <AppShell mainClassName="page-main">
-      <PageIntro
-        eyebrow="Pedido personalizado"
-        title="Diseñemos una alfombra contigo"
-        copy="Comparte medidas, colores, referencias y contexto del espacio. Con eso preparamos una propuesta clara para revisar."
-      />
       <CustomizationForm product={getCustomProduct(products)} />
     </AppShell>
   );

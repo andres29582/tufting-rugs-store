@@ -1,3 +1,5 @@
+import { useTranslation, type Translate } from '../../i18n';
+
 type AppStateProps = {
   title?: string;
   message?: string;
@@ -5,35 +7,31 @@ type AppStateProps = {
   onAction?: () => void;
 };
 
-export function AppLoadingState({
-  title = 'Preparando el catálogo',
-  message = 'Estamos cargando las alfombras y opciones personalizadas.'
-}: AppStateProps) {
+export function AppLoadingState({ title, message }: AppStateProps) {
+  const { t } = useTranslation();
+
   return (
     <section className="app-state app-state-loading" aria-busy="true" aria-live="polite" role="status">
       <div className="app-state-panel glass-panel">
         <span className="app-spinner" aria-hidden="true" />
-        <h1>{title}</h1>
-        <p>{message}</p>
+        <h1>{title || t('state.loadingTitle')}</h1>
+        <p>{message || t('state.loadingMessage')}</p>
       </div>
     </section>
   );
 }
 
-export function AppErrorState({
-  title = 'No pudimos cargar la tienda',
-  message = 'Revisa la conexión con el servidor e inténtalo nuevamente.',
-  actionLabel = 'Reintentar',
-  onAction
-}: AppStateProps) {
+export function AppErrorState({ title, message, actionLabel, onAction }: AppStateProps) {
+  const { t } = useTranslation();
+
   return (
     <section className="app-state app-state-error" role="alert">
       <div className="app-state-panel glass-panel">
-        <h1>{title}</h1>
-        <p>{message}</p>
+        <h1>{title || t('state.errorTitle')}</h1>
+        <p>{message || t('state.errorMessage')}</p>
         {onAction ? (
           <button className="button button-light" type="button" onClick={onAction}>
-            {actionLabel}
+            {actionLabel || t('state.retry')}
           </button>
         ) : null}
       </div>
@@ -41,14 +39,16 @@ export function AppErrorState({
   );
 }
 
-export function getFriendlyErrorMessage(error: unknown): string {
+export function getFriendlyErrorMessage(error: unknown, t?: Translate): string {
   if (error instanceof TypeError) {
-    return 'No se pudo conectar con el servidor. Revisa que la API esté disponible e inténtalo nuevamente.';
+    return t
+      ? t('state.serverConnectionError')
+      : 'No se pudo conectar con el servidor. Revisa que la API este disponible e intentalo nuevamente.';
   }
 
   if (error instanceof Error && error.message) {
     return error.message;
   }
 
-  return 'Revisa la conexión con el servidor e inténtalo nuevamente.';
+  return t ? t('state.errorMessage') : 'Revisa la conexion con el servidor e intentalo nuevamente.';
 }

@@ -1,22 +1,26 @@
+import { useTranslation } from '../shared/i18n';
+
 export function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer id="contacto" className="site-footer">
       <div className="footer-grid">
         <div>
           <strong>Tuft Atelier</strong>
-          <p>Alfombras tufting personalizadas, hechas a mano y preparadas para pedidos únicos.</p>
+          <p>{t('footer.description')}</p>
         </div>
         <div>
-          <span>Atención personalizada</span>
-          <p>Te acompañamos durante todo el proceso.</p>
+          <span>{t('footer.serviceTitle')}</span>
+          <p>{t('footer.serviceText')}</p>
         </div>
         <div>
-          <span>Pagos seguros</span>
-          <p>Preparado para integrar métodos reales más adelante.</p>
+          <span>{t('footer.paymentsTitle')}</span>
+          <p>{t('footer.paymentsText')}</p>
         </div>
         <div>
-          <span>Calidad garantizada</span>
-          <p>Piezas suaves, firmes y hechas para durar.</p>
+          <span>{t('footer.qualityTitle')}</span>
+          <p>{t('footer.qualityText')}</p>
         </div>
       </div>
     </footer>

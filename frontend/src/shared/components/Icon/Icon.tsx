@@ -21,6 +21,7 @@ export type IconName =
   | 'favorite'
   | 'shoppingBag'
   | 'shoppingCart'
+  | 'info'
   | 'sparkles'
   | 'tuftMark';
 
@@ -62,6 +63,12 @@ const iconDefinitions: Record<IconName, IconDefinition> = {
       { d: 'M6 6h15l-2 8H8L6 6Zm0 0-.7-3H3v2h.7l3 13H19v-2H8.3l-.5-2H19l2.7-10H5.6Z' },
       { tag: 'circle', cx: '9', cy: '21', r: '1.7' },
       { tag: 'circle', cx: '18', cy: '21', r: '1.7' }
+    ]
+  },
+  info: {
+    shapes: [
+      { tag: 'circle', cx: '12', cy: '12', r: '10' },
+      { d: 'M11 10h2v8h-2zM11 6h2v2h-2z' }
     ]
   },
   sparkles: {

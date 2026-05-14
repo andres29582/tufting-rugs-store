@@ -5,7 +5,7 @@ import type {
   CustomizationDraft,
   DesignReference
 } from '../../shared/types';
-import { mapProductFromApi } from '../products/productsMapper';
+import { mapProductFromApi, type ProductMapperOptions } from '../products/productsMapper';
 
 type ApiCustomizationDraft = {
   productId: string;
@@ -20,6 +20,7 @@ type ApiCustomizationDraft = {
   designReferences: Array<{
     kind: 'CUSTOMER_REFERENCE';
     url: string;
+    originalName: string;
   }>;
 };
 
@@ -36,12 +37,13 @@ export function mapCustomizationDraftToApi(draft: CustomizationDraft): ApiCustom
     format: draft.format,
     designReferences: draft.referenceUrl
       ? [
-          {
-            kind: 'CUSTOMER_REFERENCE',
-            url: draft.referenceUrl
-          }
-        ]
-      : []
+        {
+          kind: 'CUSTOMER_REFERENCE',
+          url: draft.referenceUrl,
+          originalName: 'Referencia visual del cliente'
+        }
+      ]
+    : []
   };
 }
 
@@ -64,10 +66,13 @@ export function mapCustomizationFromApi(customization: ApiCustomization): Custom
   };
 }
 
-export function mapAdminCustomizationFromApi(customization: ApiCustomization): AdminCustomization {
+export function mapAdminCustomizationFromApi(
+  customization: ApiCustomization,
+  options: ProductMapperOptions = {}
+): AdminCustomization {
   return {
     ...mapCustomizationFromApi(customization),
-    product: customization.product ? mapProductFromApi(customization.product) : null,
+    product: customization.product ? mapProductFromApi(customization.product, options) : null,
     order: customization.order
       ? {
           id: customization.order.id,

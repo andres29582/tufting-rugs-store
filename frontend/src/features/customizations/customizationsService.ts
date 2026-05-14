@@ -36,7 +36,7 @@ export async function saveCustomizationDraft(
     };
   }
 
-  if (appConfig.useMocks) {
+  if (appConfig.useCustomizationMocks) {
     const preparedDraft = {
       ...validation.draft,
       productId: validation.draft.productId || (await resolveMockCustomProductId())
@@ -68,7 +68,7 @@ export async function createOrderFromCustomization(
   customizationId: string,
   payload: Record<string, unknown> = {}
 ): Promise<Order> {
-  if (appConfig.useMocks) {
+  if (appConfig.useCustomizationMocks) {
     const customization = savedDrafts.find(c => c.id === customizationId);
     if (!customization) {
       throw new Error('Customization not found in mock data');

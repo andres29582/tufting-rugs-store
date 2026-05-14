@@ -1,3 +1,6 @@
+import { useTranslation } from '../../../../shared/i18n';
+import { localizeCategory } from '../../productLocalization';
+
 type ProductFiltersProps = {
   categories: string[];
   activeCategory: string;
@@ -5,8 +8,10 @@ type ProductFiltersProps = {
 };
 
 export function ProductFilters({ categories, activeCategory, onCategoryChange }: ProductFiltersProps) {
+  const { language, t } = useTranslation();
+
   return (
-    <div id="categorias" className="category-filters" role="group" aria-label="Filtrar por categoría">
+    <div id="categorias" className="category-filters" role="group" aria-label={t('filters.aria')}>
       {categories.map((category) => {
         const isActive = category === activeCategory;
 
@@ -19,7 +24,7 @@ export function ProductFilters({ categories, activeCategory, onCategoryChange }:
             aria-pressed={isActive}
             onClick={() => onCategoryChange(category)}
           >
-            {category}
+            {localizeCategory(category, language)}
           </button>
         );
       })}

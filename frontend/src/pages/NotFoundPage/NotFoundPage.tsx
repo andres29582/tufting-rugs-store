@@ -1,22 +1,25 @@
 import { AppShell } from '../../app/AppShell';
+import { useTranslation } from '../../shared/i18n';
 import { PageIntro } from '../shared/PageIntro';
 
 export function NotFoundPage() {
+  const { t } = useTranslation();
+
   return (
     <AppShell mainClassName="page-main">
       <PageIntro
         eyebrow="404"
-        title="No encontramos esta página"
-        copy="La ruta no existe o todavía no está disponible."
+        title={t('notFound.title')}
+        copy={t('notFound.copy')}
         actions={[
           {
             to: '/',
-            label: 'Volver al inicio',
+            label: t('success.backHome'),
             variant: 'light'
           },
           {
             to: '/catalogo',
-            label: 'Ver catálogo',
+            label: t('success.viewCatalog'),
             variant: 'ghost'
           }
         ]}

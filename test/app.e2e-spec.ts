@@ -20,6 +20,10 @@ describe('Backend HTTP flow (e2e)', () => {
   const customerEmail = `e2e-${testRunId}@example.com`;
   const productSlugPrefix = `e2e-product-${testRunId}`;
   const uploadedProductImages: string[] = [];
+  const validPngImage = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+    'base64'
+  );
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -171,7 +175,7 @@ describe('Backend HTTP flow (e2e)', () => {
 
     await request(app.getHttpServer())
       .post('/admin/uploads/product-images')
-      .attach('file', Buffer.from('not-a-real-image-but-valid-test-by-mime'), {
+      .attach('file', validPngImage, {
         filename: 'test-rug.png',
         contentType: 'image/png'
       })
@@ -180,7 +184,7 @@ describe('Backend HTTP flow (e2e)', () => {
     const uploadResponse = await request(app.getHttpServer())
       .post('/admin/uploads/product-images')
       .set('Authorization', `Bearer ${adminToken}`)
-      .attach('file', Buffer.from('not-a-real-image-but-valid-test-by-mime'), {
+      .attach('file', validPngImage, {
         filename: 'test-rug.png',
         contentType: 'image/png'
       })

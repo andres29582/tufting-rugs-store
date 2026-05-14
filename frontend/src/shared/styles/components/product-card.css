@@ -1,56 +1,49 @@
 .catalog-section {
-  padding: 42px 0 56px;
+  padding: var(--catalog-section-padding);
 }
 
 .catalog-heading {
   display: flex;
-  gap: 22px;
+  gap: var(--catalog-heading-gap);
   align-items: end;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: var(--catalog-heading-space);
 }
 
 .result-summary {
-  min-height: 24px;
-  margin: 0 0 18px;
+  min-height: var(--catalog-summary-min-height);
+  margin: 0 0 var(--catalog-summary-space);
 }
 
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
+  gap: var(--catalog-grid-gap);
 }
 
 .rug-card {
   overflow: hidden;
-  border-radius: 18px;
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease;
+  border-radius: var(--radius-card);
+  transition: var(--transition-base);
 }
 
 .rug-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.4);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.09)),
-    rgba(10, 16, 28, 0.2);
+  transform: translateY(var(--product-card-hover-y));
+  border-color: var(--color-card-hover-line);
+  background: var(--color-card-hover-surface);
 }
 
 .rug-card-media {
   display: grid;
-  height: 220px;
-  padding: 14px;
+  height: var(--product-card-media-height);
+  padding: var(--product-card-media-padding);
   place-items: center;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2), transparent 42%),
-    rgba(0, 0, 0, 0.18);
+  background: var(--color-card-media-surface);
 }
 
 .rug-card-media .rug-visual-shell {
-  width: 130%;
+  width: var(--product-card-visual-width);
 }
 
 .rug-card-media .floating-spec,
@@ -59,44 +52,44 @@
 }
 
 .rug-card-media .rug-svg {
-  transform: rotate(-2deg) scale(1.04);
+  transform: var(--product-card-visual-transform);
 }
 
 .rug-card-body {
   display: grid;
-  gap: 16px;
-  padding: 18px;
+  gap: var(--product-card-body-gap);
+  padding: var(--product-card-body-padding);
 }
 
 .card-category {
-  margin: 0 0 4px;
-  font-size: 0.78rem;
+  margin: 0 0 var(--card-category-space);
+  font-size: var(--text-xs);
 }
 
 .card-bottom {
   display: flex;
-  gap: 12px;
+  gap: var(--space-3);
   align-items: center;
   justify-content: space-between;
 }
 
 .mini-actions {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .mini-actions .icon-button {
-  width: 36px;
-  height: 36px;
+  width: var(--control-size-sm);
+  height: var(--control-size-sm);
 }
 
 .mini-actions svg {
-  width: 18px;
-  height: 18px;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
 }
 
 .empty-state {
   grid-column: 1 / -1;
-  padding: 30px;
-  border-radius: 18px;
+  padding: var(--empty-state-padding);
+  border-radius: var(--radius-card);
 }
