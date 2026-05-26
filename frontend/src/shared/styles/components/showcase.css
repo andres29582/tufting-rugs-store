@@ -142,8 +142,8 @@
 }
 
 .showcase-flow__rug-area .rug-image {
-  width: var(--showcase-rug-image-width);
-  max-height: var(--showcase-rug-image-max-height);
+  width: min(96%, 600px);
+  max-height: 88%;
   filter: var(--showcase-rug-image-shadow);
   transition: var(--showcase-rug-image-transition);
 }

@@ -1,8 +1,5 @@
-import { appConfig } from '../../app/config';
-import { ApiError } from '../../shared/api/apiErrors';
 import type { Product } from '../../shared/types';
 import { mockProducts, productCategories } from './mockProducts';
-import { getProductById, getProductBySlug, getProducts } from './productsApi';
 
 let productsCachePromise: Promise<Product[]> | null = null;
 
@@ -49,50 +46,24 @@ export async function loadProductCategories(options: { refresh?: boolean } = {})
 
 export async function loadProductById(
   id: string,
-  options: { refresh?: boolean } = {}
+  _options: { refresh?: boolean } = {}
 ): Promise<Product | null> {
   if (!id) {
     return null;
   }
 
-  if (appConfig.useProductMocks) {
-    return findProductById(mockProducts, id);
-  }
-
-  try {
-    return cloneProduct(await getProductById(id));
-  } catch (error) {
-    if (!shouldFallbackToProductList(error)) {
-      throw error;
-    }
-
-    const products = await loadProducts(options);
-    return findProductById(products, id);
-  }
+  return findProductById(await loadProducts(), id);
 }
 
 export async function loadProductBySlug(
   slug: string,
-  options: { refresh?: boolean } = {}
+  _options: { refresh?: boolean } = {}
 ): Promise<Product | null> {
   if (!slug) {
     return null;
   }
 
-  if (appConfig.useProductMocks) {
-    return findProductBySlug(mockProducts, slug);
-  }
-
-  try {
-    return cloneProduct(await getProductBySlug(slug));
-  } catch (error) {
-    if (!shouldFallbackToProductList(error)) {
-      throw error;
-    }
-
-    const products = await loadProducts(options);
-    return findProductBySlug(products, slug);
-  }
+  return findProductBySlug(await loadProducts(), slug);
 }
 
 export function clearProductsCache(): void {
@@ -100,11 +71,7 @@ export function clearProductsCache(): void {
 }
 
 async function resolveProducts(): Promise<Product[]> {
-  if (appConfig.useProductMocks) {
-    return cloneProducts(mockProducts);
-  }
-
-  return getProducts();
+  return cloneProducts(mockProducts);
 }
 
 function findProductById(products: Product[], id: string): Product | null {
@@ -122,10 +89,6 @@ function findProductInList(
   const product = products.find(predicate);
 
   return product ? cloneProduct(product) : null;
-}
-
-function shouldFallbackToProductList(error: unknown): boolean {
-  return error instanceof ApiError && error.status === 404;
 }
 
 function cloneProducts(products: Product[]): Product[] {

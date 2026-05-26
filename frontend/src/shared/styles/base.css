@@ -9,11 +9,8 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--active-a) 74%, transparent), transparent 32rem),
-    radial-gradient(circle at 78% 12%, color-mix(in srgb, var(--active-c) 62%, transparent), transparent 34rem),
-    radial-gradient(circle at 68% 78%, color-mix(in srgb, var(--active-b) 48%, transparent), transparent 30rem),
-    linear-gradient(135deg, #05101d 0%, #160d21 46%, #07182a 100%);
-  background-attachment: scroll;
+    linear-gradient(rgba(1, 5, 12, 0.53), rgba(1, 5, 12, 0.67)),
+    url('/images/fondo.png') center / cover no-repeat fixed;
   overflow-x: hidden;
 }
 

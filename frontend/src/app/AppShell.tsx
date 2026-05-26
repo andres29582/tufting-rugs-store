@@ -1,17 +1,16 @@
 import type { ReactNode } from 'react';
 import { Footer } from '../components/Footer';
-import { Header, type HeaderToolsControls } from '../components/Header';
+import { Header } from '../components/Header';
 
 type AppShellProps = {
   children: ReactNode;
   mainClassName?: string;
-  renderHeaderTools?: (controls: HeaderToolsControls) => ReactNode;
 };
 
-export function AppShell({ children, mainClassName, renderHeaderTools }: AppShellProps) {
+export function AppShell({ children, mainClassName }: AppShellProps) {
   return (
     <>
-      <Header renderTools={renderHeaderTools} />
+      <Header />
       <main className={mainClassName}>{children}</main>
       <Footer />
     </>

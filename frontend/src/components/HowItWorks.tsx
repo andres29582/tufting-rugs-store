@@ -1,4 +1,5 @@
 import { useTranslation, type TranslationKey } from '../shared/i18n';
+import { ButtonLink } from '../shared/components/Button/Button';
 
 const steps: Array<{
   titleKey: TranslationKey;
@@ -37,6 +38,9 @@ export function HowItWorks() {
           <p className="eyebrow">{t('how.eyebrow')}</p>
           <h2>{t('how.title')}</h2>
           <p>{t('how.copy')}</p>
+          <ButtonLink className="section-copy-action" to="/personalizar" variant="primary">
+            {t('how.cta')}
+          </ButtonLink>
         </div>
         <div className="steps-grid">
           {steps.map((step, index) => (

@@ -23,6 +23,12 @@ export function Footer() {
           <p>{t('footer.qualityText')}</p>
         </div>
       </div>
+      <p className="footer-credit">
+        Creado por{' '}
+        <a href="https://andres-pignoloni-dev.vercel.app/" target="_blank" rel="noopener noreferrer">
+          Andrés Eduardo Pignoloni Vasquez
+        </a>
+      </p>
     </footer>
   );
 }

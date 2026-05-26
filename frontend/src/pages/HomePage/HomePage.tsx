@@ -1,50 +1,32 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { ReactNode } from 'react';
 import type { Product } from '../../shared/types';
 import { AppShell } from '../../app/AppShell';
 import { FeatureStrip } from '../../components/FeatureStrip';
 import { HowItWorks } from '../../components/HowItWorks';
-import { ProductFilters } from '../../features/products/components/ProductFilters/ProductFilters';
-import { ProductSearch } from '../../features/products/components/ProductSearch/ProductSearch';
 import { RugCatalog } from '../../features/products/components/RugCatalog/RugCatalog';
 import {
   RugShowcaseCarousel,
   applyShowcaseTheme
 } from '../../features/products/components/RugShowcase/RugShowcase';
-import {
-  loadProductCategories,
-  loadProducts
-} from '../../features/products/productsService';
-import { localizeProduct } from '../../features/products/productLocalization';
+import { loadProducts } from '../../features/products/productsService';
 import {
   AppErrorState,
   AppLoadingState,
   getFriendlyErrorMessage
 } from '../../shared/components/AppState/AppState';
-import type { HeaderToolsControls } from '../../components/Header';
-import { useTranslation, type Language } from '../../shared/i18n';
+import { useTranslation } from '../../shared/i18n';
 
 type HomePageProps = {
   scrollTo?: string;
 };
 
-type CatalogState = {
-  query: string;
-  category: string;
-};
-
 export function HomePage({ scrollTo }: HomePageProps) {
-  const { language, t } = useTranslation();
+  const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [catalogState, setCatalogState] = useState<CatalogState>({
-    query: '',
-    category: 'Todas'
-  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
   const showcaseProducts = useMemo(() => getShowcaseProducts(products), [products]);
-  const filteredProducts = useFilteredProducts(products, catalogState, language);
+  const catalogPreviewProducts = useMemo(() => products.slice(0, 3), [products]);
 
   const loadPage = useCallback(() => {
     let isCurrent = true;
@@ -52,14 +34,13 @@ export function HomePage({ scrollTo }: HomePageProps) {
     setIsLoading(true);
     setError(null);
 
-    void Promise.all([loadProducts(), loadProductCategories()])
-      .then(([loadedProducts, loadedCategories]) => {
+    void loadProducts()
+      .then((loadedProducts) => {
         if (!isCurrent) {
           return;
         }
 
         setProducts(loadedProducts);
-        setCategories(loadedCategories);
 
         const firstShowcaseProduct = getShowcaseProducts(loadedProducts)[0];
 
@@ -95,12 +76,6 @@ export function HomePage({ scrollTo }: HomePageProps) {
     });
   }, [isLoading, scrollTo]);
 
-  const renderHeaderTools = useCatalogHeaderTools({
-    categories,
-    catalogState,
-    setCatalogState
-  });
-
   if (isLoading) {
     return <AppLoadingState title={t('home.loading')} />;
   }
@@ -110,78 +85,16 @@ export function HomePage({ scrollTo }: HomePageProps) {
   }
 
   return (
-    <AppShell renderHeaderTools={renderHeaderTools}>
+    <AppShell>
       <RugShowcaseCarousel rugs={showcaseProducts} />
       <FeatureStrip />
       <HowItWorks />
       <RugCatalog
-        rugs={filteredProducts}
-        query={catalogState.query}
-        category={catalogState.category}
-        showCustomizationCta={false}
+        rugs={catalogPreviewProducts}
+        ctaLabel={t('rugCatalog.viewAll')}
+        ctaTo="/catalogo"
       />
     </AppShell>
-  );
-}
-
-export function useFilteredProducts(
-  products: Product[],
-  catalogState: CatalogState,
-  language: Language = 'es'
-): Product[] {
-  return useMemo(() => {
-    const normalizedQuery = catalogState.query.trim().toLowerCase();
-
-    return products.filter((rug) => {
-      const localizedRug = localizeProduct(rug, language);
-      const matchesName =
-        !normalizedQuery ||
-        rug.name.toLowerCase().includes(normalizedQuery) ||
-        localizedRug.name.toLowerCase().includes(normalizedQuery);
-      const matchesCategory = catalogState.category === 'Todas' || rug.category === catalogState.category;
-
-      return matchesName && matchesCategory;
-    });
-  }, [catalogState.category, catalogState.query, language, products]);
-}
-
-export function useCatalogHeaderTools({
-  categories,
-  catalogState,
-  setCatalogState
-}: {
-  categories: string[];
-  catalogState: CatalogState;
-  setCatalogState: React.Dispatch<React.SetStateAction<CatalogState>>;
-}): (controls: HeaderToolsControls) => ReactNode {
-  return useCallback(
-    ({ closeMenu }: HeaderToolsControls) => (
-      <>
-        <ProductSearch
-          query={catalogState.query}
-          onSearch={(query) => {
-            setCatalogState((current) => ({
-              ...current,
-              query
-            }));
-          }}
-          onSubmit={closeMenu}
-        />
-        <ProductFilters
-          categories={categories}
-          activeCategory={catalogState.category}
-          onCategoryChange={(category) => {
-            closeMenu();
-            setCatalogState((current) => ({
-              ...current,
-              category
-            }));
-            document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }}
-        />
-      </>
-    ),
-    [catalogState.category, catalogState.query, categories, setCatalogState]
   );
 }
 

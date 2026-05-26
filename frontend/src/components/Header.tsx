@@ -1,31 +1,17 @@
-import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon/Icon';
 import { IconButton } from '../shared/components/Button/Button';
 import { useTranslation, type Language } from '../shared/i18n';
 
-export type HeaderToolsControls = {
-  closeMenu: () => void;
-  openMenu: () => void;
-};
-
-type HeaderProps = {
-  renderTools?: ((controls: HeaderToolsControls) => ReactNode) | undefined;
-};
-
-export function Header({ renderTools }: HeaderProps) {
+export function Header() {
   const { t } = useTranslation();
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
-  const menuId = 'filter-menu';
-
-  function openMenu() {
-    setIsFilterOpen(true);
-  }
+  const menuId = 'mobile-navigation-menu';
 
   function closeMenu() {
-    setIsFilterOpen(false);
+    setIsMenuOpen(false);
   }
 
   useEffect(() => {
@@ -51,7 +37,7 @@ export function Header({ renderTools }: HeaderProps) {
   }, []);
 
   return (
-    <header ref={headerRef} className={isFilterOpen ? 'site-header is-filter-open' : 'site-header'}>
+    <header ref={headerRef} className={isMenuOpen ? 'site-header is-menu-open' : 'site-header'}>
       <div className="header-shell">
         <Brand />
         <MainNav />
@@ -61,11 +47,11 @@ export function Header({ renderTools }: HeaderProps) {
             icon="menu"
             className="menu-toggle"
             type="button"
-            aria-label={t('header.openSearch')}
-            aria-expanded={isFilterOpen}
+            aria-label={t('header.openMenu')}
+            aria-expanded={isMenuOpen}
             aria-controls={menuId}
             onClick={() => {
-              setIsFilterOpen((current) => !current);
+              setIsMenuOpen((current) => !current);
             }}
           />
           <IconButton icon="favorite" type="button" aria-label={t('header.favorites')} />
@@ -74,18 +60,18 @@ export function Header({ renderTools }: HeaderProps) {
             {t('nav.order')}
           </Link>
         </div>
-        <div id={menuId} className="filter-menu glass-panel" hidden={!isFilterOpen}>
-          <div className="filter-menu-head">
-            <span>{t('header.searchFilters')}</span>
+        <div id={menuId} className="mobile-nav-menu glass-panel" hidden={!isMenuOpen}>
+          <div className="mobile-nav-menu-head">
+            <span>{t('header.mobileMenu')}</span>
             <IconButton
               icon="close"
-              className="filter-menu-close"
+              className="mobile-nav-menu-close"
               type="button"
-              aria-label={t('header.closeSearch')}
+              aria-label={t('header.closeMenu')}
               onClick={closeMenu}
             />
           </div>
-          <div className="header-tools">{renderTools ? renderTools({ closeMenu, openMenu }) : null}</div>
+          <MobileNav onNavigate={closeMenu} />
         </div>
       </div>
     </header>
@@ -122,6 +108,28 @@ function MainNav() {
       <Link to="/catalogo">{t('nav.catalog')}</Link>
       <Link to="/personalizar">{t('nav.custom')}</Link>
       <Link to="/como-funciona">{t('nav.how')}</Link>
+      <a href="#contacto" onClick={scrollToContact}>
+        {t('nav.contact')}
+      </a>
+    </nav>
+  );
+}
+
+function MobileNav({ onNavigate }: { onNavigate: () => void }) {
+  const { t } = useTranslation();
+
+  function scrollToContact(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
+    onNavigate();
+    document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  return (
+    <nav className="mobile-nav-links" aria-label={t('nav.aria')}>
+      <Link to="/" onClick={onNavigate}>{t('nav.home')}</Link>
+      <Link to="/catalogo" onClick={onNavigate}>{t('nav.catalog')}</Link>
+      <Link to="/personalizar" onClick={onNavigate}>{t('nav.custom')}</Link>
+      <Link to="/como-funciona" onClick={onNavigate}>{t('nav.how')}</Link>
       <a href="#contacto" onClick={scrollToContact}>
         {t('nav.contact')}
       </a>

@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import type { CustomizationDraft, Product } from '../../../../shared/types';
 import type { Language, Translate } from '../../../../shared/i18n';
 import { localizeProduct } from '../../../products/productLocalization';
-import { saveCustomizationDraft } from '../../customizationsService';
 import {
   getRecommendedStyles,
   shapeOptions,
@@ -12,7 +11,6 @@ import {
 import { getFirstInvalidStep, getStepValidationMessage } from './customizationWizardCopy';
 import { buildSummary } from './customizationWizardSummary';
 import { buildWhatsAppUrl } from './whatsappMessage';
-import { buildCustomizationDraftFromWizard } from './customizationWizardDraft';
 import type {
   ColorAvoidId,
   GuidedDraft,
@@ -36,9 +34,9 @@ export function useCustomizationWizard({
   const [draft, setDraft] = useState<GuidedDraft>(() => createInitialGuidedDraft(initialDraft));
   const [currentStep, setCurrentStep] = useState(0);
   const [highestStep, setHighestStep] = useState(0);
-  const [savedCustomizationId, setSavedCustomizationId] = useState('');
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [requestId] = useState(() => generateLocalRugCode());
 
   const recommendedStyles = useMemo(
     () => getRecommendedStyles(draft.placement),
@@ -49,8 +47,8 @@ export function useCustomizationWizard({
     [language, product]
   );
   const summary = useMemo(
-    () => buildSummary(draft, displayProduct, t, savedCustomizationId),
-    [draft, displayProduct, savedCustomizationId, t]
+    () => buildSummary(draft, displayProduct, t, requestId),
+    [draft, displayProduct, requestId, t]
   );
   const activeStep = steps[currentStep] || steps[0]!;
   const isFirstStep = currentStep === 0;
@@ -61,7 +59,6 @@ export function useCustomizationWizard({
       ...current,
       ...patch
     }));
-    setSavedCustomizationId('');
     setStatus('');
   }
 
@@ -72,7 +69,6 @@ export function useCustomizationWizard({
         ? current.intentions.filter((item) => item !== intention)
         : [...current.intentions, intention]
     }));
-    setSavedCustomizationId('');
     setStatus('');
   }
 
@@ -83,7 +79,6 @@ export function useCustomizationWizard({
         ? current.colorsToAvoid.filter((item) => item !== color)
         : [...current.colorsToAvoid, color]
     }));
-    setSavedCustomizationId('');
     setStatus('');
   }
 
@@ -97,7 +92,6 @@ export function useCustomizationWizard({
         ? current.visualStyle
         : ''
     }));
-    setSavedCustomizationId('');
     setStatus('');
   }
 
@@ -146,21 +140,11 @@ export function useCustomizationWizard({
     }
 
     setIsSubmitting(true);
-    setStatus(t('custom.statusSavingLead'));
+    setStatus(t('custom.statusWhatsAppOpened'));
 
     try {
-      const customizationDraft = buildCustomizationDraftFromWizard(draft, summary, product, t);
-      const result = await saveCustomizationDraft(customizationDraft);
-
-      if (!result.ok) {
-        setStatus(getFirstValidationError(result.errors) || t('custom.statusLeadSaveFailed'));
-        return;
-      }
-
-      const savedSummary = buildSummary(draft, displayProduct, t, result.customization.id);
-      setSavedCustomizationId(result.customization.id);
-      window.open(buildWhatsAppUrl(savedSummary), '_blank', 'noopener,noreferrer');
-      setStatus(t('custom.statusLeadSavedWhatsAppOpened', { id: result.customization.id }));
+      window.open(buildWhatsAppUrl(summary), '_blank', 'noopener,noreferrer');
+      setStatus(t('custom.statusWhatsAppOpened'));
     } catch (error) {
       setStatus(error instanceof Error ? error.message : t('custom.statusLeadSaveFailed'));
     } finally {
@@ -213,6 +197,24 @@ function createInitialGuidedDraft(initialDraft: Partial<CustomizationDraft>): Gu
   };
 }
 
-function getFirstValidationError(errors: Record<string, string | undefined>): string {
-  return Object.values(errors).find(Boolean) || '';
+function generateLocalRugCode(date = new Date()): string {
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes = new Uint8Array(4);
+
+  if (window.crypto?.getRandomValues) {
+    window.crypto.getRandomValues(bytes);
+  } else {
+    for (let index = 0; index < bytes.length; index += 1) {
+      bytes[index] = Math.floor(Math.random() * 256);
+    }
+  }
+
+  const suffix = Array.from(bytes, (byte) => alphabet[byte % alphabet.length]).join('');
+  const datePart = [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0')
+  ].join('');
+
+  return 'RUG-' + datePart + '-' + suffix;
 }

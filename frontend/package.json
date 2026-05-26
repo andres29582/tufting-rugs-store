@@ -1,29 +1,24 @@
 {
-  "name": "custom-tufting-rugs-frontend",
-  "version": "0.1.0",
+  "name": "tuft-atelier-frontend",
   "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "check:encoding": "node scripts/check-encoding.mjs",
     "dev": "vite",
-    "dev:qa": "vite --mode qa",
-    "test": "vitest",
-    "test:run": "vitest run",
-    "typecheck": "tsc -p tsconfig.app.json --noEmit",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^4.3.4",
-    "typescript": "^6.0.3",
-    "vite": "^5.4.0",
-    "vitest": "^4.1.5"
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest"
   },
   "dependencies": {
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "react-router-dom": "^7.14.2"
+    "@vitejs/plugin-react": "4.3.4",
+    "vite": "5.4.21",
+    "typescript": "6.0.3",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "react-router-dom": "7.14.2"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "vitest": "4.0.15"
   }
 }

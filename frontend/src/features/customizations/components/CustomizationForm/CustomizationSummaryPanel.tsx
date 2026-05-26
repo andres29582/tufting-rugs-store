@@ -59,7 +59,12 @@ function WhatsAppPreview({ summary, t }: { summary: CustomizationSummary; t: Tra
         <h3>{t('custom.whatsappTitle')}</h3>
         <p>{t('custom.whatsappText')}</p>
       </div>
-      <a className="customization-whatsapp-link" href={buildWhatsAppUrl(summary)} target="_blank" rel="noreferrer">
+      <a
+        className="customization-whatsapp-link"
+        href={buildWhatsAppUrl(summary)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {t('custom.whatsappPreview')}
       </a>
     </section>

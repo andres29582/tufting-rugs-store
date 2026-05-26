@@ -7,6 +7,18 @@ type LocalizedProductCopy = {
 };
 
 const productCopyBySlug: Record<string, Record<Language, LocalizedProductCopy>> = {
+  'bola-ocho': {
+    es: {
+      name: 'Bola Ocho',
+      description:
+        'Alfombra tufting circular inspirada en la bola ocho, con textura alta y contraste grafico para espacios con actitud.'
+    },
+    pt: {
+      name: 'Bola Oito',
+      description:
+        'Tapete tufting circular inspirado na bola oito, com textura alta e contraste grafico para espacos com atitude.'
+    }
+  },
   'ondas-abstractas': {
     es: {
       name: 'Ondas Abstractas',

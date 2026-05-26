@@ -6,18 +6,19 @@ describe('appConfig', () => {
     vi.resetModules();
   });
 
-  it('enables visual QA mocks from VITE_QA_MODE', async () => {
-    vi.stubEnv('VITE_QA_MODE', 'true');
+  it('uses local static data in production', async () => {
+    vi.stubEnv('PROD', true);
+    vi.stubEnv('VITE_API_URL', 'https://api.example.com');
 
     const config = await loadAppConfig();
 
-    expect(config.qaMode).toBe(true);
+    expect(config.apiUrl).toBe('');
     expect(config.useProductMocks).toBe(true);
     expect(config.useCustomizationMocks).toBe(true);
     expect(config.mocksEnabled).toBe(true);
   });
 
-  it('enables visual QA mocks from Vite qa mode', async () => {
+  it('keeps QA mode as an environment label only', async () => {
     vi.stubEnv('MODE', 'qa');
     vi.stubEnv('PROD', false);
 
@@ -28,24 +29,15 @@ describe('appConfig', () => {
     expect(config.useCustomizationMocks).toBe(true);
   });
 
-  it('allows domain mock flags to opt out of QA mode', async () => {
-    vi.stubEnv('VITE_QA_MODE', 'true');
+  it('ignores legacy mock flags for the static V1', async () => {
+    vi.stubEnv('VITE_USE_MOCKS', 'false');
+    vi.stubEnv('VITE_USE_PRODUCT_MOCKS', 'false');
     vi.stubEnv('VITE_USE_CUSTOMIZATION_MOCKS', 'false');
 
     const config = await loadAppConfig();
 
-    expect(config.qaMode).toBe(true);
     expect(config.useProductMocks).toBe(true);
-    expect(config.useCustomizationMocks).toBe(false);
-  });
-
-  it('fails explicitly when QA mode is enabled in production', async () => {
-    vi.stubEnv('PROD', true);
-    vi.stubEnv('VITE_QA_MODE', 'true');
-
-    await expect(loadAppConfig()).rejects.toThrow(
-      'Frontend mocks cannot be enabled in production'
-    );
+    expect(config.useCustomizationMocks).toBe(true);
   });
 });
 

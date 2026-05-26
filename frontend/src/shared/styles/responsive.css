@@ -120,6 +120,10 @@
     display: none;
   }
 
+  .menu-toggle {
+    display: grid;
+  }
+
   .brand {
     order: 1;
     flex: 0 1 auto;
@@ -159,6 +163,7 @@
 
   .main-nav {
     order: 3;
+    display: none;
     flex: 1 0 100%;
     gap: var(--header-nav-gap-compact);
     justify-content: flex-start;
@@ -191,7 +196,8 @@
     font-size: var(--text-sm);
   }
 
-  .filter-menu {
+  .filter-menu,
+  .mobile-nav-menu {
     right: auto;
     left: 0;
     width: 100%;

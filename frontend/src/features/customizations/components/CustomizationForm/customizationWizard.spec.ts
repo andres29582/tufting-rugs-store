@@ -58,9 +58,10 @@ describe('customizationWizard', () => {
 
   it('builds localized summaries and WhatsApp messages from the guided draft', () => {
     const product = buildProduct({ name: 'Base premium' });
-    const summary = buildSummary(validDraft, product, t);
+    const summary = buildSummary(validDraft, product, t, 'RUG-20260526-TEST');
 
     expect(summary).toMatchObject({
+      requestId: 'RUG-20260526-TEST',
       intention: 'Elegante',
       placement: 'Setup',
       visualStyle: 'Gamer neon',
@@ -73,6 +74,7 @@ describe('customizationWizard', () => {
       customerPhone: '+55 11 99999-0000'
     });
     expect(summary.whatsappMessage).toContain('Nombre: Cliente Test');
+    expect(summary.whatsappMessage).toContain('Codigo RUG: RUG-20260526-TEST');
     expect(summary.whatsappMessage).toContain('Base creativa: Base premium');
     expect(summary.whatsappMessage).toContain('Referencia: https://example.com/reference.png');
     expect(decodeURIComponent(buildWhatsAppUrl(summary).replace('https://wa.me/?text=', ''))).toBe(

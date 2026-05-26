@@ -6,13 +6,23 @@ import { RugCard } from '../RugCard/RugCard';
 
 type RugCatalogProps = {
   rugs: Product[];
-  query: string;
-  category: string;
+  query?: string;
+  category?: string;
+  ctaLabel?: string;
+  ctaTo?: string;
   showCustomizationCta?: boolean;
 };
 
-export function RugCatalog({ rugs, query, category, showCustomizationCta = true }: RugCatalogProps) {
+export function RugCatalog({
+  rugs,
+  query = '',
+  category = 'Todas',
+  ctaLabel,
+  ctaTo = '/personalizar',
+  showCustomizationCta = true
+}: RugCatalogProps) {
   const { language, t } = useTranslation();
+  const actionLabel = ctaLabel || t('rugCatalog.cta');
   const categoryText =
     category && category !== 'Todas'
       ? t('rugCatalog.categorySuffix', { category: localizeCategory(category, language) })
@@ -27,8 +37,8 @@ export function RugCatalog({ rugs, query, category, showCustomizationCta = true 
           <h2>{t('rugCatalog.title')}</h2>
         </div>
         {showCustomizationCta ? (
-          <ButtonLink to="/personalizar" variant="ghost">
-            {t('rugCatalog.cta')}
+          <ButtonLink to={ctaTo} variant="ghost">
+            {actionLabel}
           </ButtonLink>
         ) : null}
       </div>

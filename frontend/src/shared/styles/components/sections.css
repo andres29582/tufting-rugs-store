@@ -76,6 +76,11 @@
   font-size: var(--section-title-size);
 }
 
+.section-copy-action {
+  width: fit-content;
+  margin-top: var(--space-5);
+}
+
 .steps-grid {
   display: grid;
   grid-template-columns: var(--steps-grid-columns);
@@ -147,4 +152,26 @@
 .footer-grid span {
   color: var(--color-text);
   font-weight: var(--weight-bold);
+}
+
+.footer-credit {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-line-soft);
+  color: var(--color-text-dim);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+
+.footer-credit a {
+  color: var(--color-text);
+  font-weight: var(--weight-bold);
+  text-decoration: underline;
+  text-decoration-color: var(--color-interactive-border-hover);
+  text-underline-offset: 4px;
+}
+
+.footer-credit a:hover,
+.footer-credit a:focus-visible {
+  color: var(--color-text-soft);
 }
