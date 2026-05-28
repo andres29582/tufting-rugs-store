@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "vercel-build": "npm --prefix frontend install && npm --prefix frontend run build",
     "db:migrate": "prisma migrate dev",
     "db:status": "prisma migrate status",
     "dev": "nest start --watch",
