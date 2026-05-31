@@ -1,5 +1,5 @@
 import type { Product } from '../../../../shared/types';
-import { IconButton, IconLink } from '../../../../shared/components/Button/Button';
+import { ButtonLink } from '../../../../shared/components/Button/Button';
 import { useTranslation } from '../../../../shared/i18n';
 import { formatPrice } from '../../../../utils/money';
 import { localizeProduct } from '../../productLocalization';
@@ -22,14 +22,14 @@ export function RugCard({ rug }: { rug: Product }) {
         </div>
         <div className="card-bottom">
           <strong>{formatPrice(rug.priceFrom)}</strong>
-          <div className="mini-actions">
-            <IconButton icon="favorite" type="button" aria-label={t('rugCard.favorite', { name: displayRug.name })} />
-            <IconLink
-              to={'/producto/' + encodeURIComponent(rug.slug)}
-              icon="shoppingCart"
-              aria-label={t('rugCard.details', { name: displayRug.name })}
-            />
-          </div>
+          <ButtonLink
+            to={'/producto/' + encodeURIComponent(rug.slug)}
+            variant="ghost"
+            className="card-detail-link"
+            aria-label={t('rugCard.details', { name: displayRug.name })}
+          >
+            {t('product.details')}
+          </ButtonLink>
         </div>
       </div>
     </article>

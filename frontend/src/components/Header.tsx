@@ -54,8 +54,6 @@ export function Header() {
               setIsMenuOpen((current) => !current);
             }}
           />
-          <IconButton icon="favorite" type="button" aria-label={t('header.favorites')} />
-          <IconButton icon="shoppingBag" type="button" aria-label={t('header.bag')} />
           <Link className="order-link" to="/personalizar">
             {t('nav.order')}
           </Link>
@@ -97,20 +95,12 @@ function Brand() {
 function MainNav() {
   const { t } = useTranslation();
 
-  function scrollToContact(event: React.MouseEvent<HTMLAnchorElement>) {
-    event.preventDefault();
-    document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   return (
     <nav className="main-nav" aria-label={t('nav.aria')}>
       <Link to="/">{t('nav.home')}</Link>
       <Link to="/catalogo">{t('nav.catalog')}</Link>
       <Link to="/personalizar">{t('nav.custom')}</Link>
       <Link to="/como-funciona">{t('nav.how')}</Link>
-      <a href="#contacto" onClick={scrollToContact}>
-        {t('nav.contact')}
-      </a>
     </nav>
   );
 }
@@ -118,21 +108,12 @@ function MainNav() {
 function MobileNav({ onNavigate }: { onNavigate: () => void }) {
   const { t } = useTranslation();
 
-  function scrollToContact(event: React.MouseEvent<HTMLAnchorElement>) {
-    event.preventDefault();
-    onNavigate();
-    document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   return (
     <nav className="mobile-nav-links" aria-label={t('nav.aria')}>
       <Link to="/" onClick={onNavigate}>{t('nav.home')}</Link>
       <Link to="/catalogo" onClick={onNavigate}>{t('nav.catalog')}</Link>
       <Link to="/personalizar" onClick={onNavigate}>{t('nav.custom')}</Link>
       <Link to="/como-funciona" onClick={onNavigate}>{t('nav.how')}</Link>
-      <a href="#contacto" onClick={scrollToContact}>
-        {t('nav.contact')}
-      </a>
     </nav>
   );
 }

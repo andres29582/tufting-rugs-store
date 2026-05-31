@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { Product } from '../../../../shared/types';
-import { ButtonLink, IconButton } from '../../../../shared/components/Button/Button';
+import { ButtonLink } from '../../../../shared/components/Button/Button';
 import { useTranslation } from '../../../../shared/i18n';
 import { formatPrice } from '../../../../utils/money';
 import { localizeProduct } from '../../productLocalization';
@@ -178,12 +178,6 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
         </div>
 
         <aside className="showcase-flow__info-card" key={'info-' + activeRug.id}>
-          <IconButton
-            icon="favorite"
-            className="showcase-flow__favorite"
-            type="button"
-            aria-label={t('product.favorite', { name: displayRug.name })}
-          />
           <div>
             <span>{t('product.design')}</span>
             <strong>{displayRug.name}</strong>
