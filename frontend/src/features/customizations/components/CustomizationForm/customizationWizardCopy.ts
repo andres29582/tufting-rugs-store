@@ -29,10 +29,6 @@ export function getStepQuestion(stepId: StepId, draft: GuidedDraft, t: Translate
     return t('custom.question.reference');
   }
 
-  if (stepId === 'contact') {
-    return t('custom.question.contact');
-  }
-
   return t('custom.question.summary');
 }
 
@@ -59,10 +55,6 @@ export function getStepDescription(stepId: StepId, draft: GuidedDraft, t: Transl
 
   if (stepId === 'reference') {
     return t('custom.description.reference');
-  }
-
-  if (stepId === 'contact') {
-    return t('custom.description.contact');
   }
 
   return draft.referenceMode === 'LINK'
@@ -107,16 +99,6 @@ export function getStepValidationMessage(
     }
   }
 
-  if (step.id === 'contact') {
-    if (!draft.customerName.trim()) {
-      return t('custom.validation.contactName');
-    }
-
-    if (!isValidEmail(draft.customerEmail)) {
-      return t('custom.validation.contactEmail');
-    }
-  }
-
   return '';
 }
 
@@ -154,8 +136,4 @@ function isValidUrl(value: string): boolean {
   } catch {
     return false;
   }
-}
-
-function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }

@@ -8,7 +8,6 @@ export type StepId =
   | 'base'
   | 'colors'
   | 'reference'
-  | 'contact'
   | 'summary';
 export type IntentionId = 'ELEGANT' | 'FAMILIAR' | 'FUN' | 'MODERN' | 'GAMER' | 'KIDS';
 export type PlacementId = 'LIVING' | 'BEDROOM' | 'ENTRY' | 'SETUP' | 'BUSINESS' | 'GIFT';
@@ -22,7 +21,7 @@ export type VisualStyleId =
   | 'LOGO'
   | 'PLAYFUL';
 export type ShapeId = 'RECTANGULAR' | 'ROUND' | 'FREE';
-export type SizeBaseId = '40X40' | '60X60' | '70X90' | '90X90';
+export type SizeBaseId = '40X40' | '60X60';
 export type ColorAvoidId =
   | 'WHITE'
   | 'BEIGE'
@@ -45,9 +44,6 @@ export type GuidedDraft = {
   colorsToAvoid: ColorAvoidId[];
   referenceMode: ReferenceMode | '';
   referenceUrl: string;
-  customerName: string;
-  customerEmail: string;
-  customerPhone: string;
 };
 
 export type StepDefinition = {
@@ -93,9 +89,6 @@ export type CustomizationSummary = {
     size: string;
     colorsAvoid: string;
     reference: string;
-    customerName: string;
-    customerEmail: string;
-    customerPhone: string;
   };
   intention: string;
   placement: string;
@@ -105,9 +98,6 @@ export type CustomizationSummary = {
   colorsToAvoid: string;
   reference: string;
   referenceUrl: string;
-  customerName: string;
-  customerEmail: string;
-  customerPhone: string;
   requestId: string;
   whatsappMessage: string;
 };

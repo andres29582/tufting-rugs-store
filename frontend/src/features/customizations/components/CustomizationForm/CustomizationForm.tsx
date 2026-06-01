@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react';
 import type { CustomizationDraft, Product } from '../../../../shared/types';
-import { Button } from '../../../../shared/components/Button/Button';
+import { Button, ButtonLink } from '../../../../shared/components/Button/Button';
 import { Icon } from '../../../../shared/components/Icon/Icon';
 import { useTranslation } from '../../../../shared/i18n';
 import { CustomizationStepContent } from './CustomizationStepContent';
@@ -9,6 +9,7 @@ import { CustomizationSummaryPanel } from './CustomizationSummaryPanel';
 import { getStepDescription, getStepQuestion } from './customizationWizardCopy';
 import { steps } from './customizationWizardConfig';
 import { useCustomizationWizard } from './useCustomizationWizard';
+import { buildWhatsAppUrl } from './whatsappMessage';
 import './CustomizationForm.css';
 
 type CustomizationFormProps = {
@@ -92,9 +93,14 @@ export function CustomizationForm({ product, initialDraft = {} }: CustomizationF
                 {t('custom.back')}
               </Button>
               {wizard.isLastStep ? (
-                <Button type="submit" className="customization-whatsapp-submit" disabled={wizard.isSubmitting}>
-                  {wizard.isSubmitting ? t('custom.submitSaving') : t('custom.submitWhatsApp')}
-                </Button>
+                <ButtonLink
+                  href={buildWhatsAppUrl(wizard.summary)}
+                  className="customization-whatsapp-submit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t('custom.submitWhatsApp')}
+                </ButtonLink>
               ) : (
                 <Button
                   type="button"
@@ -123,7 +129,6 @@ export function CustomizationForm({ product, initialDraft = {} }: CustomizationF
         <CustomizationSummaryPanel
           summary={wizard.summary}
           t={t}
-          onEdit={() => wizard.goToStep(0)}
         />
       </form>
     </section>

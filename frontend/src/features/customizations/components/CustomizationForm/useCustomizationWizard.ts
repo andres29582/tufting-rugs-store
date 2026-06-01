@@ -10,7 +10,6 @@ import {
 } from './customizationWizardConfig';
 import { getFirstInvalidStep, getStepValidationMessage } from './customizationWizardCopy';
 import { buildSummary } from './customizationWizardSummary';
-import { buildWhatsAppUrl } from './whatsappMessage';
 import type {
   ColorAvoidId,
   GuidedDraft,
@@ -121,7 +120,7 @@ export function useCustomizationWizard({
     setStatus('');
   }
 
-  async function submit() {
+  function submit() {
     if (isSubmitting) {
       return;
     }
@@ -139,17 +138,7 @@ export function useCustomizationWizard({
       return;
     }
 
-    setIsSubmitting(true);
-    setStatus(t('custom.statusWhatsAppOpened'));
-
-    try {
-      window.open(buildWhatsAppUrl(summary), '_blank', 'noopener,noreferrer');
-      setStatus(t('custom.statusWhatsAppOpened'));
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : t('custom.statusLeadSaveFailed'));
-    } finally {
-      setIsSubmitting(false);
-    }
+    setStatus('');
   }
 
   return {
@@ -190,10 +179,7 @@ function createInitialGuidedDraft(initialDraft: Partial<CustomizationDraft>): Gu
     sizeBase: initialSize,
     colorsToAvoid: [],
     referenceMode: initialDraft.referenceUrl ? 'LINK' : '',
-    referenceUrl: initialDraft.referenceUrl || '',
-    customerName: initialDraft.customerName || '',
-    customerEmail: initialDraft.customerEmail || '',
-    customerPhone: initialDraft.customerPhone || ''
+    referenceUrl: initialDraft.referenceUrl || ''
   };
 }
 

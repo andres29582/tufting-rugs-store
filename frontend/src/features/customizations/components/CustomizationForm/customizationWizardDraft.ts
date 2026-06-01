@@ -14,9 +14,9 @@ export function buildCustomizationDraftFromWizard(
 
   return {
     productId: product?.id || '',
-    customerName: draft.customerName,
-    customerEmail: draft.customerEmail,
-    customerPhone: draft.customerPhone,
+    customerName: '',
+    customerEmail: '',
+    customerPhone: '',
     description: buildCustomizationDescription(summary, product, selectedShape?.format || 'CUSTOM', t),
     preferredColors: [],
     sizeCategory: selectedSize?.sizeCategory || 'CUSTOM',
@@ -48,12 +48,7 @@ function buildCustomizationDescription(
     `${summary.labels.size}: ${valueOrPending(summary.sizeBase, t)}`,
     `${t('custom.lead.backendFormat')}: ${backendFormat}`,
     `${summary.labels.colorsAvoid}: ${summary.colorsToAvoid}`,
-    `${summary.labels.reference}: ${summary.reference}`,
-    '',
-    t('custom.lead.contactSection'),
-    `${summary.labels.customerName}: ${valueOrPending(summary.customerName, t)}`,
-    `${summary.labels.customerEmail}: ${valueOrPending(summary.customerEmail, t)}`,
-    `${summary.labels.customerPhone}: ${summary.customerPhone || t('custom.lead.noPhone')}`
+    `${summary.labels.reference}: ${summary.reference}`
   ].join('\n');
 }
 

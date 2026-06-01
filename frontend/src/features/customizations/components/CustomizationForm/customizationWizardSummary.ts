@@ -33,10 +33,7 @@ export function buildSummary(
       shape: t('custom.summary.shape'),
       size: t('custom.summary.size'),
       colorsAvoid: t('custom.summary.colorsAvoid'),
-      reference: t('custom.summary.reference'),
-      customerName: t('custom.summary.customerName'),
-      customerEmail: t('custom.summary.customerEmail'),
-      customerPhone: t('custom.summary.customerPhone')
+      reference: t('custom.summary.reference')
     },
     intention: joinLabels(
       intentionOptions.filter((option) => draft.intentions.includes(option.value)).map((option) => t(option.labelKey))
@@ -50,9 +47,6 @@ export function buildSummary(
     ) || t('custom.colors.noRestrictions'),
     reference,
     referenceUrl: draft.referenceUrl,
-    customerName: draft.customerName.trim(),
-    customerEmail: draft.customerEmail.trim(),
-    customerPhone: draft.customerPhone.trim(),
     requestId,
     whatsappMessage: ''
   };

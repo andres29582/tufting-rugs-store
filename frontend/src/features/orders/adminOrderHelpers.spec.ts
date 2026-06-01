@@ -115,7 +115,7 @@ describe('adminOrderHelpers', () => {
           'Uso: Regalo',
           'Estilo: Suave',
           'Formato: Forma libre',
-          'Tamano base: 70 x 90 cm',
+          'Tamano base: 60 x 60 cm',
           'Referencia: No tengo referencia'
         ].join('\n')
       })
@@ -125,7 +125,7 @@ describe('adminOrderHelpers', () => {
       isGuided: true,
       preview: 'Intencion: Infantil - Uso: Regalo - Estilo: Suave',
       shape: 'Forma libre',
-      size: '70 x 90 cm',
+      size: '60 x 60 cm',
       reference: 'No tengo referencia'
     });
   });

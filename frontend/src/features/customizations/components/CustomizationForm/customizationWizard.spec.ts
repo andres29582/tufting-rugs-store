@@ -23,10 +23,7 @@ const validDraft: GuidedDraft = {
   sizeBase: '60X60',
   colorsToAvoid: ['WHITE'],
   referenceMode: 'LINK',
-  referenceUrl: 'https://example.com/reference.png',
-  customerName: 'Cliente Test',
-  customerEmail: 'cliente@example.com',
-  customerPhone: '+55 11 99999-0000'
+  referenceUrl: 'https://example.com/reference.png'
 };
 
 describe('customizationWizard', () => {
@@ -68,16 +65,15 @@ describe('customizationWizard', () => {
       shape: 'Forma libre',
       sizeBase: '60 x 60 cm',
       colorsToAvoid: 'Blanco',
-      reference: 'https://example.com/reference.png',
-      customerName: 'Cliente Test',
-      customerEmail: 'cliente@example.com',
-      customerPhone: '+55 11 99999-0000'
+      reference: 'https://example.com/reference.png'
     });
-    expect(summary.whatsappMessage).toContain('Nombre: Cliente Test');
+    expect(summary.whatsappMessage).not.toContain('Nombre:');
+    expect(summary.whatsappMessage).not.toContain('Email:');
+    expect(summary.whatsappMessage).not.toContain('WhatsApp:');
     expect(summary.whatsappMessage).toContain('Codigo RUG: RUG-20260526-TEST');
     expect(summary.whatsappMessage).toContain('Base creativa: Base premium');
     expect(summary.whatsappMessage).toContain('Referencia: https://example.com/reference.png');
-    expect(decodeURIComponent(buildWhatsAppUrl(summary).replace('https://wa.me/?text=', ''))).toBe(
+    expect(decodeURIComponent(buildWhatsAppUrl(summary).replace('https://wa.me/5541985291212?text=', ''))).toBe(
       summary.whatsappMessage
     );
   });
@@ -106,9 +102,9 @@ describe('customizationWizard', () => {
 
     expect(draft).toMatchObject({
       productId: 'custom-product',
-      customerName: 'Cliente Test',
-      customerEmail: 'cliente@example.com',
-      customerPhone: '+55 11 99999-0000',
+      customerName: '',
+      customerEmail: '',
+      customerPhone: '',
       preferredColors: [],
       sizeCategory: 'MEDIUM',
       sizeLabel: '60 x 60 cm',
@@ -119,7 +115,7 @@ describe('customizationWizard', () => {
     expect(draft.description).toContain('Producto base');
     expect(draft.description).toContain('Nombre: Base premium');
     expect(draft.description).toContain('Formato tecnico: CUSTOM');
-    expect(draft.description).toContain('Contacto');
+    expect(draft.description).not.toContain('Contacto');
     expect(draft.description).toContain('Colores a evitar: Blanco');
   });
 });

@@ -324,20 +324,9 @@
 }
 
 .customization-base-grid,
-.customization-reference-step,
-.customization-contact-step {
+.customization-reference-step {
   display: grid;
   gap: 16px;
-}
-
-.customization-contact-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.customization-contact-grid .form-field:last-child {
-  grid-column: 1 / -1;
 }
 
 .customization-size-grid {
@@ -547,7 +536,6 @@
   justify-content: space-between;
 }
 
-.customization-edit-button,
 .customization-whatsapp-link {
   display: inline-flex;
   min-height: 34px;
@@ -565,7 +553,6 @@
   cursor: pointer;
 }
 
-.customization-edit-button:hover,
 .customization-whatsapp-link:hover {
   border-color: rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.12);
@@ -721,7 +708,6 @@
 
   .customization-choice-grid,
   .customization-color-grid,
-  .customization-contact-grid,
   .customization-size-grid {
     grid-template-columns: 1fr;
   }

@@ -185,44 +185,6 @@ export function CustomizationStepContent({
     );
   }
 
-  if (stepId === 'contact') {
-    return (
-      <fieldset className="customization-fieldset customization-contact-step">
-        <legend>{t('custom.group.contact')}</legend>
-        <div className="customization-contact-grid">
-          <FormField
-            label={t('custom.contactName')}
-            name="customerName"
-            placeholder={t('custom.contactNamePlaceholder')}
-            autoComplete="name"
-            required
-            value={draft.customerName}
-            onChange={(event) => onUpdateDraft({ customerName: event.currentTarget.value })}
-          />
-          <FormField
-            label={t('custom.contactEmail')}
-            name="customerEmail"
-            type="email"
-            placeholder={t('custom.contactEmailPlaceholder')}
-            autoComplete="email"
-            required
-            value={draft.customerEmail}
-            onChange={(event) => onUpdateDraft({ customerEmail: event.currentTarget.value })}
-          />
-          <FormField
-            label={t('custom.contactPhone')}
-            name="customerPhone"
-            type="tel"
-            placeholder={t('custom.contactPhonePlaceholder')}
-            autoComplete="tel"
-            value={draft.customerPhone}
-            onChange={(event) => onUpdateDraft({ customerPhone: event.currentTarget.value })}
-          />
-        </div>
-      </fieldset>
-    );
-  }
-
   return <SummaryStep summary={summary} />;
 }
 
@@ -274,9 +236,6 @@ function SummaryStep({ summary }: { summary: CustomizationSummary }) {
         <SummaryItem label={summary.labels.size} value={summary.sizeBase} />
         <SummaryItem label={summary.labels.colorsAvoid} value={summary.colorsToAvoid} />
         <SummaryItem label={summary.labels.reference} value={summary.reference} />
-        <SummaryItem label={summary.labels.customerName} value={summary.customerName} />
-        <SummaryItem label={summary.labels.customerEmail} value={summary.customerEmail} />
-        <SummaryItem label={summary.labels.customerPhone} value={summary.customerPhone} />
       </dl>
     </div>
   );

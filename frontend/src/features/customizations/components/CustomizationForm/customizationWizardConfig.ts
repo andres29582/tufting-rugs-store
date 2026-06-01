@@ -19,7 +19,6 @@ export const steps: StepDefinition[] = [
   { id: 'base', labelKey: 'custom.step.base', shortLabelKey: 'custom.step.baseShort' },
   { id: 'colors', labelKey: 'custom.step.colors', shortLabelKey: 'custom.step.colorsShort' },
   { id: 'reference', labelKey: 'custom.step.reference', shortLabelKey: 'custom.step.reference' },
-  { id: 'contact', labelKey: 'custom.step.contact', shortLabelKey: 'custom.step.contactShort' },
   { id: 'summary', labelKey: 'custom.step.summary', shortLabelKey: 'custom.step.summary' }
 ];
 
@@ -198,20 +197,6 @@ export const sizeBaseOptions: SizeBaseOption[] = [
     detailKey: 'custom.size.medium',
     sizeLabel: '60 x 60 cm',
     sizeCategory: 'MEDIUM'
-  },
-  {
-    value: '70X90',
-    label: '70x90',
-    detailKey: 'custom.size.wide',
-    sizeLabel: '70 x 90 cm',
-    sizeCategory: 'LARGE'
-  },
-  {
-    value: '90X90',
-    label: '90x90',
-    detailKey: 'custom.size.large',
-    sizeLabel: '90 x 90 cm',
-    sizeCategory: 'LARGE'
   }
 ];
 
