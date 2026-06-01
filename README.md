@@ -1,6 +1,25 @@
 # Tufting Rugs Store
 
-Backend V1 para una tienda de alfombras personalizadas hechas con tufting.
+Proyecto fullstack para una tienda de alfombras personalizadas hechas con tufting.
+
+El repositorio contiene un storefront React/Vite y un backend NestJS con Prisma y
+PostgreSQL. El estado publicado actualmente es frontend-first: Vercel sirve el
+storefront estatico generado desde `frontend`, mientras que el backend queda
+disponible en el repositorio para desarrollo local, administracion e integracion
+API futura.
+
+> Estado actual (Mayo 2026)
+>
+> El sitio publicado en Vercel funciona actualmente como un storefront estatico
+> construido con React + Vite.
+>
+> El frontend utiliza datos mock para catalogo, personalizacion y flujo de
+> pedidos.
+>
+> El backend NestJS, Prisma y PostgreSQL continua disponible dentro del
+> repositorio, pero no forma parte del runtime actualmente desplegado en Vercel.
+>
+> La integracion frontend <-> API esta planificada para una version futura.
 
 La V1 se enfoca en el flujo operativo basico:
 
@@ -8,17 +27,95 @@ La V1 se enfoca en el flujo operativo basico:
 FULL_CUSTOM Product -> Customization -> Order -> AdminReview
 ```
 
-No implementa IA, generacion automatica de imagenes, Mercado Pago ni pagos automaticos. El modelo queda preparado para esas etapas futuras, pero la V1 prioriza reglas de negocio claras, trazabilidad admin y una API estable para el frontend.
+No ejecuta generacion automatica de imagenes, Mercado Pago ni pagos
+automaticos. El modelo queda preparado para esas etapas futuras, pero la V1
+prioriza reglas de negocio claras, trazabilidad admin y una API estable para
+una integracion frontend futura.
 
 ## Stack
 
+- React
+- Vite
 - NestJS
 - TypeScript
 - Prisma ORM
 - PostgreSQL
 - REST API
 - Jest
+- Vitest
 - Supertest para pruebas HTTP reales
+
+## Modos de operación
+
+| Modo | Estado | Descripcion |
+| --- | --- | --- |
+| Static storefront mode | Activo | Frontend React/Vite publicado en Vercel usando mocks. |
+| API-integrated mode | Futuro | Frontend conectado a una API real mediante `apiUrl`. |
+| Backend admin/API mode | Disponible en el repositorio | Backend NestJS + Prisma + PostgreSQL para administracion y operaciones. |
+
+### Static storefront mode
+
+Es el modo activo del sitio publicado. Vercel instala y compila la app dentro de
+`frontend`:
+
+```powershell
+npm --prefix frontend install
+npm --prefix frontend run build
+```
+
+Comandos locales del storefront:
+
+```powershell
+cd frontend
+npm run dev
+npm run build
+npm run test -- --run
+```
+
+La salida publicada es:
+
+```text
+frontend/dist
+```
+
+En este modo, el frontend usa datos mock configurados en:
+
+```text
+frontend/src/app/config.ts
+```
+
+Esto permite operar el storefront publico sin ejecutar el backend.
+
+### API-integrated mode
+
+Este modo queda planificado para una version futura. La idea es que el frontend
+deje de usar mocks y consuma una API real mediante `apiUrl`.
+
+Para habilitarlo se debera ajustar la configuracion runtime del frontend en
+`frontend/src/app/config.ts`, definir las variables de entorno necesarias y
+validar los flujos contra endpoints reales.
+
+### Backend admin/API mode
+
+El backend esta disponible en el repositorio para desarrollo local,
+administracion y operaciones. Usa NestJS, Prisma y PostgreSQL, y expone endpoints
+para productos, personalizaciones, pedidos y admin.
+
+Comandos principales desde la raiz:
+
+```powershell
+npm install
+npm run db:migrate
+npm run dev
+npm run build
+npm start
+```
+
+Por defecto la API escucha en:
+
+```text
+http://localhost:3001
+```
 
 ## Requisitos
 
@@ -557,7 +654,15 @@ npm start
 
 ## Estado actual
 
-Backend V1 con:
+Storefront publico actual:
+
+- frontend React/Vite publicado como sitio estatico;
+- build de Vercel apuntando a `frontend/dist`;
+- datos mock para catalogo, personalizacion y flujo de pedidos;
+- guia de IA externa para ayudar a crear referencias visuales;
+- contacto y continuidad del pedido orientados a WhatsApp.
+
+Backend disponible en el repo:
 
 - schema Prisma;
 - migracion inicial;
