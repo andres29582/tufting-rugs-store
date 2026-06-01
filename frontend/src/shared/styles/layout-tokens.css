@@ -1,0 +1,120 @@
+/* ========================================================================== 
+   Layout tokens
+   Global dimensions, page grids, and responsive layout values.
+   ========================================================================== */
+
+:root {
+
+  /* --------------------------------------------------------------------------
+     Layout
+  -------------------------------------------------------------------------- */
+
+  --max-width: 1180px;
+  --page-section-width-offset: 36px;
+  --page-section-padding: 112px 0 44px;
+  --page-section-padding-top-compact: var(--space-7);
+  --page-adjacent-section-padding-top: var(--space-3);
+  --page-panel-gap: var(--space-4);
+  --page-panel-padding: clamp(24px, 5vw, 44px);
+  --page-title-max-width: 16ch;
+  --page-title-size: clamp(2.35rem, 5.5vw, 4.6rem);
+  --page-copy-max-width: 58ch;
+  --page-copy-leading: 1.65;
+  --page-actions-gap: var(--space-3);
+  --page-actions-space: var(--space-2);
+  --admin-main-min-height: 70vh;
+  --admin-section-width-offset: 36px;
+  --admin-section-padding: 112px 0 56px;
+  --admin-section-padding-top-compact: 30px;
+  --admin-auth-min-height: 78vh;
+  --admin-auth-card-max-width: 480px;
+  --admin-auth-card-padding: clamp(24px, 5vw, 40px);
+  --admin-title-size: clamp(2rem, 4vw, 3.5rem);
+  --admin-title-leading: 1;
+  --admin-copy-max-width: 62ch;
+  --admin-page-header-gap: var(--space-6);
+  --admin-page-header-space: var(--space-6);
+  --admin-page-header-inner-gap: 10px;
+  --admin-table-wrap-padding: var(--space-2);
+  --admin-table-min-width: 820px;
+  --admin-table-cell-padding: var(--space-4);
+  --admin-table-header-size: var(--text-xs);
+  --admin-table-detail-size: 0.9rem;
+  --admin-upload-columns: minmax(0, 1fr) minmax(220px, 320px);
+  --admin-upload-field-padding: var(--space-3);
+  --admin-orders-columns: minmax(280px, 0.9fr) minmax(0, 1.7fr);
+  --admin-orders-gap: 18px;
+  --admin-order-panel-padding: 14px;
+  --admin-order-list-gap: 10px;
+  --admin-order-card-gap: var(--space-2);
+  --admin-order-card-padding: 14px;
+  --admin-order-detail-gap: var(--space-5);
+  --admin-order-detail-head-gap: var(--space-4);
+  --admin-detail-grid-gap: 10px;
+  --admin-detail-item-gap: var(--space-1);
+  --admin-detail-item-padding: var(--space-3);
+  --admin-detail-label-size: 0.82rem;
+  --admin-detail-section-gap: var(--space-3);
+  --admin-reference-gap: var(--space-2);
+  --admin-reference-min-height: 34px;
+  --admin-reference-min-height-compact: 30px;
+  --admin-reference-padding: 0 10px;
+  --admin-reference-text-compact: 0.85rem;
+  --admin-review-history-gap: 10px;
+  --admin-review-item-gap: var(--space-1);
+  --admin-review-item-padding: var(--space-3);
+  --admin-review-border-width: 3px;
+  --admin-review-text-size: 0.85rem;
+  --feature-section-padding: var(--space-7) 0 34px;
+  --feature-strip-columns: repeat(4, 1fr);
+  --feature-strip-columns-medium: repeat(2, 1fr);
+  --how-section-padding: 34px 0 58px;
+  --how-panel-columns: minmax(220px, 0.82fr) minmax(0, 1.5fr);
+  --steps-grid-columns: repeat(4, 1fr);
+  --steps-grid-columns-medium: repeat(2, minmax(0, 1fr));
+  --custom-cta-section-padding: var(--space-2) 0 var(--space-11);
+  --custom-cta-columns: auto minmax(0, 1fr) auto;
+  --footer-grid-columns: 1.2fr repeat(3, 1fr);
+  --footer-grid-columns-medium: repeat(2, 1fr);
+  --showcase-flow-min-height: clamp(430px, calc(100svh - 150px), 520px);
+  --showcase-flow-padding: clamp(16px, 2.5vh, 28px) max(22px, calc((100vw - var(--max-width)) / 2)) 36px;
+  --showcase-flow-padding-medium-inline: var(--space-4);
+  --showcase-flow-padding-compact: var(--space-3) var(--space-3) 42px;
+  --showcase-flow-background-inset: -4%;
+  --showcase-flow-background-inset-compact: -12%;
+  --showcase-flow-content-columns: minmax(230px, 276px) minmax(260px, 1fr) minmax(150px, 184px);
+  --showcase-flow-content-columns-medium: minmax(280px, 0.82fr) minmax(320px, 1.18fr);
+  --showcase-flow-content-gap: clamp(12px, 2vw, 24px);
+  --showcase-flow-content-min-height: clamp(340px, calc(100svh - 250px), 420px);
+  --showcase-rug-area-min-height: clamp(280px, calc(100svh - 310px), 350px);
+  --showcase-rug-area-min-height-medium: 300px;
+  --showcase-rug-area-min-height-compact: 96px;
+  --showcase-rug-shell-width: min(86%, 460px);
+  --showcase-rug-shell-width-compact: min(56%, 210px);
+  --showcase-section-min-height: clamp(640px, 88vh, 820px);
+  --showcase-section-padding: 112px 22px 66px;
+  --showcase-section-padding-compact: var(--space-7) 14px 42px;
+  --showcase-inner-columns: minmax(280px, 0.78fr) minmax(420px, 1.22fr);
+  --showcase-inner-columns-reverse: minmax(420px, 1.22fr) minmax(280px, 0.78fr);
+  --showcase-inner-gap: clamp(28px, 5vw, 72px);
+  --showcase-inner-gap-medium: 22px;
+  --showcase-inner-gap-compact: var(--space-2);
+  --showcase-visual-min-height: 520px;
+  --showcase-visual-min-height-medium: 430px;
+  --showcase-visual-min-height-compact: 270px;
+  --customization-section-width-offset: var(--space-10);
+  --customization-section-width-offset-compact: var(--space-6);
+  --customization-section-padding: 18px 0 var(--space-12);
+  --customization-section-padding-bottom-compact: 46px;
+  --customization-panel-columns: minmax(220px, 0.7fr) minmax(0, 1.18fr) minmax(260px, 0.72fr);
+  --customization-panel-gap: clamp(18px, 3vw, 34px);
+  --customization-contact-columns: repeat(2, minmax(0, 1fr));
+  --customization-option-grid-columns: repeat(2, minmax(0, 1fr));
+  --customization-format-grid-columns: repeat(4, minmax(0, 1fr));
+  --customization-format-grid-columns-compact: repeat(2, minmax(0, 1fr));
+  --customization-color-grid-columns: repeat(3, minmax(0, 1fr));
+  --customization-summary-top: 110px;
+  --customization-summary-list-columns: 0.82fr 1fr;
+  --page-gutter: 18px;
+  --page-gutter-compact: 12px;
+}

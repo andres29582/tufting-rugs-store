@@ -68,3 +68,24 @@
   background: var(--color-filter-active-surface);
   border-color: var(--color-filter-active-line);
 }
+
+@media (max-width: 720px) {
+  .category-filters {
+    flex-wrap: wrap;
+    gap: var(--filter-gap-compact);
+    overflow: visible;
+    padding-bottom: 0;
+    mask-image: none;
+  }
+
+  .search-bar input {
+    backdrop-filter: none;
+  }
+
+  .category-filter {
+    flex: 1 1 calc(33.333% - var(--filter-gap-compact));
+    min-width: var(--filter-min-width-compact);
+    padding: var(--filter-padding-compact);
+    font-size: var(--text-sm);
+  }
+}

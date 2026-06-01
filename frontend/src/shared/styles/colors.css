@@ -1,0 +1,121 @@
+/* ========================================================================== 
+   Color tokens
+   Brand primitives, semantic color roles, and color legacy aliases.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* --------------------------------------------------------------------------
+     Primitives
+     Keep raw brand values here and consume them through semantic tokens below.
+  -------------------------------------------------------------------------- */
+
+  --_navy: #1d2b53;
+  --_orange: #f97316;
+  --_pink: #db5c91;
+  --_cream: #fffaf3;
+  --_surface: #050506;
+  --_surface-deep: #01050c;
+
+  /* --------------------------------------------------------------------------
+     Semantic colors
+  -------------------------------------------------------------------------- */
+
+  --color-text: var(--_cream);
+  --color-text-soft: rgba(255, 250, 243, 0.82);
+  --color-text-secondary: rgba(255, 250, 243, 0.78);
+  --color-text-muted: rgba(255, 250, 243, 0.72);
+  --color-text-filter-placeholder: rgba(255, 250, 243, 0.65);
+  --color-text-dim: rgba(255, 250, 243, 0.54);
+  --color-text-placeholder: rgba(255, 250, 243, 0.44);
+  --color-text-subtle: rgba(255, 250, 243, 0.34);
+  --color-text-inverse: #171717;
+  --color-text-inverse-strong: #151515;
+  --color-text-emphasis: rgba(255, 250, 243, 0.86);
+  --color-surface: var(--_surface);
+  --color-surface-deep: var(--_surface-deep);
+  --color-surface-inverse: rgba(255, 250, 243, 0.94);
+  --color-surface-raised: rgba(255, 255, 255, 0.08);
+  --color-surface-overlay: rgba(1, 5, 12, 0.42);
+  --color-line: rgba(255, 255, 255, 0.22);
+  --color-line-soft: rgba(255, 255, 255, 0.14);
+  --color-line-strong: rgba(255, 255, 255, 0.36);
+  --color-glass: rgba(255, 255, 255, 0.13);
+  --color-glass-strong: rgba(255, 255, 255, 0.19);
+  --color-glass-medium: rgba(255, 255, 255, 0.11);
+  --color-glass-soft: rgba(255, 255, 255, 0.08);
+  --color-interactive-surface: rgba(255, 255, 255, 0.09);
+  --color-interactive-surface-soft-hover: rgba(255, 255, 255, 0.12);
+  --color-interactive-surface-hover: rgba(255, 255, 255, 0.15);
+  --color-interactive-surface-strong-hover: rgba(255, 255, 255, 0.18);
+  --color-interactive-border-soft: rgba(255, 255, 255, 0.2);
+  --color-interactive-border-muted: rgba(255, 255, 255, 0.24);
+  --color-interactive-border: rgba(255, 255, 255, 0.28);
+  --color-interactive-border-hover: rgba(255, 255, 255, 0.48);
+  --color-control-surface: rgba(7, 15, 28, 0.4);
+  --color-control-surface-focus: rgba(7, 15, 28, 0.5);
+  --color-control-line: rgba(255, 255, 255, 0.18);
+  --color-control-line-focus: rgba(255, 255, 255, 0.62);
+  --color-control-ring: rgba(255, 255, 255, 0.08);
+  --color-search-surface: rgba(8, 14, 28, 0.28);
+  --color-search-surface-focus: rgba(8, 14, 28, 0.4);
+  --color-search-line: rgba(255, 255, 255, 0.24);
+  --color-search-line-focus: rgba(255, 255, 255, 0.68);
+  --color-filter-surface: rgba(255, 255, 255, 0.1);
+  --color-filter-surface-hover: rgba(255, 255, 255, 0.16);
+  --color-filter-line: rgba(255, 255, 255, 0.17);
+  --color-filter-active-surface: rgba(255, 250, 243, 0.92);
+  --color-filter-active-line: rgba(255, 250, 243, 0.96);
+  --color-card-hover-line: rgba(255, 255, 255, 0.4);
+  --color-card-hover-surface:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.09)),
+    rgba(10, 16, 28, 0.2);
+  --color-card-media-surface:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.2), transparent 42%),
+    rgba(0, 0, 0, 0.18);
+  --color-admin-main-background:
+    linear-gradient(180deg, rgba(255, 250, 243, 0.04), rgba(255, 250, 243, 0)),
+    #101820;
+  --color-admin-text-strong: rgba(255, 250, 243, 0.9);
+  --color-admin-surface: rgba(255, 255, 255, 0.06);
+  --color-admin-surface-strong: rgba(255, 255, 255, 0.08);
+  --color-admin-surface-subtle: rgba(255, 255, 255, 0.05);
+  --color-admin-line: rgba(255, 255, 255, 0.14);
+  --color-admin-line-soft: rgba(255, 255, 255, 0.12);
+  --color-admin-line-subtle: rgba(255, 255, 255, 0.1);
+  --color-admin-success-text: #102f25;
+  --color-admin-success-surface: #bcebd6;
+  --color-admin-warning-text: #12211c;
+  --color-admin-warning-surface: #f5d58d;
+  --color-admin-warning-line: rgba(245, 213, 141, 0.8);
+  --color-admin-warning-surface-soft: rgba(245, 213, 141, 0.12);
+  --color-accent-a: var(--_navy);
+  --color-accent-b: var(--_orange);
+  --color-accent-c: var(--_pink);
+  --color-focus: rgba(255, 255, 255, 0.84);
+  --color-focus-soft: color-mix(in srgb, var(--color-text) 70%, transparent);
+  --color-danger: rgba(255, 120, 120, 0.9);
+  --color-danger-text: #ffd5d5;
+  --color-danger-line: rgba(255, 213, 213, 0.72);
+  --color-danger-ring: rgba(255, 120, 120, 0.1);
+  --color-danger-soft: var(--color-danger-ring);
+  --color-warning: rgba(245, 213, 141, 0.9);
+  --color-warning-soft: rgba(245, 213, 141, 0.12);
+
+  /* --------------------------------------------------------------------------
+     Legacy aliases
+     Existing styles still use these names. Keep them until each component has
+     migrated to the semantic tokens above.
+  -------------------------------------------------------------------------- */
+
+  --active-a: var(--color-accent-a);
+  --active-b: var(--color-accent-b);
+  --active-c: var(--color-accent-c);
+  --ink: var(--color-text);
+  --muted: var(--color-text-muted);
+  --dim: var(--color-text-dim);
+  --line: var(--color-line);
+  --glass: var(--color-glass);
+  --glass-strong: var(--color-glass-strong);
+}

@@ -295,3 +295,109 @@
   border-color: var(--color-interactive-border-hover);
   background: var(--color-interactive-surface-soft-hover);
 }
+
+@media (max-width: 1080px) {
+  .header-shell {
+    grid-template-columns: 1fr auto;
+  }
+
+  .main-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: center;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-header {
+    position: relative;
+    top: auto;
+    width: min(calc(100vw - var(--header-gutter-compact)), var(--header-max-width));
+    margin-top: var(--space-2);
+  }
+
+  .header-shell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--header-shell-padding-compact);
+    border-radius: var(--radius-header-compact);
+    backdrop-filter: none;
+  }
+
+  .brand-copy small,
+  .header-actions .icon-button:not(.menu-toggle) {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: grid;
+  }
+
+  .brand {
+    order: 1;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .header-actions {
+    order: 2;
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .order-link {
+    max-width: var(--header-order-max-width-compact);
+    overflow: hidden;
+    padding: var(--header-order-padding-compact);
+    font-size: var(--header-text-link-compact);
+    text-overflow: ellipsis;
+  }
+
+  .header-actions .order-link {
+    display: none;
+  }
+
+  .main-nav a {
+    padding: var(--header-nav-padding-compact);
+    font-size: var(--header-text-link-compact);
+  }
+
+  .main-nav {
+    order: 3;
+    display: none;
+    flex: 1 0 100%;
+    flex-wrap: nowrap;
+    gap: var(--header-nav-gap-compact);
+    justify-content: flex-start;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    mask-image: linear-gradient(to right, #000 88%, transparent);
+  }
+
+  .main-nav a {
+    flex: 0 0 auto;
+    min-width: auto;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .filter-menu,
+  .mobile-nav-menu {
+    right: auto;
+    left: 0;
+    width: 100%;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+  }
+
+  .filter-menu .category-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filter-menu .category-filter {
+    min-width: 0;
+  }
+}

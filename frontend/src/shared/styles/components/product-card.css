@@ -84,3 +84,32 @@
   padding: var(--empty-state-padding);
   border-radius: var(--radius-card);
 }
+
+@media (max-width: 1080px) {
+  .catalog-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .catalog-section {
+    width: min(calc(100% - 24px), var(--max-width));
+  }
+
+  .catalog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-heading {
+    display: grid;
+    align-items: start;
+  }
+
+  .catalog-heading .button {
+    width: 100%;
+  }
+
+  .rug-card-media {
+    height: var(--product-card-media-height-compact);
+  }
+}

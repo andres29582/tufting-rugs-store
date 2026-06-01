@@ -1,4 +1,8 @@
-@import './tokens.css';
+@import './colors.css';
+@import './spacing.css';
+@import './typography.css';
+@import './layout-tokens.css';
+@import './component-tokens.css';
 @import './reset.css';
 @import './base.css';
 @import './layout.css';
@@ -15,5 +19,4 @@
 @import './components/product-card.css';
 @import './components/sections.css';
 @import '../../features/aiDesign/styles/ai-design.css';
-@import './responsive.css';
 @import './animations.css';
