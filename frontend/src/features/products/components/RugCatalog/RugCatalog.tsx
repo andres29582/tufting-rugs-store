@@ -10,6 +10,8 @@ type RugCatalogProps = {
   category?: string;
   ctaLabel?: string;
   ctaTo?: string;
+  headingTitle?: string;
+  showEyebrow?: boolean;
   showCustomizationCta?: boolean;
 };
 
@@ -19,10 +21,13 @@ export function RugCatalog({
   category = 'Todas',
   ctaLabel,
   ctaTo = '/personalizar',
+  headingTitle,
+  showEyebrow = true,
   showCustomizationCta = true
 }: RugCatalogProps) {
   const { language, t } = useTranslation();
   const actionLabel = ctaLabel || t('rugCatalog.cta');
+  const title = headingTitle || t('rugCatalog.title');
   const categoryText =
     category && category !== 'Todas'
       ? t('rugCatalog.categorySuffix', { category: localizeCategory(category, language) })
@@ -33,8 +38,8 @@ export function RugCatalog({
     <section id="catalogo" className="catalog-section">
       <div className="catalog-heading">
         <div>
-          <p className="eyebrow">{t('rugCatalog.eyebrow')}</p>
-          <h2>{t('rugCatalog.title')}</h2>
+          {showEyebrow ? <p className="eyebrow">{t('rugCatalog.eyebrow')}</p> : null}
+          <h2>{title}</h2>
         </div>
         {showCustomizationCta ? (
           <ButtonLink to={ctaTo} variant="ghost">

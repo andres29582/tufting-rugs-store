@@ -4,6 +4,8 @@ import { Icon } from '../shared/components/Icon/Icon';
 import { IconButton } from '../shared/components/Button/Button';
 import { useTranslation, type Language } from '../shared/i18n';
 
+const customizationRestartEvent = 'tuft:restart-customization';
+
 export function Header() {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,7 +56,7 @@ export function Header() {
               setIsMenuOpen((current) => !current);
             }}
           />
-          <Link className="order-link" to="/personalizar">
+          <Link className="order-link" to="/personalizar" onClick={restartCustomizationFlow}>
             {t('nav.order')}
           </Link>
         </div>
@@ -80,7 +82,7 @@ function Brand() {
   const { t } = useTranslation();
 
   return (
-    <Link className="brand" to="/" aria-label={t('brand.homeAria')}>
+    <Link className="brand" to="/" aria-label={t('brand.homeAria')} onClick={scrollToPageTop}>
       <span className="brand-mark" aria-hidden="true">
         <Icon name="tuftMark" />
       </span>
@@ -97,9 +99,9 @@ function MainNav() {
 
   return (
     <nav className="main-nav" aria-label={t('nav.aria')}>
-      <Link to="/">{t('nav.home')}</Link>
+      <Link to="/" onClick={scrollToPageTop}>{t('nav.home')}</Link>
       <Link to="/catalogo">{t('nav.catalog')}</Link>
-      <Link to="/personalizar">{t('nav.custom')}</Link>
+      <Link to="/personalizar" onClick={restartCustomizationFlow}>{t('nav.custom')}</Link>
       <Link to="/como-funciona">{t('nav.how')}</Link>
     </nav>
   );
@@ -110,12 +112,38 @@ function MobileNav({ onNavigate }: { onNavigate: () => void }) {
 
   return (
     <nav className="mobile-nav-links" aria-label={t('nav.aria')}>
-      <Link to="/" onClick={onNavigate}>{t('nav.home')}</Link>
+      <Link
+        to="/"
+        onClick={() => {
+          scrollToPageTop();
+          onNavigate();
+        }}
+      >
+        {t('nav.home')}
+      </Link>
       <Link to="/catalogo" onClick={onNavigate}>{t('nav.catalog')}</Link>
-      <Link to="/personalizar" onClick={onNavigate}>{t('nav.custom')}</Link>
+      <Link
+        to="/personalizar"
+        onClick={() => {
+          restartCustomizationFlow();
+          onNavigate();
+        }}
+      >
+        {t('nav.custom')}
+      </Link>
       <Link to="/como-funciona" onClick={onNavigate}>{t('nav.how')}</Link>
     </nav>
   );
+}
+
+function restartCustomizationFlow() {
+  window.dispatchEvent(new Event(customizationRestartEvent));
+}
+
+function scrollToPageTop() {
+  window.setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 0);
 }
 
 function LanguageToggle() {

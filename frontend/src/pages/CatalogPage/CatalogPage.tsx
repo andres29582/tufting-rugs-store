@@ -58,7 +58,12 @@ export function CatalogPage() {
 
   return (
     <AppShell mainClassName="page-main">
-      <RugCatalog rugs={products} />
+      <RugCatalog
+        rugs={products}
+        ctaLabel={t('catalog.customizeCta')}
+        headingTitle={t('catalog.eyebrow')}
+        showEyebrow={false}
+      />
     </AppShell>
   );
 }
