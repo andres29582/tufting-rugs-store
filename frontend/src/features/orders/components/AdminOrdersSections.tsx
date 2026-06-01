@@ -8,8 +8,8 @@ import {
   getOrderStatusLabel,
   type CustomizationBriefDetails,
   type ReviewFormState
-} from '../adminOrderHelpers';
-import type { AdminOrdersTab } from '../useAdminOrdersPage';
+} from '../lib/adminOrderHelpers';
+import type { AdminOrdersTab } from '../lib/useAdminOrdersPage';
 import { Button } from '../../../shared/components/Button/Button';
 import { FormField } from '../../../shared/components/FormField/FormField';
 import type { AdminCustomization, Order, OrderStatus } from '../../../shared/types';

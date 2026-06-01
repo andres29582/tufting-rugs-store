@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { ApiOrder } from '../../shared/types';
+import type { ApiOrder } from '../../../shared/types';
 import { mapOrderFromApi, mapOrdersFromApi } from './ordersMapper';
 
 describe('ordersMapper', () => {

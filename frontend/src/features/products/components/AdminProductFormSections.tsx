@@ -2,7 +2,7 @@ import type { ChangeEvent } from 'react';
 import {
   slugifyAdminProduct,
   type ProductFormState
-} from '../adminProductFormHelpers';
+} from '../lib/adminProductFormHelpers';
 import { Button } from '../../../shared/components/Button/Button';
 import { FormField } from '../../../shared/components/FormField/FormField';
 import type { ProductType, RugFormat, SizeCategory } from '../../../shared/types';

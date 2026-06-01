@@ -1,4 +1,4 @@
-import type { Product } from '../../shared/types';
+import type { Product } from '../../../shared/types';
 
 export const productCategories = [
   'Todas',

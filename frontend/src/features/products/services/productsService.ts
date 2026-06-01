@@ -1,5 +1,5 @@
-import type { Product } from '../../shared/types';
-import { mockProducts, productCategories } from './mockProducts';
+import type { Product } from '../../../shared/types';
+import { mockProducts, productCategories } from '../model/mockProducts';
 
 let productsCachePromise: Promise<Product[]> | null = null;
 

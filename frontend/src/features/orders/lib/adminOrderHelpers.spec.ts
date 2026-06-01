@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildCustomization, buildOrder, buildProduct } from '../../shared/test/builders';
+import { buildCustomization, buildOrder, buildProduct } from '../../../shared/test/builders';
 import {
   buildAdminOrderReviewPayload,
   centsToInput,

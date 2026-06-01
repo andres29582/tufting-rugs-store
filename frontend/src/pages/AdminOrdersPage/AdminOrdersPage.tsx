@@ -6,7 +6,7 @@ import {
   AdminOrderList,
   AdminOrderTabs
 } from '../../features/orders/components/AdminOrdersSections';
-import { useAdminOrdersPage } from '../../features/orders/useAdminOrdersPage';
+import { useAdminOrdersPage } from '../../features/orders/lib/useAdminOrdersPage';
 import { Button, ButtonLink } from '../../shared/components/Button/Button';
 import {
   AppErrorState,

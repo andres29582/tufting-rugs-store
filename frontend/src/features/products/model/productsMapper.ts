@@ -1,4 +1,4 @@
-import type { ApiProduct, ColorPalette, Product, RugMotif } from '../../shared/types';
+import type { ApiProduct, ColorPalette, Product, RugMotif } from '../../../shared/types';
 
 export type ProductMapperOptions = {
   resolveAssetUrl?: (url: string) => string;

@@ -3,7 +3,7 @@ import {
   createCustomizationDraft,
   normalizeCustomizationDraft,
   validateCustomizationDraft
-} from './customizationDraft';
+} from '../lib/customizationDraft';
 
 describe('customizationDraft', () => {
   it('creates a valid default draft shape', () => {

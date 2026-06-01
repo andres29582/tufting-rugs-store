@@ -1,19 +1,19 @@
-import { appConfig } from '../../app/config';
+import { appConfig } from '../../../app/config';
 import type {
   Customization,
   CustomizationDraft,
   Order,
   Product,
   SaveCustomizationResult
-} from '../../shared/types';
-import { getProducts } from '../products/productsApi';
-import { loadProducts } from '../products/productsService';
+} from '../../../shared/types';
+import { getProducts } from '../../products/api/productsApi';
+import { loadProducts } from '../../products/services/productsService';
 import {
   createCustomizationDraft,
   normalizeCustomizationDraft,
   validateCustomizationDraft
-} from './customizationDraft';
-import { createCustomization, createOrderFromCustomization as createOrderFromCustomizationApi } from './customizationsApi';
+} from '../lib/customizationDraft';
+import { createCustomization, createOrderFromCustomization as createOrderFromCustomizationApi } from '../api/customizationsApi';
 
 const savedDrafts: Customization[] = [];
 

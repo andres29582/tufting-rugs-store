@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { CustomizationDraft, Product } from '../../../../shared/types';
 import type { Language, Translate } from '../../../../shared/i18n';
-import { localizeProduct } from '../../../products/productLocalization';
+import { localizeProduct } from '../../../products/model/productLocalization';
 import {
   getRecommendedStyles,
   shapeOptions,

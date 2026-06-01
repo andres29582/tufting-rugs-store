@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAdminToken } from '../admin/adminAuth';
+import { getAdminToken } from '../../admin/lib/adminAuth';
 import {
   createAdminProduct,
   getAdminProductById,
   updateAdminProduct,
   uploadAdminProductImage
-} from './productsApi';
+} from '../api/productsApi';
 import {
   createInitialProductForm,
   mapAdminProductFormToPayload,

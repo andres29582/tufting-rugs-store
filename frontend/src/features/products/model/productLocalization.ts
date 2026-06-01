@@ -1,5 +1,5 @@
-import type { Language } from '../../shared/i18n';
-import type { Product } from '../../shared/types';
+import type { Language } from '../../../shared/i18n';
+import type { Product } from '../../../shared/types';
 
 type LocalizedProductCopy = {
   name: string;

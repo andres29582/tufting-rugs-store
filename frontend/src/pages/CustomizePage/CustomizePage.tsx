@@ -3,7 +3,7 @@ import type { Product } from '../../shared/types';
 import { AppShell } from '../../app/AppShell';
 import { AiPersonalizationGate } from '../../features/aiDesign/components/AiPersonalizationGate';
 import { CustomizationForm } from '../../features/customizations/components/CustomizationForm/CustomizationForm';
-import { loadProducts } from '../../features/products/productsService';
+import { loadProducts } from '../../features/products/services/productsService';
 import {
   AppErrorState,
   AppLoadingState,

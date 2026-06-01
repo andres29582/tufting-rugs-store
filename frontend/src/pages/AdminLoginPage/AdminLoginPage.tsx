@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../../app/AppShell';
-import { loginAdmin } from '../../features/admin/adminAuth';
+import { loginAdmin } from '../../features/admin/lib/adminAuth';
 import { Button } from '../../shared/components/Button/Button';
 import { FormField } from '../../shared/components/FormField/FormField';
 

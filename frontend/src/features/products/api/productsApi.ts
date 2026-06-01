@@ -1,7 +1,7 @@
-import type { AdminProductPayload, ApiProduct, Product } from '../../shared/types';
-import { resolveApiAssetUrl } from '../../shared/api/assets';
-import { apiFormRequest, apiRequest } from '../../shared/api/httpClient';
-import { mapProductFromApi, mapProductsFromApi } from './productsMapper';
+import type { AdminProductPayload, ApiProduct, Product } from '../../../shared/types';
+import { resolveApiAssetUrl } from '../../../shared/api/assets';
+import { apiFormRequest, apiRequest } from '../../../shared/api/httpClient';
+import { mapProductFromApi, mapProductsFromApi } from '../model/productsMapper';
 
 const productMapperOptions = {
   resolveAssetUrl: resolveApiAssetUrl

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Button, ButtonLink } from '../../../shared/components/Button/Button';
 import { useTranslation } from '../../../shared/i18n';
-import { buildAiReferenceWhatsAppUrl, buildAiRugPrompt } from '../aiRugPrompt';
+import { buildAiReferenceWhatsAppUrl, buildAiRugPrompt } from '../lib/aiRugPrompt';
 import { CopyPromptButton } from './CopyPromptButton';
 
 type AiPromptGuideProps = {

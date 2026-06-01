@@ -3,7 +3,7 @@ import type {
   CustomizationValidationErrors,
   RugFormat,
   SizeCategory
-} from '../../shared/types';
+} from '../../../shared/types';
 
 export const customizationColorOptions = [
   { name: 'Azul profundo', value: '#1d2b53' },

@@ -1,6 +1,6 @@
-import type { AdminReview, ApiOrder, Order } from '../../shared/types';
-import { mapCustomizationFromApi } from '../customizations/customizationsMapper';
-import { mapProductFromApi, type ProductMapperOptions } from '../products/productsMapper';
+import type { AdminReview, ApiOrder, Order } from '../../../shared/types';
+import { mapCustomizationFromApi } from '../../customizations/model/customizationsMapper';
+import { mapProductFromApi, type ProductMapperOptions } from '../../products/model/productsMapper';
 
 export function mapOrderFromApi(
   order: ApiOrder,

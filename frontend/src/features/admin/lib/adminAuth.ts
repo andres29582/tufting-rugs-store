@@ -1,4 +1,4 @@
-import { apiRequest } from '../../shared/api/httpClient';
+import { apiRequest } from '../../../shared/api/httpClient';
 
 const ADMIN_TOKEN_STORAGE_KEY = 'tuft-admin-token';
 

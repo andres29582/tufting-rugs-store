@@ -5,8 +5,8 @@ import { AppShell } from '../../app/AppShell';
 import { ButtonLink } from '../../shared/components/Button/Button';
 import { AppErrorState, AppLoadingState, getFriendlyErrorMessage } from '../../shared/components/AppState/AppState';
 import { RugVisualMockup } from '../../features/products/components/RugVisualMockup/RugVisualMockup';
-import { localizeProduct } from '../../features/products/productLocalization';
-import { loadProductBySlug } from '../../features/products/productsService';
+import { localizeProduct } from '../../features/products/model/productLocalization';
+import { loadProductBySlug } from '../../features/products/services/productsService';
 import { useTranslation } from '../../shared/i18n';
 import { formatPrice } from '../../utils/money';
 

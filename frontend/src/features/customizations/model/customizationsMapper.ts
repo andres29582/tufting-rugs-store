@@ -4,8 +4,8 @@ import type {
   Customization,
   CustomizationDraft,
   DesignReference
-} from '../../shared/types';
-import { mapProductFromApi, type ProductMapperOptions } from '../products/productsMapper';
+} from '../../../shared/types';
+import { mapProductFromApi, type ProductMapperOptions } from '../../products/model/productsMapper';
 
 type ApiCustomizationDraft = {
   productId: string;

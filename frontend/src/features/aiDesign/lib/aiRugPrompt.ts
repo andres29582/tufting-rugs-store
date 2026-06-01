@@ -1,4 +1,4 @@
-import type { Language } from '../../shared/i18n';
+import type { Language } from '../../../shared/i18n';
 
 export const storeDomain = 'https://tu-dominio-vercel.app';
 export const storeWhatsappNumber = '5541985291212';

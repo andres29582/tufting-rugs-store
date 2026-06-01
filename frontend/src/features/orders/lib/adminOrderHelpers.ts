@@ -1,5 +1,5 @@
-import type { Customization, Order, OrderReviewPayload, OrderStatus } from '../../shared/types';
-import { formatPrice } from '../../utils/money';
+import type { Customization, Order, OrderReviewPayload, OrderStatus } from '../../../shared/types';
+import { formatPrice } from '../../../utils/money';
 
 export type ReviewFormState = {
   status: OrderStatus;

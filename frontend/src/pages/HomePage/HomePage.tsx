@@ -8,7 +8,7 @@ import {
   RugShowcaseCarousel,
   applyShowcaseTheme
 } from '../../features/products/components/RugShowcase/RugShowcase';
-import { loadProducts } from '../../features/products/productsService';
+import { loadProducts } from '../../features/products/services/productsService';
 import {
   AppErrorState,
   AppLoadingState,

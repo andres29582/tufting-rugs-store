@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { clearAdminToken, getAdminToken } from '../admin/adminAuth';
-import { getAdminCustomizations } from '../customizations/customizationsApi';
+import { clearAdminToken, getAdminToken } from '../../admin/lib/adminAuth';
+import { getAdminCustomizations } from '../../customizations/api/customizationsApi';
 import {
   confirmAdminOrderDeposit,
   getAdminOrders,
   reviewAdminOrder
-} from './ordersApi';
+} from '../api/ordersApi';
 import {
   buildAdminOrderReviewPayload,
   createOrderReviewForm,
   type ReviewFormState
 } from './adminOrderHelpers';
-import type { AdminCustomization, Order } from '../../shared/types';
+import type { AdminCustomization, Order } from '../../../shared/types';
 
 export type AdminOrdersTab = 'orders' | 'customizations';
 

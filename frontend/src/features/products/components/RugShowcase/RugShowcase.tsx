@@ -4,7 +4,7 @@ import type { Product } from '../../../../shared/types';
 import { ButtonLink } from '../../../../shared/components/Button/Button';
 import { useTranslation } from '../../../../shared/i18n';
 import { formatPrice } from '../../../../utils/money';
-import { localizeProduct } from '../../productLocalization';
+import { localizeProduct } from '../../model/productLocalization';
 import { RugGlassInfoCard } from '../RugGlassInfoCard/RugGlassInfoCard';
 import { RugVisualMockup } from '../RugVisualMockup/RugVisualMockup';
 

@@ -1,7 +1,7 @@
-import type { ApiOrder, Order, OrderReviewPayload } from '../../shared/types';
-import { resolveApiAssetUrl } from '../../shared/api/assets';
-import { apiRequest } from '../../shared/api/httpClient';
-import { mapOrderFromApi, mapOrdersFromApi } from './ordersMapper';
+import type { ApiOrder, Order, OrderReviewPayload } from '../../../shared/types';
+import { resolveApiAssetUrl } from '../../../shared/api/assets';
+import { apiRequest } from '../../../shared/api/httpClient';
+import { mapOrderFromApi, mapOrdersFromApi } from '../model/ordersMapper';
 
 const productMapperOptions = {
   resolveAssetUrl: resolveApiAssetUrl

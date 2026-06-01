@@ -1,5 +1,5 @@
 import { useTranslation } from '../../../../shared/i18n';
-import { localizeCategory } from '../../productLocalization';
+import { localizeCategory } from '../../model/productLocalization';
 
 type ProductFiltersProps = {
   categories: string[];

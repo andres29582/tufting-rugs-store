@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { ApiCustomization, CustomizationDraft } from '../../shared/types';
+import type { ApiCustomization, CustomizationDraft } from '../../../shared/types';
 import {
   mapAdminCustomizationFromApi,
   mapCustomizationDraftToApi,

@@ -4,7 +4,7 @@ import type {
   ProductType,
   RugFormat,
   SizeCategory
-} from '../../shared/types';
+} from '../../../shared/types';
 
 export type ProductFormState = {
   name: string;

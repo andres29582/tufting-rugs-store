@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppShell } from '../../app/AppShell';
-import { clearAdminToken, getAdminToken } from '../../features/admin/adminAuth';
+import { clearAdminToken, getAdminToken } from '../../features/admin/lib/adminAuth';
 import {
   getAdminProducts,
   publishAdminProduct,
   unpublishAdminProduct
-} from '../../features/products/productsApi';
+} from '../../features/products/api/productsApi';
 import type { Product } from '../../shared/types';
 import { Button, ButtonLink } from '../../shared/components/Button/Button';
 import {

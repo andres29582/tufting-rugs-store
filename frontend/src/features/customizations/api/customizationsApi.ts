@@ -5,15 +5,15 @@ import type {
   Customization,
   CustomizationDraft,
   Order
-} from '../../shared/types';
-import { resolveApiAssetUrl } from '../../shared/api/assets';
-import { apiRequest } from '../../shared/api/httpClient';
+} from '../../../shared/types';
+import { resolveApiAssetUrl } from '../../../shared/api/assets';
+import { apiRequest } from '../../../shared/api/httpClient';
 import {
   mapAdminCustomizationFromApi,
   mapCustomizationDraftToApi,
   mapCustomizationFromApi
-} from './customizationsMapper';
-import { mapOrderFromApi } from '../orders/ordersMapper';
+} from '../model/customizationsMapper';
+import { mapOrderFromApi } from '../../orders/model/ordersMapper';
 
 const productMapperOptions = {
   resolveAssetUrl: resolveApiAssetUrl

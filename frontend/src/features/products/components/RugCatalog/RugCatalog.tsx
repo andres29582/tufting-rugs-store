@@ -1,7 +1,7 @@
 import type { Product } from '../../../../shared/types';
 import { ButtonLink } from '../../../../shared/components/Button/Button';
 import { useTranslation } from '../../../../shared/i18n';
-import { localizeCategory } from '../../productLocalization';
+import { localizeCategory } from '../../model/productLocalization';
 import { RugCard } from '../RugCard/RugCard';
 
 type RugCatalogProps = {

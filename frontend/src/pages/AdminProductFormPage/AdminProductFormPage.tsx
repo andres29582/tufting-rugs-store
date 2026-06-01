@@ -6,7 +6,7 @@ import {
   AdminProductFormActions,
   AdminProductImageUpload
 } from '../../features/products/components/AdminProductFormSections';
-import { useAdminProductForm } from '../../features/products/useAdminProductForm';
+import { useAdminProductForm } from '../../features/products/lib/useAdminProductForm';
 import { ButtonLink } from '../../shared/components/Button/Button';
 import {
   AppErrorState,

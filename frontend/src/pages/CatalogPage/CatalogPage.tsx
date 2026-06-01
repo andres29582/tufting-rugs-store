@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import type { Product } from '../../shared/types';
 import { AppShell } from '../../app/AppShell';
 import { RugCatalog } from '../../features/products/components/RugCatalog/RugCatalog';
-import { loadProducts } from '../../features/products/productsService';
+import { loadProducts } from '../../features/products/services/productsService';
 import {
   AppErrorState,
   AppLoadingState,
