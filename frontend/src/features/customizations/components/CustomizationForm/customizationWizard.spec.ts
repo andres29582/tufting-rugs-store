@@ -23,7 +23,7 @@ const validDraft: GuidedDraft = {
   sizeBase: '60X60',
   colorsToAvoid: ['WHITE'],
   referenceMode: 'LINK',
-  referenceUrl: 'https://example.com/reference.png'
+  referenceUrl: 'https://example.com/reference.png',
 };
 
 describe('customizationWizard', () => {
@@ -32,17 +32,19 @@ describe('customizationWizard', () => {
       'MINIMAL',
       'ORGANIC',
       'GEOMETRIC',
-      'SOFT'
+      'SOFT',
     ]);
     expect(getRecommendedStyles('SETUP').map((option) => option.value)).toEqual([
       'NEON',
       'CHARACTER',
-      'PLAYFUL'
+      'PLAYFUL',
     ]);
   });
 
   it('validates required steps and unsafe reference links', () => {
-    expect(getFirstInvalidStep({ ...validDraft, intentions: [] }, t)).toBe(getStepIndex('intention'));
+    expect(getFirstInvalidStep({ ...validDraft, intentions: [] }, t)).toBe(
+      getStepIndex('intention')
+    );
     expect(getFirstInvalidStep({ ...validDraft, shape: '' }, t)).toBe(getStepIndex('base'));
     expect(
       getStepValidationMessage(
@@ -65,15 +67,19 @@ describe('customizationWizard', () => {
       shape: 'Forma libre',
       sizeBase: '60 x 60 cm',
       colorsToAvoid: 'Blanco',
-      reference: 'https://example.com/reference.png'
+      reference: 'https://example.com/reference.png',
     });
     expect(summary.whatsappMessage).not.toContain('Nombre:');
     expect(summary.whatsappMessage).not.toContain('Email:');
     expect(summary.whatsappMessage).not.toContain('WhatsApp:');
-    expect(summary.whatsappMessage).toContain('Codigo RUG: RUG-20260526-TEST');
-    expect(summary.whatsappMessage).toContain('Base creativa: Base premium');
+    expect(summary.whatsappMessage).toContain('Código RUG: RUG-20260526-TEST');
+    expect(summary.whatsappMessage).toContain('Origen: Personalización manual');
+    expect(summary.whatsappMessage).toContain('Tipo/base: Base premium');
     expect(summary.whatsappMessage).toContain('Referencia: https://example.com/reference.png');
-    expect(decodeURIComponent(buildWhatsAppUrl(summary).replace('https://wa.me/5541985291212?text=', ''))).toBe(
+    expect(summary.whatsappMessage).toContain(
+      'Observaciones: Validar viabilidad, plazo y presupuesto por WhatsApp.'
+    );
+    expect(decodeURIComponent(buildWhatsAppUrl(summary).split('?text=')[1] || '')).toBe(
       summary.whatsappMessage
     );
   });
@@ -84,7 +90,7 @@ describe('customizationWizard', () => {
         ...validDraft,
         colorsToAvoid: [],
         referenceMode: 'NONE',
-        referenceUrl: ''
+        referenceUrl: '',
       },
       null,
       t
@@ -92,7 +98,7 @@ describe('customizationWizard', () => {
 
     expect(summary.colorsToAvoid).toBe(translations.es['custom.colors.noRestrictions']);
     expect(summary.reference).toBe(translations.es['custom.reference.none']);
-    expect(summary.whatsappMessage).not.toContain('Base creativa:');
+    expect(summary.whatsappMessage).toContain('Tipo/base: Alfombra personalizada');
   });
 
   it('maps guided answers to the backend customization draft contract', () => {
@@ -109,12 +115,12 @@ describe('customizationWizard', () => {
       sizeCategory: 'MEDIUM',
       sizeLabel: '60 x 60 cm',
       format: 'CUSTOM',
-      referenceUrl: 'https://example.com/reference.png'
+      referenceUrl: 'https://example.com/reference.png',
     });
     expect(draft.description).toContain('Brief guiado de alfombra personalizada');
     expect(draft.description).toContain('Producto base');
     expect(draft.description).toContain('Nombre: Base premium');
-    expect(draft.description).toContain('Formato tecnico: CUSTOM');
+    expect(draft.description).toContain('Formato técnico: CUSTOM');
     expect(draft.description).not.toContain('Contacto');
     expect(draft.description).toContain('Colores a evitar: Blanco');
   });
