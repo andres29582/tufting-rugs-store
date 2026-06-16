@@ -2,15 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/components/Icon/Icon';
 import { IconButton } from '../shared/components/Button/Button';
+import { buildGeneralContactMessage, buildWhatsappUrl } from '../shared/config/contact';
 import { useTranslation, type Language } from '../shared/i18n';
 
 const customizationRestartEvent = 'tuft:restart-customization';
 
 export function Header() {
-  const { t } = useTranslation();
+  const { language, t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
   const menuId = 'mobile-navigation-menu';
+  const whatsappContactUrl = buildWhatsappUrl(buildGeneralContactMessage(language));
 
   function closeMenu() {
     setIsMenuOpen(false);
@@ -59,6 +61,14 @@ export function Header() {
           <Link className="order-link" to="/personalizar" onClick={restartCustomizationFlow}>
             {t('nav.order')}
           </Link>
+          <a
+            className="order-link whatsapp-link"
+            href={whatsappContactUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t('nav.whatsapp')}
+          </a>
         </div>
         <div id={menuId} className="mobile-nav-menu glass-panel" hidden={!isMenuOpen}>
           <div className="mobile-nav-menu-head">
@@ -71,7 +81,7 @@ export function Header() {
               onClick={closeMenu}
             />
           </div>
-          <MobileNav onNavigate={closeMenu} />
+          <MobileNav onNavigate={closeMenu} whatsappContactUrl={whatsappContactUrl} />
         </div>
       </div>
     </header>
@@ -99,15 +109,25 @@ function MainNav() {
 
   return (
     <nav className="main-nav" aria-label={t('nav.aria')}>
-      <Link to="/" onClick={scrollToPageTop}>{t('nav.home')}</Link>
+      <Link to="/" onClick={scrollToPageTop}>
+        {t('nav.home')}
+      </Link>
       <Link to="/catalogo">{t('nav.catalog')}</Link>
-      <Link to="/personalizar" onClick={restartCustomizationFlow}>{t('nav.custom')}</Link>
+      <Link to="/personalizar" onClick={restartCustomizationFlow}>
+        {t('nav.custom')}
+      </Link>
       <Link to="/como-funciona">{t('nav.how')}</Link>
     </nav>
   );
 }
 
-function MobileNav({ onNavigate }: { onNavigate: () => void }) {
+function MobileNav({
+  onNavigate,
+  whatsappContactUrl,
+}: {
+  onNavigate: () => void;
+  whatsappContactUrl: string;
+}) {
   const { t } = useTranslation();
 
   return (
@@ -121,7 +141,9 @@ function MobileNav({ onNavigate }: { onNavigate: () => void }) {
       >
         {t('nav.home')}
       </Link>
-      <Link to="/catalogo" onClick={onNavigate}>{t('nav.catalog')}</Link>
+      <Link to="/catalogo" onClick={onNavigate}>
+        {t('nav.catalog')}
+      </Link>
       <Link
         to="/personalizar"
         onClick={() => {
@@ -131,7 +153,12 @@ function MobileNav({ onNavigate }: { onNavigate: () => void }) {
       >
         {t('nav.custom')}
       </Link>
-      <Link to="/como-funciona" onClick={onNavigate}>{t('nav.how')}</Link>
+      <Link to="/como-funciona" onClick={onNavigate}>
+        {t('nav.how')}
+      </Link>
+      <a href={whatsappContactUrl} target="_blank" rel="noopener noreferrer" onClick={onNavigate}>
+        {t('nav.whatsapp')}
+      </a>
     </nav>
   );
 }

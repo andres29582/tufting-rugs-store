@@ -41,6 +41,7 @@ const es = {
   'productDetail.material': 'Material',
   'productDetail.production': 'Produccion',
   'productDetail.customizeSimilar': 'Personalizar similar',
+  'productDetail.whatsappCta': 'Pedir por WhatsApp',
   'productDetail.backCatalog': 'Volver al catalogo'
 } as const;
 
@@ -87,6 +88,7 @@ const pt = {
   'productDetail.material': 'Material',
   'productDetail.production': 'Producao',
   'productDetail.customizeSimilar': 'Personalizar parecido',
+  'productDetail.whatsappCta': 'Pedir pelo WhatsApp',
   'productDetail.backCatalog': 'Voltar ao catalogo'
 } satisfies Record<keyof typeof es, string>;
 

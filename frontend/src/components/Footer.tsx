@@ -1,7 +1,13 @@
+import {
+  buildGeneralContactMessage,
+  buildWhatsappUrl,
+  storeWhatsappDisplayNumber,
+} from '../shared/config/contact';
 import { useTranslation } from '../shared/i18n';
 
 export function Footer() {
-  const { t } = useTranslation();
+  const { language, t } = useTranslation();
+  const whatsappContactUrl = buildWhatsappUrl(buildGeneralContactMessage(language));
 
   return (
     <footer id="contacto" className="site-footer">
@@ -22,10 +28,27 @@ export function Footer() {
           <span>{t('footer.qualityTitle')}</span>
           <p>{t('footer.qualityText')}</p>
         </div>
+        <div>
+          <span>WhatsApp</span>
+          <p>{storeWhatsappDisplayNumber}</p>
+          <a
+            className="footer-whatsapp-link"
+            href={whatsappContactUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t('footer.whatsappAria')}
+          >
+            {t('footer.whatsappCta')}
+          </a>
+        </div>
       </div>
       <p className="footer-credit">
         Creado por{' '}
-        <a href="https://andres-pignoloni-dev.vercel.app/" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://andres-pignoloni-dev.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Andrés Eduardo Pignoloni Vasquez
         </a>
       </p>

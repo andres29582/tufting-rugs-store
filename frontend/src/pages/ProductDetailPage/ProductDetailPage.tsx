@@ -3,7 +3,12 @@ import { useParams } from 'react-router-dom';
 import type { Product } from '../../shared/types';
 import { AppShell } from '../../app/AppShell';
 import { ButtonLink } from '../../shared/components/Button/Button';
-import { AppErrorState, AppLoadingState, getFriendlyErrorMessage } from '../../shared/components/AppState/AppState';
+import { buildProductContactMessage, buildWhatsappUrl } from '../../shared/config/contact';
+import {
+  AppErrorState,
+  AppLoadingState,
+  getFriendlyErrorMessage,
+} from '../../shared/components/AppState/AppState';
 import { RugVisualMockup } from '../../features/products/components/RugVisualMockup/RugVisualMockup';
 import { localizeProduct } from '../../features/products/model/productLocalization';
 import { loadProductBySlug } from '../../features/products/services/productsService';
@@ -98,6 +103,14 @@ export function ProductDetailPage() {
               ))}
             </ul>
             <div className="page-actions">
+              <ButtonLink
+                href={buildWhatsappUrl(buildProductContactMessage(displayProduct.name, language))}
+                variant="secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t('productDetail.whatsappCta')}
+              </ButtonLink>
               <ButtonLink to="/personalizar" variant="primary">
                 {t('productDetail.customizeSimilar')}
               </ButtonLink>

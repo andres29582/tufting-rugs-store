@@ -1,7 +1,7 @@
 import type { Language } from '../../../shared/i18n';
+import { buildWhatsappUrl, storeWhatsappNumber } from '../../../shared/config/contact';
 
 export const storeDomain = 'https://tu-dominio-vercel.app';
-export const storeWhatsappNumber = '5541985291212';
 export const aiRugGuideUrl = storeDomain + '/ai-rug-guide/';
 export const llmsUrl = storeDomain + '/llms.txt';
 
@@ -11,12 +11,7 @@ const aiReferenceWhatsAppMessages: Record<Language, string> = {
 };
 
 export function buildAiReferenceWhatsAppUrl(language: Language): string {
-  return (
-    'https://wa.me/' +
-    storeWhatsappNumber +
-    '?text=' +
-    encodeURIComponent(aiReferenceWhatsAppMessages[language])
-  );
+  return buildWhatsappUrl(aiReferenceWhatsAppMessages[language]);
 }
 
 export function buildAiRugPrompt(language: Language): string {
