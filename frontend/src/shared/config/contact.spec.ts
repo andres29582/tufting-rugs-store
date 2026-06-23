@@ -20,7 +20,9 @@ describe('contact config', () => {
     const message = 'Hola! Medidas: 60 x 60 cm & colores rosa/azul';
     const url = buildWhatsappUrl(message);
 
-    expect(url).toBe(storeWhatsappBaseUrl + storeWhatsappNumber + '?text=' + encodeURIComponent(message));
+    expect(url).toBe(
+      storeWhatsappBaseUrl + storeWhatsappNumber + '?text=' + encodeURIComponent(message)
+    );
     expect(decodeURIComponent(url.split('?text=')[1] || '')).toBe(message);
     expect(storeWhatsappDisplayNumber).toContain('98529-1212');
   });

@@ -16,7 +16,9 @@ export function buildWhatsAppMessage(
     t('custom.whatsapp.originManual'),
     '',
     t('custom.whatsapp.sectionRug'),
-    product ? t('custom.whatsapp.rugType', { value: product.name }) : t('custom.whatsapp.rugTypeCustom'),
+    product
+      ? t('custom.whatsapp.rugType', { value: product.name })
+      : t('custom.whatsapp.rugTypeCustom'),
     t('custom.whatsapp.size', { value: valueOrPending(summary.sizeBase, t) }),
     t('custom.whatsapp.shape', { value: valueOrPending(summary.shape, t) }),
     '',
