@@ -132,18 +132,18 @@
   transition: var(--transition-interactive);
 }
 
-.language-toggle button[aria-pressed="true"] {
+.language-toggle button[aria-pressed='true'] {
   color: var(--color-text-inverse);
   border-color: var(--color-surface-inverse);
   background: var(--color-surface-inverse);
 }
 
-.language-toggle button:not([aria-pressed="true"]):hover {
+.language-toggle button:not([aria-pressed='true']):hover {
   color: var(--color-text);
   background: var(--color-interactive-surface-soft-hover);
 }
 
-.menu-toggle[aria-expanded="true"] {
+.menu-toggle[aria-expanded='true'] {
   color: var(--color-text-inverse);
   background: var(--color-surface-inverse);
   border-color: var(--color-surface-inverse);

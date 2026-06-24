@@ -3,7 +3,7 @@ import type {
   Product,
   ProductType,
   RugFormat,
-  SizeCategory
+  SizeCategory,
 } from '../../../shared/types';
 
 export type ProductFormState = {
@@ -44,7 +44,7 @@ export function createInitialProductForm(): ProductFormState {
     productionTime: '12 a 18 dias',
     isCustomizable: true,
     isFeatured: false,
-    isActive: false
+    isActive: false,
   };
 }
 
@@ -66,7 +66,7 @@ export function mapProductToAdminForm(product: Product): ProductFormState {
     productionTime: product.productionTime,
     isCustomizable: product.isCustomizable,
     isFeatured: product.isFeatured,
-    isActive: product.isActive
+    isActive: product.isActive,
   };
 }
 
@@ -94,7 +94,7 @@ export function mapAdminProductFormToPayload(form: ProductFormState): AdminProdu
     productionTime: optionalText(form.productionTime),
     isCustomizable: form.isCustomizable,
     isFeatured: form.isFeatured,
-    isActive: form.isActive
+    isActive: form.isActive,
   };
 }
 

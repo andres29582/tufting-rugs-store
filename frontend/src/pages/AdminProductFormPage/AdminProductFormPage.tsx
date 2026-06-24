@@ -4,14 +4,14 @@ import { AppShell } from '../../app/AppShell';
 import {
   AdminProductFields,
   AdminProductFormActions,
-  AdminProductImageUpload
+  AdminProductImageUpload,
 } from '../../features/products/components/AdminProductFormSections';
 import { useAdminProductForm } from '../../features/products/lib/useAdminProductForm';
 import { ButtonLink } from '../../shared/components/Button/Button';
 import {
   AppErrorState,
   AppLoadingState,
-  getFriendlyErrorMessage
+  getFriendlyErrorMessage,
 } from '../../shared/components/AppState/AppState';
 import { resolveApiAssetUrl } from '../../shared/api/assets';
 
@@ -32,7 +32,7 @@ export function AdminProductFormPage() {
     title,
     updateForm,
     uploadProductImage,
-    uploadStatus
+    uploadStatus,
   } = useAdminProductForm(productId);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {

@@ -9,7 +9,7 @@ import type {
   SizeBaseId,
   SizeBaseOption,
   StepDefinition,
-  VisualStyleOption
+  VisualStyleOption,
 } from './customizationWizardTypes';
 
 export const steps: StepDefinition[] = [
@@ -19,7 +19,7 @@ export const steps: StepDefinition[] = [
   { id: 'base', labelKey: 'custom.step.base', shortLabelKey: 'custom.step.baseShort' },
   { id: 'colors', labelKey: 'custom.step.colors', shortLabelKey: 'custom.step.colorsShort' },
   { id: 'reference', labelKey: 'custom.step.reference', shortLabelKey: 'custom.step.reference' },
-  { id: 'summary', labelKey: 'custom.step.summary', shortLabelKey: 'custom.step.summary' }
+  { id: 'summary', labelKey: 'custom.step.summary', shortLabelKey: 'custom.step.summary' },
 ];
 
 export const intentionOptions: ChoiceOption<IntentionId>[] = [
@@ -27,38 +27,38 @@ export const intentionOptions: ChoiceOption<IntentionId>[] = [
     value: 'ELEGANT',
     labelKey: 'custom.intention.elegant.label',
     detailKey: 'custom.intention.elegant.detail',
-    marker: '01'
+    marker: '01',
   },
   {
     value: 'FAMILIAR',
     labelKey: 'custom.intention.familiar.label',
     detailKey: 'custom.intention.familiar.detail',
-    marker: '02'
+    marker: '02',
   },
   {
     value: 'FUN',
     labelKey: 'custom.intention.fun.label',
     detailKey: 'custom.intention.fun.detail',
-    marker: '03'
+    marker: '03',
   },
   {
     value: 'MODERN',
     labelKey: 'custom.intention.modern.label',
     detailKey: 'custom.intention.modern.detail',
-    marker: '04'
+    marker: '04',
   },
   {
     value: 'GAMER',
     labelKey: 'custom.intention.gamer.label',
     detailKey: 'custom.intention.gamer.detail',
-    marker: '05'
+    marker: '05',
   },
   {
     value: 'KIDS',
     labelKey: 'custom.intention.kids.label',
     detailKey: 'custom.intention.kids.detail',
-    marker: '06'
-  }
+    marker: '06',
+  },
 ];
 
 export const placementOptions: PlacementOption[] = [
@@ -66,38 +66,38 @@ export const placementOptions: PlacementOption[] = [
     value: 'LIVING',
     labelKey: 'custom.placement.living.label',
     detailKey: 'custom.placement.living.detail',
-    marker: 'SL'
+    marker: 'SL',
   },
   {
     value: 'BEDROOM',
     labelKey: 'custom.placement.bedroom.label',
     detailKey: 'custom.placement.bedroom.detail',
-    marker: 'CT'
+    marker: 'CT',
   },
   {
     value: 'ENTRY',
     labelKey: 'custom.placement.entry.label',
     detailKey: 'custom.placement.entry.detail',
-    marker: 'EN'
+    marker: 'EN',
   },
   {
     value: 'SETUP',
     labelKey: 'custom.placement.setup.label',
     detailKey: 'custom.placement.setup.detail',
-    marker: 'ST'
+    marker: 'ST',
   },
   {
     value: 'BUSINESS',
     labelKey: 'custom.placement.business.label',
     detailKey: 'custom.placement.business.detail',
-    marker: 'NG'
+    marker: 'NG',
   },
   {
     value: 'GIFT',
     labelKey: 'custom.placement.gift.label',
     detailKey: 'custom.placement.gift.detail',
-    marker: 'RG'
-  }
+    marker: 'RG',
+  },
 ];
 
 export const visualStyleOptions: VisualStyleOption[] = [
@@ -106,57 +106,57 @@ export const visualStyleOptions: VisualStyleOption[] = [
     labelKey: 'custom.style.minimal.label',
     detailKey: 'custom.style.minimal.detail',
     marker: 'MN',
-    placements: ['LIVING', 'BEDROOM', 'BUSINESS']
+    placements: ['LIVING', 'BEDROOM', 'BUSINESS'],
   },
   {
     value: 'ORGANIC',
     labelKey: 'custom.style.organic.label',
     detailKey: 'custom.style.organic.detail',
     marker: 'OR',
-    placements: ['LIVING', 'BEDROOM', 'GIFT']
+    placements: ['LIVING', 'BEDROOM', 'GIFT'],
   },
   {
     value: 'GEOMETRIC',
     labelKey: 'custom.style.geometric.label',
     detailKey: 'custom.style.geometric.detail',
     marker: 'GM',
-    placements: ['LIVING', 'ENTRY', 'BUSINESS']
+    placements: ['LIVING', 'ENTRY', 'BUSINESS'],
   },
   {
     value: 'SOFT',
     labelKey: 'custom.style.soft.label',
     detailKey: 'custom.style.soft.detail',
     marker: 'SV',
-    placements: ['BEDROOM', 'GIFT']
+    placements: ['BEDROOM', 'GIFT'],
   },
   {
     value: 'NEON',
     labelKey: 'custom.style.neon.label',
     detailKey: 'custom.style.neon.detail',
     marker: 'GN',
-    placements: ['SETUP']
+    placements: ['SETUP'],
   },
   {
     value: 'CHARACTER',
     labelKey: 'custom.style.character.label',
     detailKey: 'custom.style.character.detail',
     marker: 'PJ',
-    placements: ['SETUP', 'GIFT', 'BEDROOM']
+    placements: ['SETUP', 'GIFT', 'BEDROOM'],
   },
   {
     value: 'LOGO',
     labelKey: 'custom.style.logo.label',
     detailKey: 'custom.style.logo.detail',
     marker: 'LG',
-    placements: ['BUSINESS', 'ENTRY', 'GIFT']
+    placements: ['BUSINESS', 'ENTRY', 'GIFT'],
   },
   {
     value: 'PLAYFUL',
     labelKey: 'custom.style.playful.label',
     detailKey: 'custom.style.playful.detail',
     marker: 'CL',
-    placements: ['GIFT', 'SETUP', 'LIVING']
-  }
+    placements: ['GIFT', 'SETUP', 'LIVING'],
+  },
 ];
 
 export const shapeOptions: ShapeOption[] = [
@@ -165,22 +165,22 @@ export const shapeOptions: ShapeOption[] = [
     labelKey: 'custom.shape.rectangular.label',
     detailKey: 'custom.shape.rectangular.detail',
     marker: 'RC',
-    format: 'RECTANGULAR'
+    format: 'RECTANGULAR',
   },
   {
     value: 'ROUND',
     labelKey: 'custom.shape.round.label',
     detailKey: 'custom.shape.round.detail',
     marker: 'CR',
-    format: 'ROUND'
+    format: 'ROUND',
   },
   {
     value: 'FREE',
     labelKey: 'custom.shape.free.label',
     detailKey: 'custom.shape.free.detail',
     marker: 'FL',
-    format: 'CUSTOM'
-  }
+    format: 'CUSTOM',
+  },
 ];
 
 export const sizeBaseOptions: SizeBaseOption[] = [
@@ -189,15 +189,15 @@ export const sizeBaseOptions: SizeBaseOption[] = [
     label: '40x40',
     detailKey: 'custom.size.compact',
     sizeLabel: '40 x 40 cm',
-    sizeCategory: 'SMALL'
+    sizeCategory: 'SMALL',
   },
   {
     value: '60X60',
     label: '60x60',
     detailKey: 'custom.size.medium',
     sizeLabel: '60 x 60 cm',
-    sizeCategory: 'MEDIUM'
-  }
+    sizeCategory: 'MEDIUM',
+  },
 ];
 
 export const colorAvoidOptions: ColorAvoidOption[] = [
@@ -210,7 +210,7 @@ export const colorAvoidOptions: ColorAvoidOption[] = [
   { value: 'GREEN', labelKey: 'custom.color.green', swatch: '#3f7d44' },
   { value: 'BLUE', labelKey: 'custom.color.blue', swatch: '#1d2b53' },
   { value: 'PURPLE', labelKey: 'custom.color.purple', swatch: '#7c3aed' },
-  { value: 'BLACK', labelKey: 'custom.color.black', swatch: '#111111' }
+  { value: 'BLACK', labelKey: 'custom.color.black', swatch: '#111111' },
 ];
 
 export const referenceOptions: ReferenceOption[] = [
@@ -218,14 +218,14 @@ export const referenceOptions: ReferenceOption[] = [
     value: 'LINK',
     labelKey: 'custom.reference.link.label',
     detailKey: 'custom.reference.link.detail',
-    marker: 'LK'
+    marker: 'LK',
   },
   {
     value: 'NONE',
     labelKey: 'custom.reference.none.label',
     detailKey: 'custom.reference.none.detail',
-    marker: 'NR'
-  }
+    marker: 'NR',
+  },
 ];
 
 export function getRecommendedStyles(placement: PlacementId | ''): VisualStyleOption[] {

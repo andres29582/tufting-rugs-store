@@ -4,14 +4,14 @@ import {
   AdminCustomizationRequestsTable,
   AdminOrderDetail,
   AdminOrderList,
-  AdminOrderTabs
+  AdminOrderTabs,
 } from '../../features/orders/components/AdminOrdersSections';
 import { useAdminOrdersPage } from '../../features/orders/lib/useAdminOrdersPage';
 import { Button, ButtonLink } from '../../shared/components/Button/Button';
 import {
   AppErrorState,
   AppLoadingState,
-  getFriendlyErrorMessage
+  getFriendlyErrorMessage,
 } from '../../shared/components/AppState/AppState';
 
 export function AdminOrdersPage() {
@@ -31,7 +31,7 @@ export function AdminOrdersPage() {
     setSelectedOrderId,
     status,
     submitReview,
-    updateReviewForm
+    updateReviewForm,
   } = useAdminOrdersPage();
 
   function handleReviewSubmit(event: FormEvent<HTMLFormElement>) {

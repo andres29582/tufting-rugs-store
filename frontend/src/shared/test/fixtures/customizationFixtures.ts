@@ -12,5 +12,5 @@ export const pendingCustomizationFixture = buildCustomization({
   sizeCategory: 'CUSTOM',
   sizeLabel: 'A medida',
   format: 'CUSTOM',
-  createdAt: '2026-05-10T03:00:00.000Z'
+  createdAt: '2026-05-10T03:00:00.000Z',
 });

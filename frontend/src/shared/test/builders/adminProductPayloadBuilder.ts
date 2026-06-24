@@ -17,7 +17,7 @@ const baseAdminProductPayload: AdminProductPayload = {
   productionTime: '12 a 18 dias',
   isCustomizable: true,
   isFeatured: false,
-  isActive: true
+  isActive: true,
 };
 
 export function buildAdminProductPayload(
@@ -27,6 +27,6 @@ export function buildAdminProductPayload(
     ...baseAdminProductPayload,
     ...overrides,
     colors: [...(overrides.colors ?? baseAdminProductPayload.colors)],
-    features: [...(overrides.features ?? baseAdminProductPayload.features)]
+    features: [...(overrides.features ?? baseAdminProductPayload.features)],
   };
 }

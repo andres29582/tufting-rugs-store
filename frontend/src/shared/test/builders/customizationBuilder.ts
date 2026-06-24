@@ -7,8 +7,8 @@ const baseDesignReferences: DesignReference[] = [
     url: 'https://example.com/reference.png',
     storageKey: null,
     mimeType: 'image/png',
-    originalName: 'reference.png'
-  }
+    originalName: 'reference.png',
+  },
 ];
 
 const baseCustomization: Customization = {
@@ -23,7 +23,7 @@ const baseCustomization: Customization = {
   sizeLabel: '100 x 80 cm',
   format: 'ORGANIC',
   designReferences: baseDesignReferences,
-  createdAt: '2026-05-10T03:00:00.000Z'
+  createdAt: '2026-05-10T03:00:00.000Z',
 };
 
 export function buildCustomization(overrides: Partial<Customization> = {}): Customization {
@@ -33,7 +33,7 @@ export function buildCustomization(overrides: Partial<Customization> = {}): Cust
     preferredColors: [...(overrides.preferredColors ?? baseCustomization.preferredColors)],
     designReferences: cloneDesignReferences(
       overrides.designReferences ?? baseCustomization.designReferences
-    )
+    ),
   };
 }
 

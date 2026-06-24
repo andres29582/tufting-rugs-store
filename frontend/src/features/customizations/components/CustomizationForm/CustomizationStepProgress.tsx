@@ -12,12 +12,13 @@ export function CustomizationStepProgress({
   currentStep,
   highestStep,
   t,
-  onStepClick
+  onStepClick,
 }: CustomizationStepProgressProps) {
   return (
     <nav className="customization-stepper" aria-label={t('custom.progressAria')}>
       {steps.map((step, index) => {
-        const state = index === currentStep ? 'active' : index < currentStep ? 'complete' : 'upcoming';
+        const state =
+          index === currentStep ? 'active' : index < currentStep ? 'complete' : 'upcoming';
         const canVisit = index <= highestStep;
 
         return (

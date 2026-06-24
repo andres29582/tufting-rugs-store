@@ -31,7 +31,9 @@ export async function loadFeaturedProducts(
   return products.slice(0, limit);
 }
 
-export async function loadProductCategories(options: { refresh?: boolean } = {}): Promise<string[]> {
+export async function loadProductCategories(
+  options: { refresh?: boolean } = {}
+): Promise<string[]> {
   const products = await loadProducts(options);
   const categories = new Set<string>(productCategories);
 
@@ -99,6 +101,6 @@ function cloneProduct(product: Product): Product {
   return {
     ...product,
     colors: [...product.colors],
-    features: [...product.features]
+    features: [...product.features],
   };
 }

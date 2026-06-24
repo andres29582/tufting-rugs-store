@@ -2,10 +2,7 @@ import type { AdminReview, ApiOrder, Order } from '../../../shared/types';
 import { mapCustomizationFromApi } from '../../customizations/model/customizationsMapper';
 import { mapProductFromApi, type ProductMapperOptions } from '../../products/model/productsMapper';
 
-export function mapOrderFromApi(
-  order: ApiOrder,
-  options: ProductMapperOptions = {}
-): Order {
+export function mapOrderFromApi(order: ApiOrder, options: ProductMapperOptions = {}): Order {
   return {
     id: order.id,
     publicCode: order.publicCode || order.id,
@@ -25,7 +22,7 @@ export function mapOrderFromApi(
     product: order.product ? mapProductFromApi(order.product, options) : null,
     customization: order.customization ? mapCustomizationFromApi(order.customization) : null,
     designReferences: Array.isArray(order.designReferences) ? order.designReferences : [],
-    adminReviews: normalizeReviews(order.adminReviews)
+    adminReviews: normalizeReviews(order.adminReviews),
   };
 }
 
@@ -53,6 +50,6 @@ function normalizeReviews(reviews: ApiOrder['adminReviews']): AdminReview[] {
     finalPriceCents: review.finalPriceCents ?? null,
     depositAmountCents: review.depositAmountCents ?? null,
     comment: review.comment || '',
-    createdAt: review.createdAt || null
+    createdAt: review.createdAt || null,
   }));
 }

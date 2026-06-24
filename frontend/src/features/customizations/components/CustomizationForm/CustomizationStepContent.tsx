@@ -7,7 +7,7 @@ import {
   placementOptions,
   referenceOptions,
   shapeOptions,
-  sizeBaseOptions
+  sizeBaseOptions,
 } from './customizationWizardConfig';
 import { SummaryItem } from './CustomizationSummaryItem';
 import type {
@@ -18,7 +18,7 @@ import type {
   IntentionId,
   PlacementId,
   StepId,
-  VisualStyleOption
+  VisualStyleOption,
 } from './customizationWizardTypes';
 
 type CustomizationStepContentProps = {
@@ -42,7 +42,7 @@ export function CustomizationStepContent({
   onToggleIntention,
   onSelectPlacement,
   onUpdateDraft,
-  onToggleColorToAvoid
+  onToggleColorToAvoid,
 }: CustomizationStepContentProps) {
   if (stepId === 'intention') {
     return (
@@ -163,7 +163,7 @@ export function CustomizationStepContent({
               onClick={() =>
                 onUpdateDraft({
                   referenceMode: option.value,
-                  referenceUrl: option.value === 'NONE' ? '' : draft.referenceUrl
+                  referenceUrl: option.value === 'NONE' ? '' : draft.referenceUrl,
                 })
               }
             />
@@ -201,7 +201,7 @@ function ChoiceCard<T extends string>({
   option,
   t,
   selected,
-  onClick
+  onClick,
 }: {
   option: ChoiceOption<T>;
   t: Translate;

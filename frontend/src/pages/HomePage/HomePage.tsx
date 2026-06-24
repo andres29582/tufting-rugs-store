@@ -6,13 +6,13 @@ import { HowItWorks } from '../../components/HowItWorks';
 import { RugCatalog } from '../../features/products/components/RugCatalog/RugCatalog';
 import {
   RugShowcaseCarousel,
-  applyShowcaseTheme
+  applyShowcaseTheme,
 } from '../../features/products/components/RugShowcase/RugShowcase';
 import { loadProducts } from '../../features/products/services/productsService';
 import {
   AppErrorState,
   AppLoadingState,
-  getFriendlyErrorMessage
+  getFriendlyErrorMessage,
 } from '../../shared/components/AppState/AppState';
 import { useTranslation } from '../../shared/i18n';
 

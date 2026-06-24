@@ -67,7 +67,12 @@ export function FormField(props: FormFieldProps) {
           onChange={props.onChange}
         />
       )}
-      <small id={errorId} className="form-field-error" data-error-for={props.name} aria-live="polite">
+      <small
+        id={errorId}
+        className="form-field-error"
+        data-error-for={props.name}
+        aria-live="polite"
+      >
         {props.error || ''}
       </small>
     </label>

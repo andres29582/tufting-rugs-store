@@ -11,7 +11,12 @@ export function AppLoadingState({ title, message }: AppStateProps) {
   const { t } = useTranslation();
 
   return (
-    <section className="app-state app-state-loading" aria-busy="true" aria-live="polite" role="status">
+    <section
+      className="app-state app-state-loading"
+      aria-busy="true"
+      aria-live="polite"
+      role="status"
+    >
       <div className="app-state-panel glass-panel">
         <span className="app-spinner" aria-hidden="true" />
         <h1>{title || t('state.loadingTitle')}</h1>

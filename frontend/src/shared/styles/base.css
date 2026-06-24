@@ -18,7 +18,7 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -2;
-  content: "";
+  content: '';
   background:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
@@ -31,7 +31,7 @@ body::after {
   position: fixed;
   inset: 0;
   z-index: -1;
-  content: "";
+  content: '';
   pointer-events: none;
   background: rgba(1, 5, 12, 0.42);
 }

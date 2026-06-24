@@ -7,7 +7,7 @@ import {
   getOrderProductName,
   getOrderStatusLabel,
   type CustomizationBriefDetails,
-  type ReviewFormState
+  type ReviewFormState,
 } from '../lib/adminOrderHelpers';
 import type { AdminOrdersTab } from '../lib/useAdminOrdersPage';
 import { Button } from '../../../shared/components/Button/Button';
@@ -16,7 +16,7 @@ import type { AdminCustomization, Order, OrderStatus } from '../../../shared/typ
 
 export function AdminOrderTabs({
   activeTab,
-  onTabChange
+  onTabChange,
 }: {
   activeTab: AdminOrdersTab;
   onTabChange: (tab: AdminOrdersTab) => void;
@@ -44,7 +44,7 @@ export function AdminOrderTabs({
 export function AdminOrderList({
   orders,
   selectedOrder,
-  onSelectOrder
+  onSelectOrder,
 }: {
   orders: Order[];
   selectedOrder: Order | null;
@@ -54,7 +54,9 @@ export function AdminOrderList({
     <div className="admin-order-list glass-panel">
       {orders.map((order) => (
         <button
-          className={order.id === selectedOrder?.id ? 'admin-order-card is-selected' : 'admin-order-card'}
+          className={
+            order.id === selectedOrder?.id ? 'admin-order-card is-selected' : 'admin-order-card'
+          }
           type="button"
           key={order.id}
           onClick={() => onSelectOrder(order.id)}
@@ -81,7 +83,7 @@ export function AdminOrderDetail({
   status,
   onConfirmDeposit,
   onReviewFormChange,
-  onReviewSubmit
+  onReviewSubmit,
 }: {
   selectedOrder: Order | null;
   reviewForm: ReviewFormState;
@@ -108,12 +110,34 @@ export function AdminOrderDetail({
             <DetailItem label="Email" value={selectedOrder.customerEmail} />
             <DetailItem label="Telefono" value={selectedOrder.customerPhone || 'Sin telefono'} />
             <DetailItem label="Producto" value={getOrderProductName(selectedOrder)} />
-            <DetailItem label="Medida" value={selectedOrder.customization?.sizeLabel || selectedOrder.product?.size || 'A medida'} />
-            <DetailItem label="Formato" value={selectedOrder.customization?.format || selectedOrder.product?.format || 'CUSTOM'} />
-            <DetailItem label="Estimado" value={formatOptionalOrderCents(selectedOrder.estimatedPriceCents)} />
-            <DetailItem label="Final" value={formatOptionalOrderCents(selectedOrder.finalPriceCents)} />
-            <DetailItem label="Sena" value={formatOptionalOrderCents(selectedOrder.depositAmountCents)} />
-            <DetailItem label="Pago" value={selectedOrder.depositPaid ? 'Confirmado' : 'Pendiente'} />
+            <DetailItem
+              label="Medida"
+              value={
+                selectedOrder.customization?.sizeLabel || selectedOrder.product?.size || 'A medida'
+              }
+            />
+            <DetailItem
+              label="Formato"
+              value={
+                selectedOrder.customization?.format || selectedOrder.product?.format || 'CUSTOM'
+              }
+            />
+            <DetailItem
+              label="Estimado"
+              value={formatOptionalOrderCents(selectedOrder.estimatedPriceCents)}
+            />
+            <DetailItem
+              label="Final"
+              value={formatOptionalOrderCents(selectedOrder.finalPriceCents)}
+            />
+            <DetailItem
+              label="Sena"
+              value={formatOptionalOrderCents(selectedOrder.depositAmountCents)}
+            />
+            <DetailItem
+              label="Pago"
+              value={selectedOrder.depositPaid ? 'Confirmado' : 'Pendiente'}
+            />
           </div>
 
           {selectedOrder.customization ? (
@@ -142,7 +166,9 @@ export function AdminOrderDetail({
               <div className="admin-review-history">
                 {selectedOrder.adminReviews.map((review) => (
                   <article key={review.id}>
-                    <strong>{review.status ? getOrderStatusLabel(review.status) : 'Revision'}</strong>
+                    <strong>
+                      {review.status ? getOrderStatusLabel(review.status) : 'Revision'}
+                    </strong>
                     <span>{formatAdminDate(review.createdAt)}</span>
                     <p>{review.comment || 'Sin comentario.'}</p>
                   </article>
@@ -165,7 +191,7 @@ export function AdminOrderReviewForm({
   status,
   onConfirmDeposit,
   onReviewFormChange,
-  onReviewSubmit
+  onReviewSubmit,
 }: {
   selectedOrder: Order;
   reviewForm: ReviewFormState;
@@ -211,18 +237,14 @@ export function AdminOrderReviewForm({
           name="estimatedPrice"
           type="number"
           value={reviewForm.estimatedPrice}
-          onChange={(event) =>
-            onReviewFormChange({ estimatedPrice: event.currentTarget.value })
-          }
+          onChange={(event) => onReviewFormChange({ estimatedPrice: event.currentTarget.value })}
         />
         <FormField
           label="Precio final (R$)"
           name="finalPrice"
           type="number"
           value={reviewForm.finalPrice}
-          onChange={(event) =>
-            onReviewFormChange({ finalPrice: event.currentTarget.value })
-          }
+          onChange={(event) => onReviewFormChange({ finalPrice: event.currentTarget.value })}
         />
       </div>
       <FormField
@@ -231,9 +253,7 @@ export function AdminOrderReviewForm({
         name="comment"
         value={reviewForm.comment}
         rows={4}
-        onChange={(event) =>
-          onReviewFormChange({ comment: event.currentTarget.value })
-        }
+        onChange={(event) => onReviewFormChange({ comment: event.currentTarget.value })}
       />
       <div className="admin-form-footer">
         <Button type="submit" variant="primary" disabled={isSubmitting}>
@@ -258,7 +278,7 @@ export function AdminOrderReviewForm({
 }
 
 export function AdminCustomizationRequestsTable({
-  customizations
+  customizations,
 }: {
   customizations: AdminCustomization[];
 }) {
@@ -348,7 +368,7 @@ function CustomizationBriefSummary({ brief }: { brief: CustomizationBriefDetails
 
 function CustomizationBriefDetail({
   customization,
-  brief
+  brief,
 }: {
   customization: Pick<AdminCustomization, 'description' | 'preferredColors' | 'designReferences'>;
   brief: CustomizationBriefDetails;
@@ -356,7 +376,9 @@ function CustomizationBriefDetail({
   if (!brief.isGuided) {
     return (
       <div className="admin-request-detail">
-        <p className="admin-brief-text">{customization.description || 'Sin descripcion adicional.'}</p>
+        <p className="admin-brief-text">
+          {customization.description || 'Sin descripcion adicional.'}
+        </p>
         <p>
           <strong>Colores:</strong>{' '}
           {customization.preferredColors.length
@@ -422,7 +444,7 @@ function DetailItem({ label, value }: { label: string; value: string }) {
 
 function ReferenceLinks({
   references,
-  compact
+  compact,
 }: {
   references: Array<{ url: string; originalName?: string | null }>;
   compact?: boolean;

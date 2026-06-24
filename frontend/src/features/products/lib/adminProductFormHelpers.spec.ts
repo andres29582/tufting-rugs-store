@@ -5,7 +5,7 @@ import {
   mapAdminProductFormToPayload,
   mapProductToAdminForm,
   slugifyAdminProduct,
-  splitAdminProductList
+  splitAdminProductList,
 } from './adminProductFormHelpers';
 
 describe('adminProductFormHelpers', () => {
@@ -20,7 +20,7 @@ describe('adminProductFormHelpers', () => {
       format: 'RECTANGULAR',
       isCustomizable: true,
       isFeatured: false,
-      isActive: false
+      isActive: false,
     });
     expect(form.colorsText).toContain('#1d2b53');
   });
@@ -32,7 +32,7 @@ describe('adminProductFormHelpers', () => {
       priceFrom: 175,
       colors: ['#111111', '#222222', '#333333'],
       features: ['Feature A', 'Feature B'],
-      isActive: true
+      isActive: true,
     });
 
     expect(mapProductToAdminForm(product)).toMatchObject({
@@ -41,7 +41,7 @@ describe('adminProductFormHelpers', () => {
       basePrice: '175',
       colorsText: '#111111\n#222222\n#333333',
       featuresText: 'Feature A\nFeature B',
-      isActive: true
+      isActive: true,
     });
   });
 
@@ -58,7 +58,7 @@ describe('adminProductFormHelpers', () => {
       featuresText: 'Feature A\n\nFeature B',
       material: '  Lana  ',
       productionTime: ' 12 dias ',
-      isActive: true
+      isActive: true,
     });
 
     expect(payload).toEqual({
@@ -78,7 +78,7 @@ describe('adminProductFormHelpers', () => {
       productionTime: '12 dias',
       isCustomizable: true,
       isFeatured: false,
-      isActive: true
+      isActive: true,
     });
   });
 
@@ -87,7 +87,7 @@ describe('adminProductFormHelpers', () => {
       mapAdminProductFormToPayload({
         ...createInitialProductForm(),
         name: 'Produto',
-        basePrice: '-1'
+        basePrice: '-1',
       })
     ).toThrow('Ingresa un precio base valido.');
   });

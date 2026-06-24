@@ -11,7 +11,7 @@ const es = {
   ...catalogTranslations.es,
   ...customizationTranslations.es,
   ...aiTranslations.es,
-  ...adminTranslations.es
+  ...adminTranslations.es,
 } as const;
 
 export type TranslationKey = keyof typeof es;
@@ -21,10 +21,10 @@ const pt = {
   ...catalogTranslations.pt,
   ...customizationTranslations.pt,
   ...aiTranslations.pt,
-  ...adminTranslations.pt
+  ...adminTranslations.pt,
 } satisfies Record<TranslationKey, string>;
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   es,
-  pt
+  pt,
 };

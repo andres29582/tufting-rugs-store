@@ -2,7 +2,7 @@ import type {
   CustomizationDraft,
   CustomizationValidationErrors,
   RugFormat,
-  SizeCategory
+  SizeCategory,
 } from '../../../shared/types';
 
 export const customizationColorOptions = [
@@ -11,14 +11,24 @@ export const customizationColorOptions = [
   { name: 'Rosa arcilla', value: '#db5c91' },
   { name: 'Verde musgo', value: '#31482f' },
   { name: 'Arena cálida', value: '#f2e7d5' },
-  { name: 'Negro gráfico', value: '#111111' }
+  { name: 'Negro gráfico', value: '#111111' },
 ] as const;
 
 export const customizationSizeOptions = [
   { label: 'Pequeña', detail: 'Hasta 80 x 60 cm', sizeCategory: 'SMALL', sizeLabel: '80 x 60 cm' },
-  { label: 'Media', detail: '100 x 80 cm aprox.', sizeCategory: 'MEDIUM', sizeLabel: '100 x 80 cm' },
-  { label: 'Grande', detail: '120 x 160 cm aprox.', sizeCategory: 'LARGE', sizeLabel: '120 x 160 cm' },
-  { label: 'A medida', detail: 'Definimos contigo', sizeCategory: 'CUSTOM', sizeLabel: 'A medida' }
+  {
+    label: 'Media',
+    detail: '100 x 80 cm aprox.',
+    sizeCategory: 'MEDIUM',
+    sizeLabel: '100 x 80 cm',
+  },
+  {
+    label: 'Grande',
+    detail: '120 x 160 cm aprox.',
+    sizeCategory: 'LARGE',
+    sizeLabel: '120 x 160 cm',
+  },
+  { label: 'A medida', detail: 'Definimos contigo', sizeCategory: 'CUSTOM', sizeLabel: 'A medida' },
 ] as const satisfies ReadonlyArray<{
   label: string;
   detail: string;
@@ -30,7 +40,7 @@ export const customizationFormatOptions = [
   { label: 'Orgánica', value: 'ORGANIC' },
   { label: 'Rectangular', value: 'RECTANGULAR' },
   { label: 'Redonda', value: 'ROUND' },
-  { label: 'Libre', value: 'CUSTOM' }
+  { label: 'Libre', value: 'CUSTOM' },
 ] as const satisfies ReadonlyArray<{
   label: string;
   value: RugFormat;
@@ -51,11 +61,13 @@ export function createCustomizationDraft(
     format: 'ORGANIC',
     referenceUrl: '',
     notes: '',
-    ...overrides
+    ...overrides,
   });
 }
 
-export function normalizeCustomizationDraft(draft: Partial<CustomizationDraft>): CustomizationDraft {
+export function normalizeCustomizationDraft(
+  draft: Partial<CustomizationDraft>
+): CustomizationDraft {
   const sizeOption =
     customizationSizeOptions.find((option) => option.sizeCategory === draft.sizeCategory) ||
     customizationSizeOptions[1];
@@ -63,7 +75,9 @@ export function normalizeCustomizationDraft(draft: Partial<CustomizationDraft>):
   return {
     productId: String(draft.productId || '').trim(),
     customerName: String(draft.customerName || '').trim(),
-    customerEmail: String(draft.customerEmail || '').trim().toLowerCase(),
+    customerEmail: String(draft.customerEmail || '')
+      .trim()
+      .toLowerCase(),
     customerPhone: String(draft.customerPhone || '').trim(),
     description: String(draft.description || '').trim(),
     preferredColors: normalizeColors(draft.preferredColors),
@@ -71,7 +85,7 @@ export function normalizeCustomizationDraft(draft: Partial<CustomizationDraft>):
     sizeLabel: String(draft.sizeLabel || sizeOption.sizeLabel).trim(),
     format: normalizeFormat(draft.format),
     referenceUrl: String(draft.referenceUrl || '').trim(),
-    notes: String(draft.notes || '').trim()
+    notes: String(draft.notes || '').trim(),
   };
 }
 
@@ -98,7 +112,7 @@ export function validateCustomizationDraft(draft: Partial<CustomizationDraft>): 
   return {
     draft: normalizedDraft,
     errors,
-    isValid: Object.keys(errors).length === 0
+    isValid: Object.keys(errors).length === 0,
   };
 }
 

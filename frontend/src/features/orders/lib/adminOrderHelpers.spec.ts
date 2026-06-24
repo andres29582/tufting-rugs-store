@@ -10,7 +10,7 @@ import {
   getCustomizationBriefPreview,
   getOrderProductName,
   getOrderStatusLabel,
-  parseOptionalMoney
+  parseOptionalMoney,
 } from './adminOrderHelpers';
 
 describe('adminOrderHelpers', () => {
@@ -19,7 +19,7 @@ describe('adminOrderHelpers', () => {
       status: 'WAITING_DEPOSIT',
       productionPossible: false,
       estimatedPriceCents: 18000,
-      finalPriceCents: 20000
+      finalPriceCents: 20000,
     });
 
     expect(createOrderReviewForm(order)).toEqual({
@@ -27,7 +27,7 @@ describe('adminOrderHelpers', () => {
       productionPossible: false,
       estimatedPrice: '180',
       finalPrice: '200',
-      comment: ''
+      comment: '',
     });
   });
 
@@ -37,14 +37,14 @@ describe('adminOrderHelpers', () => {
       productionPossible: true,
       estimatedPrice: '180,50',
       finalPrice: '',
-      comment: '  Revisado  '
+      comment: '  Revisado  ',
     });
 
     expect(payload).toEqual({
       status: 'APPROVED',
       productionPossible: true,
       comment: 'Revisado',
-      estimatedPriceCents: 18050
+      estimatedPriceCents: 18050,
     });
   });
 
@@ -63,12 +63,14 @@ describe('adminOrderHelpers', () => {
   });
 
   it('resolves product names and status labels', () => {
-    expect(getOrderProductName(buildOrder({ product: buildProduct({ name: 'Produto' }) }))).toBe('Produto');
+    expect(getOrderProductName(buildOrder({ product: buildProduct({ name: 'Produto' }) }))).toBe(
+      'Produto'
+    );
     expect(
       getOrderProductName(
         buildOrder({
           product: null,
-          customization: buildCustomization({ productId: 'custom-product-id' })
+          customization: buildCustomization({ productId: 'custom-product-id' }),
         })
       )
     ).toBe('custom-product-id');
@@ -87,8 +89,8 @@ describe('adminOrderHelpers', () => {
         'Intencion: Elegante',
         'Uso: Setup',
         'Estilo: Gamer neon',
-        'Colores a evitar: Blanco'
-      ].join('\n')
+        'Colores a evitar: Blanco',
+      ].join('\n'),
     });
     const details = getCustomizationBriefDetails(customization);
 
@@ -101,7 +103,7 @@ describe('adminOrderHelpers', () => {
       intention: 'Elegante',
       placement: 'Setup',
       visualStyle: 'Gamer neon',
-      colorsAvoid: 'Blanco'
+      colorsAvoid: 'Blanco',
     });
     expect(getCustomizationBriefPreview(buildCustomization({ description: '' }))).toBe('Sin brief');
   });
@@ -116,8 +118,8 @@ describe('adminOrderHelpers', () => {
           'Estilo: Suave',
           'Formato: Forma libre',
           'Tamano base: 60 x 60 cm',
-          'Referencia: No tengo referencia'
-        ].join('\n')
+          'Referencia: No tengo referencia',
+        ].join('\n'),
       })
     );
 
@@ -126,7 +128,7 @@ describe('adminOrderHelpers', () => {
       preview: 'Intencion: Infantil - Uso: Regalo - Estilo: Suave',
       shape: 'Forma libre',
       size: '60 x 60 cm',
-      reference: 'No tengo referencia'
+      reference: 'No tengo referencia',
     });
   });
 });

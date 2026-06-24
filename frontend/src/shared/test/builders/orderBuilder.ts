@@ -10,8 +10,8 @@ const baseDesignReferences: DesignReference[] = [
     url: 'https://example.com/reference.png',
     storageKey: null,
     mimeType: 'image/png',
-    originalName: 'reference.png'
-  }
+    originalName: 'reference.png',
+  },
 ];
 
 const baseOrder: Order = {
@@ -33,24 +33,30 @@ const baseOrder: Order = {
   product: null,
   customization: null,
   designReferences: baseDesignReferences,
-  adminReviews: baseAdminReviews
+  adminReviews: baseAdminReviews,
 };
 
 export function buildOrder(overrides: Partial<Order> = {}): Order {
-  const product = overrides.product === undefined ? buildProduct({
-    id: baseOrder.productId,
-    slug: 'alfombra-personalizable',
-    type: 'FULL_CUSTOM',
-    category: 'Personalizadas',
-    isActive: true,
-    customizable: true,
-    isCustomizable: true
-  }) : overrides.product;
+  const product =
+    overrides.product === undefined
+      ? buildProduct({
+          id: baseOrder.productId,
+          slug: 'alfombra-personalizable',
+          type: 'FULL_CUSTOM',
+          category: 'Personalizadas',
+          isActive: true,
+          customizable: true,
+          isCustomizable: true,
+        })
+      : overrides.product;
 
-  const customization = overrides.customization === undefined ? buildCustomization({
-    id: baseOrder.customizationId,
-    productId: product?.id ?? baseOrder.productId
-  }) : overrides.customization;
+  const customization =
+    overrides.customization === undefined
+      ? buildCustomization({
+          id: baseOrder.customizationId,
+          productId: product?.id ?? baseOrder.productId,
+        })
+      : overrides.customization;
 
   return {
     ...baseOrder,
@@ -62,7 +68,7 @@ export function buildOrder(overrides: Partial<Order> = {}): Order {
     designReferences: cloneDesignReferences(
       overrides.designReferences ?? baseOrder.designReferences
     ),
-    adminReviews: cloneAdminReviews(overrides.adminReviews ?? baseOrder.adminReviews)
+    adminReviews: cloneAdminReviews(overrides.adminReviews ?? baseOrder.adminReviews),
   };
 }
 

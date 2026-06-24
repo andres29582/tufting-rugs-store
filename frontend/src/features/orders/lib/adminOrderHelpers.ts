@@ -38,7 +38,7 @@ export const adminOrderStatusOptions: Array<{ value: OrderStatus; label: string 
   { value: 'IN_PRODUCTION', label: 'En produccion' },
   { value: 'READY_FOR_DELIVERY', label: 'Listo para entrega' },
   { value: 'DELIVERED', label: 'Entregado' },
-  { value: 'CANCELED', label: 'Cancelado' }
+  { value: 'CANCELED', label: 'Cancelado' },
 ];
 
 export function createOrderReviewForm(order: Order | null): ReviewFormState {
@@ -47,7 +47,7 @@ export function createOrderReviewForm(order: Order | null): ReviewFormState {
     productionPossible: order?.productionPossible ?? true,
     estimatedPrice: centsToInput(order?.estimatedPriceCents ?? null),
     finalPrice: centsToInput(order?.finalPriceCents ?? null),
-    comment: ''
+    comment: '',
   };
 }
 
@@ -55,7 +55,7 @@ export function buildAdminOrderReviewPayload(form: ReviewFormState): OrderReview
   const payload: OrderReviewPayload = {
     status: form.status,
     productionPossible: form.productionPossible,
-    comment: form.comment.trim() || null
+    comment: form.comment.trim() || null,
   };
   const estimatedPriceCents = parseOptionalMoney(form.estimatedPrice);
   const finalPriceCents = parseOptionalMoney(form.finalPrice);
@@ -110,11 +110,13 @@ export function formatAdminDate(value: string | null): string {
 
   return new Intl.DateTimeFormat('es', {
     dateStyle: 'short',
-    timeStyle: 'short'
+    timeStyle: 'short',
   }).format(new Date(value));
 }
 
-export function getCustomizationBriefPreview(customization: Pick<Customization, 'description'>): string {
+export function getCustomizationBriefPreview(
+  customization: Pick<Customization, 'description'>
+): string {
   return getCustomizationBriefDetails(customization).preview;
 }
 
@@ -130,7 +132,7 @@ export function getCustomizationBriefDetails(
   if (!lines.length) {
     return {
       ...details,
-      preview: 'Sin brief'
+      preview: 'Sin brief',
     };
   }
 
@@ -171,13 +173,13 @@ export function getCustomizationBriefDetails(
   const previewValues = [
     details.intention ? `Intencion: ${details.intention}` : '',
     details.placement ? `Uso: ${details.placement}` : '',
-    details.visualStyle ? `Estilo: ${details.visualStyle}` : ''
+    details.visualStyle ? `Estilo: ${details.visualStyle}` : '',
   ].filter(Boolean);
 
   if (previewValues.length) {
     return {
       ...details,
-      preview: previewValues.join(' - ')
+      preview: previewValues.join(' - '),
     };
   }
 
@@ -185,7 +187,7 @@ export function getCustomizationBriefDetails(
 
   return {
     ...details,
-    preview: legacyLines.slice(0, 3).join(' - ') || 'Sin brief'
+    preview: legacyLines.slice(0, 3).join(' - ') || 'Sin brief',
   };
 }
 
@@ -205,25 +207,25 @@ function createEmptyBriefDetails(): CustomizationBriefDetails {
     reference: '',
     customerName: '',
     customerEmail: '',
-    customerPhone: ''
+    customerPhone: '',
   };
 }
 
 function hasStructuredBriefFields(details: CustomizationBriefDetails): boolean {
   return Boolean(
     details.productName ||
-      details.productId ||
-      details.intention ||
-      details.placement ||
-      details.visualStyle ||
-      details.shape ||
-      details.size ||
-      details.technicalFormat ||
-      details.colorsAvoid ||
-      details.reference ||
-      details.customerName ||
-      details.customerEmail ||
-      details.customerPhone
+    details.productId ||
+    details.intention ||
+    details.placement ||
+    details.visualStyle ||
+    details.shape ||
+    details.size ||
+    details.technicalFormat ||
+    details.colorsAvoid ||
+    details.reference ||
+    details.customerName ||
+    details.customerEmail ||
+    details.customerPhone
   );
 }
 
@@ -236,7 +238,7 @@ function parseBriefField(line: string): { key: string; value: string } | null {
 
   return {
     key: normalizeBriefKey(line.slice(0, separatorIndex)),
-    value: line.slice(separatorIndex + 1).trim()
+    value: line.slice(separatorIndex + 1).trim(),
   };
 }
 

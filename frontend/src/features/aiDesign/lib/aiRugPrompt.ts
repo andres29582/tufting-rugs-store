@@ -7,7 +7,7 @@ export const llmsUrl = storeDomain + '/llms.txt';
 
 const aiReferenceWhatsAppMessages: Record<Language, string> = {
   es: 'Hola, quiero hablar sobre la referencia que hice con IA. Sigue la imagen:',
-  pt: 'Ola, quero falar sobre a referencia que fiz com IA. Segue a imagem:'
+  pt: 'Ola, quero falar sobre a referencia que fiz com IA. Segue a imagem:',
 };
 
 export function buildAiReferenceWhatsAppUrl(language: Language): string {
@@ -59,7 +59,7 @@ function buildSpanishPrompt(): string {
     '- Ayudame a generar una referencia visual.',
     '- Cuando tenga la imagen, recuerdame volver al sitio o contactar por WhatsApp al numero: ' +
       storeWhatsappNumber +
-      '.'
+      '.',
   ].join('\n');
 }
 
@@ -104,6 +104,6 @@ function buildPortuguesePrompt(): string {
     '- Ajude-me a gerar uma referencia visual.',
     '- Quando eu tiver a imagem, lembre-me de voltar ao site ou chamar no WhatsApp pelo numero: ' +
       storeWhatsappNumber +
-      '.'
+      '.',
   ].join('\n');
 }

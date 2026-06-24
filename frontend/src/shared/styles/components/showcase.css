@@ -20,7 +20,7 @@
 .showcase-flow__background::after {
   position: absolute;
   inset: 0;
-  content: "";
+  content: '';
   background: var(--showcase-flow-background-overlay);
   backdrop-filter: var(--showcase-flow-background-blur);
 }
@@ -272,7 +272,7 @@
 .showcase-section::after {
   position: absolute;
   z-index: -1;
-  content: "";
+  content: '';
   border-radius: var(--radius-button);
   filter: var(--showcase-orb-blur);
   opacity: var(--showcase-orb-opacity);
@@ -447,8 +447,16 @@
   inset: var(--rug-glow-inset);
   border-radius: var(--rug-glow-radius);
   background:
-    radial-gradient(circle at 30% 40%, color-mix(in srgb, var(--rug-c) 56%, transparent), transparent 48%),
-    radial-gradient(circle at 70% 48%, color-mix(in srgb, var(--rug-b) 60%, transparent), transparent 44%);
+    radial-gradient(
+      circle at 30% 40%,
+      color-mix(in srgb, var(--rug-c) 56%, transparent),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 70% 48%,
+      color-mix(in srgb, var(--rug-b) 60%, transparent),
+      transparent 44%
+    );
   filter: var(--rug-glow-filter);
   opacity: var(--rug-glow-opacity);
 }

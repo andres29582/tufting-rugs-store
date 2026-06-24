@@ -1,11 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode
-} from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { translations, type Language, type TranslationKey } from './translations';
 
 type TranslationParams = Record<string, string | number>;
@@ -32,7 +25,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     () => ({
       language,
       setLanguage: setLanguageState,
-      t: (key, params) => interpolate(translations[language][key] || translations.es[key], params)
+      t: (key, params) => interpolate(translations[language][key] || translations.es[key], params),
     }),
     [language]
   );

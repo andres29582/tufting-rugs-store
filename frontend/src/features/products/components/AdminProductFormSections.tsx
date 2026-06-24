@@ -1,29 +1,26 @@
 import type { ChangeEvent } from 'react';
-import {
-  slugifyAdminProduct,
-  type ProductFormState
-} from '../lib/adminProductFormHelpers';
+import { slugifyAdminProduct, type ProductFormState } from '../lib/adminProductFormHelpers';
 import { Button } from '../../../shared/components/Button/Button';
 import { FormField } from '../../../shared/components/FormField/FormField';
 import type { ProductType, RugFormat, SizeCategory } from '../../../shared/types';
 
 const typeOptions: Array<{ label: string; value: ProductType }> = [
   { label: 'Alfombra lista', value: 'READY_MADE' },
-  { label: '100% personalizada', value: 'FULL_CUSTOM' }
+  { label: '100% personalizada', value: 'FULL_CUSTOM' },
 ];
 
 const sizeOptions: Array<{ label: string; value: SizeCategory }> = [
   { label: 'Pequena', value: 'SMALL' },
   { label: 'Media', value: 'MEDIUM' },
   { label: 'Grande', value: 'LARGE' },
-  { label: 'A medida', value: 'CUSTOM' }
+  { label: 'A medida', value: 'CUSTOM' },
 ];
 
 const formatOptions: Array<{ label: string; value: RugFormat }> = [
   { label: 'Rectangular', value: 'RECTANGULAR' },
   { label: 'Redonda', value: 'ROUND' },
   { label: 'Organica', value: 'ORGANIC' },
-  { label: 'Personalizada', value: 'CUSTOM' }
+  { label: 'Personalizada', value: 'CUSTOM' },
 ];
 
 type ProductFormPatch = Partial<ProductFormState>;
@@ -31,7 +28,7 @@ type ProductFormPatch = Partial<ProductFormState>;
 export function AdminProductFields({
   form,
   slugPreview,
-  onChange
+  onChange,
 }: {
   form: ProductFormState;
   slugPreview: string;
@@ -163,7 +160,7 @@ export function AdminProductImageUpload({
   uploadStatus,
   onChange,
   onClearImage,
-  onImageUpload
+  onImageUpload,
 }: {
   imageUrl: string;
   imagePreviewUrl: string;
@@ -213,7 +210,7 @@ export function AdminProductImageUpload({
 
 export function AdminProductFormActions({
   isSubmitting,
-  status
+  status,
 }: {
   isSubmitting: boolean;
   status: string;
@@ -241,7 +238,7 @@ function SelectField<T extends string>({
   name,
   value,
   options,
-  onChange
+  onChange,
 }: {
   label: string;
   name: string;
@@ -272,7 +269,7 @@ function SelectField<T extends string>({
 function CheckboxField({
   label,
   checked,
-  onChange
+  onChange,
 }: {
   label: string;
   checked: boolean;

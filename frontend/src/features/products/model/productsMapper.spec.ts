@@ -1,10 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { ApiProduct } from '../../../shared/types';
-import {
-  mapProductFromApi,
-  mapProductsFromApi,
-  normalizeProductImageUrl
-} from './productsMapper';
+import { mapProductFromApi, mapProductsFromApi, normalizeProductImageUrl } from './productsMapper';
 
 describe('productsMapper', () => {
   it('maps a complete API product into frontend product shape', () => {
@@ -27,7 +23,7 @@ describe('productsMapper', () => {
       isCustomizable: true,
       isFeatured: true,
       isActive: false,
-      motif: 'organic'
+      motif: 'organic',
     });
 
     expect(product).toMatchObject({
@@ -41,7 +37,7 @@ describe('productsMapper', () => {
       size: '100 x 80 cm',
       imageUrl: 'https://cdn.example.com/rug.png',
       isActive: false,
-      motif: 'organic'
+      motif: 'organic',
     });
     expect(product.colors).toEqual(['#111111', '#222222', '#333333', '#444444']);
     expect(product.features).toEqual(['Feature 1']);
@@ -53,7 +49,7 @@ describe('productsMapper', () => {
       type: 'FULL_CUSTOM',
       name: 'Custom Product',
       priceFromCents: 18000,
-      colors: ['#111111']
+      colors: ['#111111'],
     });
 
     expect(product).toMatchObject({
@@ -65,7 +61,7 @@ describe('productsMapper', () => {
       format: 'CUSTOM',
       isActive: true,
       isFeatured: false,
-      motif: 'waves'
+      motif: 'waves',
     });
     expect(product.colors).toEqual(['#1d2b53', '#f97316', '#db5c91']);
     expect(product.features).toHaveLength(3);
@@ -76,7 +72,7 @@ describe('productsMapper', () => {
   it('maps arrays and ignores non-array inputs', () => {
     const products: ApiProduct[] = [
       { id: 'one', name: 'One' },
-      { id: 'two', name: 'Two' }
+      { id: 'two', name: 'Two' },
     ];
 
     expect(mapProductsFromApi(products)).toHaveLength(2);
@@ -88,10 +84,10 @@ describe('productsMapper', () => {
       {
         id: 'image-product',
         name: 'Image Product',
-        imageUrl: '/uploads/product-images/rug.png'
+        imageUrl: '/uploads/product-images/rug.png',
       },
       {
-        resolveAssetUrl: (url) => 'https://api.example.com' + url
+        resolveAssetUrl: (url) => 'https://api.example.com' + url,
       }
     );
 

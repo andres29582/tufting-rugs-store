@@ -4,16 +4,19 @@ import type {
   CustomizationDraft,
   Order,
   Product,
-  SaveCustomizationResult
+  SaveCustomizationResult,
 } from '../../../shared/types';
 import { getProducts } from '../../products/api/productsApi';
 import { loadProducts } from '../../products/services/productsService';
 import {
   createCustomizationDraft,
   normalizeCustomizationDraft,
-  validateCustomizationDraft
+  validateCustomizationDraft,
 } from '../lib/customizationDraft';
-import { createCustomization, createOrderFromCustomization as createOrderFromCustomizationApi } from '../api/customizationsApi';
+import {
+  createCustomization,
+  createOrderFromCustomization as createOrderFromCustomizationApi,
+} from '../api/customizationsApi';
 
 const savedDrafts: Customization[] = [];
 
@@ -32,14 +35,14 @@ export async function saveCustomizationDraft(
     return {
       ok: false,
       draft: validation.draft,
-      errors: validation.errors
+      errors: validation.errors,
     };
   }
 
   if (appConfig.useCustomizationMocks) {
     const preparedDraft = {
       ...validation.draft,
-      productId: validation.draft.productId || (await resolveMockCustomProductId())
+      productId: validation.draft.productId || (await resolveMockCustomProductId()),
     };
     const savedDraft = createMockCustomization(preparedDraft);
     savedDrafts.unshift(savedDraft);
@@ -47,20 +50,20 @@ export async function saveCustomizationDraft(
     return {
       ok: true,
       customization: savedDraft,
-      mode: 'mock'
+      mode: 'mock',
     };
   }
 
   const preparedDraft = {
     ...validation.draft,
-    productId: await resolveApiCustomProductId(validation.draft.productId)
+    productId: await resolveApiCustomProductId(validation.draft.productId),
   };
   const customization = await createCustomization(preparedDraft);
 
   return {
     ok: true,
     customization,
-    mode: 'api'
+    mode: 'api',
   };
 }
 
@@ -69,7 +72,7 @@ export async function createOrderFromCustomization(
   payload: Record<string, unknown> = {}
 ): Promise<Order> {
   if (appConfig.useCustomizationMocks) {
-    const customization = savedDrafts.find(c => c.id === customizationId);
+    const customization = savedDrafts.find((c) => c.id === customizationId);
     if (!customization) {
       throw new Error('Customization not found in mock data');
     }
@@ -83,7 +86,7 @@ export function getSavedCustomizationDrafts(): Customization[] {
   return savedDrafts.map((draft) => ({
     ...draft,
     preferredColors: [...draft.preferredColors],
-    designReferences: [...draft.designReferences]
+    designReferences: [...draft.designReferences],
   }));
 }
 
@@ -137,11 +140,11 @@ function createMockCustomization(draft: CustomizationDraft): Customization {
       ? [
           {
             kind: 'CUSTOMER_REFERENCE',
-            url: normalizedDraft.referenceUrl
-          }
+            url: normalizedDraft.referenceUrl,
+          },
         ]
       : [],
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   };
 }
 
@@ -165,7 +168,7 @@ function createMockOrder(customization: Customization): Order {
     product: null,
     customization,
     designReferences: [],
-    adminReviews: []
+    adminReviews: [],
   };
 }
 
@@ -173,6 +176,6 @@ function formatDateForCode(date: Date): string {
   return [
     date.getFullYear(),
     String(date.getMonth() + 1).padStart(2, '0'),
-    String(date.getDate()).padStart(2, '0')
+    String(date.getDate()).padStart(2, '0'),
   ].join('');
 }

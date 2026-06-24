@@ -4,7 +4,6 @@
    ========================================================================== */
 
 :root {
-
   /* --------------------------------------------------------------------------
      Shadows
   -------------------------------------------------------------------------- */
@@ -53,22 +52,19 @@
   --transition-base:
     transform var(--duration-base) var(--ease-base),
     border-color var(--duration-base) var(--ease-base),
-    background var(--duration-base) var(--ease-base),
-    opacity var(--duration-base) var(--ease-base);
+    background var(--duration-base) var(--ease-base), opacity var(--duration-base) var(--ease-base);
   --transition-shadow:
     transform var(--duration-base) var(--ease-base),
     box-shadow var(--duration-base) var(--ease-base),
     border-color var(--duration-base) var(--ease-base),
-    background var(--duration-base) var(--ease-base),
-    opacity var(--duration-base) var(--ease-base);
+    background var(--duration-base) var(--ease-base), opacity var(--duration-base) var(--ease-base);
   --transition-enter:
     transform var(--duration-enter) var(--ease-enter),
     opacity var(--duration-enter) var(--ease-enter);
   --transition-interactive:
     transform var(--duration-base) var(--ease-base),
     border-color var(--duration-base) var(--ease-base),
-    background var(--duration-base) var(--ease-base),
-    color var(--duration-base) var(--ease-base),
+    background var(--duration-base) var(--ease-base), color var(--duration-base) var(--ease-base),
     opacity var(--duration-base) var(--ease-base);
   --header-max-width: 1240px;
   --header-gutter: 28px;
@@ -172,9 +168,21 @@
   --footer-grid-gap: var(--space-6);
   --footer-grid-padding-top: var(--space-7);
   --showcase-flow-background:
-    radial-gradient(circle at 64% 18%, color-mix(in srgb, var(--rug-b) 78%, transparent), transparent 30%),
-    radial-gradient(circle at 86% 70%, color-mix(in srgb, var(--rug-c) 72%, transparent), transparent 34%),
-    radial-gradient(circle at 18% 40%, color-mix(in srgb, var(--rug-a) 82%, transparent), transparent 38%),
+    radial-gradient(
+      circle at 64% 18%,
+      color-mix(in srgb, var(--rug-b) 78%, transparent),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 86% 70%,
+      color-mix(in srgb, var(--rug-c) 72%, transparent),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 18% 40%,
+      color-mix(in srgb, var(--rug-a) 82%, transparent),
+      transparent 38%
+    ),
     linear-gradient(135deg, #071226 0%, #261032 46%, #611d32 100%);
   --showcase-flow-background-overlay: rgba(0, 0, 0, 0.2);
   --showcase-flow-background-blur: blur(26px);
@@ -234,9 +242,7 @@
   --showcase-rug-image-width: min(70%, 390px);
   --showcase-rug-image-max-height: 72%;
   --showcase-rug-image-shadow: drop-shadow(0 26px 36px rgba(0, 0, 0, 0.32));
-  --showcase-rug-image-transition:
-    opacity 450ms var(--ease-base),
-    transform 550ms var(--ease-base);
+  --showcase-rug-image-transition: opacity 450ms var(--ease-base), transform 550ms var(--ease-base);
   --showcase-flow-rug-transform: rotate(-3deg) scale(0.76);
   --showcase-flow-rug-transform-compact: rotate(-4deg) scale(0.62);
   --showcase-flow-rug-shadow: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.28));
@@ -268,13 +274,23 @@
   --showcase-indicator-surface-hover: rgba(255, 255, 255, 0.68);
   --showcase-indicator-surface-active: rgba(255, 255, 255, 0.94);
   --showcase-indicator-transition:
-    width 220ms var(--ease-base),
-    background 220ms var(--ease-base),
-    opacity 220ms var(--ease-base);
+    width 220ms var(--ease-base), background 220ms var(--ease-base), opacity 220ms var(--ease-base);
   --showcase-section-background:
-    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--rug-a) 78%, transparent), transparent 34rem),
-    radial-gradient(circle at 76% 24%, color-mix(in srgb, var(--rug-c) 70%, transparent), transparent 33rem),
-    radial-gradient(circle at 70% 72%, color-mix(in srgb, var(--rug-b) 58%, transparent), transparent 34rem),
+    radial-gradient(
+      circle at 20% 20%,
+      color-mix(in srgb, var(--rug-a) 78%, transparent),
+      transparent 34rem
+    ),
+    radial-gradient(
+      circle at 76% 24%,
+      color-mix(in srgb, var(--rug-c) 70%, transparent),
+      transparent 33rem
+    ),
+    radial-gradient(
+      circle at 70% 72%,
+      color-mix(in srgb, var(--rug-b) 58%, transparent),
+      transparent 34rem
+    ),
     linear-gradient(130deg, rgba(2, 8, 20, 0.58), rgba(8, 12, 26, 0.52));
   --showcase-orb-blur: blur(24px);
   --showcase-orb-blur-compact: blur(14px);
@@ -399,7 +415,11 @@
   --customization-summary-line: var(--section-divider-line);
   --customization-summary-radius: var(--radius-menu);
   --customization-summary-background:
-    radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--color-accent-b) 32%, transparent), transparent 16rem),
+    radial-gradient(
+      circle at 20% 10%,
+      color-mix(in srgb, var(--color-accent-b) 32%, transparent),
+      transparent 16rem
+    ),
     var(--color-glass-soft);
   --customization-summary-copy-leading: var(--leading-normal);
   --customization-summary-list-gap: 10px 14px;

@@ -31,7 +31,12 @@ export function ProductSearch({ query, onSearch, onSubmit }: ProductSearchProps)
         value={query}
         onChange={(event) => onSearch(event.currentTarget.value)}
       />
-      <IconButton icon="search" type="submit" className="search-submit" aria-label={t('search.submit')} />
+      <IconButton
+        icon="search"
+        type="submit"
+        className="search-submit"
+        aria-label={t('search.submit')}
+      />
     </form>
   );
 }

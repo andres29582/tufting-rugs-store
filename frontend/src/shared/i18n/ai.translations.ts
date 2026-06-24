@@ -1,11 +1,13 @@
 const es = {
   'ai.direct.eyebrow': 'Para continuar sin ayuda de IA',
   'ai.direct.title': 'Personaliza tu tapete a tu manera',
-  'ai.direct.copy': 'Puedes ir directo al formulario y responder paso a paso para preparar tu pedido por WhatsApp.',
+  'ai.direct.copy':
+    'Puedes ir directo al formulario y responder paso a paso para preparar tu pedido por WhatsApp.',
   'ai.direct.cta': 'Personalizar mi tapete',
   'ai.choice.eyebrow': 'Referencia con IA',
   'ai.choice.title': 'Tienes acceso a una IA que genere imagenes?',
-  'ai.choice.copy': 'Si usas una de estas herramientas, te damos un prompt para crear una referencia visual antes de completar el formulario.',
+  'ai.choice.copy':
+    'Si usas una de estas herramientas, te damos un prompt para crear una referencia visual antes de completar el formulario.',
   'ai.choice.toolsAria': 'Herramientas de IA de referencia',
   'ai.choice.cta': 'Si, tengo acceso a una IA',
   'ai.guide.eyebrow': 'Usar IA externa',
@@ -28,11 +30,13 @@ const es = {
 const pt = {
   'ai.direct.eyebrow': 'Para continuar sem ajuda de IA',
   'ai.direct.title': 'Personalize seu tapete do seu jeito',
-  'ai.direct.copy': 'Voce pode ir direto ao formulario e responder passo a passo para preparar seu pedido pelo WhatsApp.',
+  'ai.direct.copy':
+    'Voce pode ir direto ao formulario e responder passo a passo para preparar seu pedido pelo WhatsApp.',
   'ai.direct.cta': 'Personalizar meu tapete',
   'ai.choice.eyebrow': 'Referencia com IA',
   'ai.choice.title': 'Voce tem acesso a uma IA que gera imagens?',
-  'ai.choice.copy': 'Se voce usa uma dessas ferramentas, damos um prompt para criar uma referencia visual antes de completar o formulario.',
+  'ai.choice.copy':
+    'Se voce usa uma dessas ferramentas, damos um prompt para criar uma referencia visual antes de completar o formulario.',
   'ai.choice.toolsAria': 'Ferramentas de IA de referencia',
   'ai.choice.cta': 'Sim, tenho acesso a uma IA',
   'ai.guide.eyebrow': 'Usar IA externa',

@@ -132,7 +132,7 @@
   left: calc(-50% + 18px);
   width: calc(100% - 34px);
   height: 1px;
-  content: "";
+  content: '';
   background: rgba(255, 255, 255, 0.22);
 }
 
@@ -172,7 +172,7 @@
   border-color: rgba(255, 255, 255, 0.46);
 }
 
-.customization-stepper-item[data-state="active"] span {
+.customization-stepper-item[data-state='active'] span {
   border-color: rgba(255, 255, 255, 0.64);
   background:
     linear-gradient(135deg, rgba(219, 92, 145, 0.92), rgba(124, 58, 237, 0.86)),
@@ -180,7 +180,7 @@
   box-shadow: 0 0 24px rgba(219, 92, 145, 0.38);
 }
 
-.customization-stepper-item[data-state="complete"] span {
+.customization-stepper-item[data-state='complete'] span {
   background: rgba(255, 255, 255, 0.16);
 }
 
@@ -262,7 +262,7 @@
     rgba(5, 14, 30, 0.54);
 }
 
-.customization-choice-card[aria-pressed="true"] {
+.customization-choice-card[aria-pressed='true'] {
   border-color: rgba(255, 146, 226, 0.86);
   background:
     linear-gradient(145deg, rgba(219, 92, 145, 0.34), rgba(124, 58, 237, 0.18)),
@@ -302,13 +302,13 @@
   left: 8px;
   width: 6px;
   height: 10px;
-  content: "";
+  content: '';
   border: solid #fffaf3;
   border-width: 0 2px 2px 0;
   transform: rotate(42deg);
 }
 
-.customization-choice-card[aria-pressed="true"] .customization-choice-card__check {
+.customization-choice-card[aria-pressed='true'] .customization-choice-card__check {
   display: block;
 }
 
@@ -371,14 +371,14 @@
   border-color: rgba(255, 255, 255, 0.34);
 }
 
-.customization-size-option[aria-pressed="true"],
-.customization-color-option[aria-pressed="true"] {
+.customization-size-option[aria-pressed='true'],
+.customization-color-option[aria-pressed='true'] {
   color: var(--color-text-inverse);
   border-color: rgba(255, 250, 243, 0.9);
   background: rgba(255, 250, 243, 0.92);
 }
 
-.customization-size-option[aria-pressed="true"] span {
+.customization-size-option[aria-pressed='true'] span {
   color: rgba(23, 23, 23, 0.72);
 }
 
@@ -407,7 +407,7 @@
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
 }
 
-.customization-color-option[aria-pressed="true"] span {
+.customization-color-option[aria-pressed='true'] span {
   border-color: rgba(23, 23, 23, 0.42);
 }
 
