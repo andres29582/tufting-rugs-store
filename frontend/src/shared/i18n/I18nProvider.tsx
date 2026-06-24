@@ -50,7 +50,7 @@ function getInitialLanguage(): Language {
     return storedLanguage;
   }
 
-  return window.navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'es';
+  return 'pt';
 }
 
 function interpolate(value: string, params: TranslationParams = {}): string {
