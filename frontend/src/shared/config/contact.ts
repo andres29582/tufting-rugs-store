@@ -10,28 +10,28 @@ export function buildWhatsappUrl(message: string): string {
 
 export function buildGeneralContactMessage(language: Language = 'es'): string {
   return language === 'pt'
-    ? 'Olá! Quero pedir um tapete tufting personalizado.'
-    : 'Hola! Quiero pedir una alfombra tufting personalizada.';
+    ? 'Olá! Quero solicitar orçamento para um tapete tufting personalizado.'
+    : 'Hola! Quiero solicitar presupuesto para una alfombra tufting personalizada.';
 }
 
 export function buildProductContactMessage(productName: string, language: Language = 'es'): string {
   if (language === 'pt') {
     return [
-      'Olá! Quero pedir um tapete tufting.',
+      'Olá! Quero solicitar orçamento para um tapete tufting.',
       '',
-      'Produto de referência: ' + productName,
+      'Produto/base de referência: ' + productName,
       'Origem: Detalhe do produto',
       '',
-      'Observações: Quero validar viabilidade, prazo e orçamento pelo WhatsApp.',
+      'Solicitação: Confirmar viabilidade, prazo de produção e orçamento final pelo WhatsApp.',
     ].join('\n');
   }
 
   return [
-    'Hola! Quiero pedir una alfombra tufting.',
+    'Hola! Quiero solicitar presupuesto para una alfombra tufting.',
     '',
-    'Producto de referencia: ' + productName,
+    'Producto/base de referencia: ' + productName,
     'Origen: Detalle de producto',
     '',
-    'Observaciones: Quiero validar viabilidad, plazo y presupuesto por WhatsApp.',
+    'Solicitud: Confirmar viabilidad, plazo de producción y presupuesto final por WhatsApp.',
   ].join('\n');
 }

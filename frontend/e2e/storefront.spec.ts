@@ -22,7 +22,7 @@ test.describe('Storefront', () => {
 
     await expect(page).toHaveURL(/\/catalogo$/);
     await expect(page.getByRole('heading', { name: /^Catálogo$/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /Ver detalles/i }).first()).toBeVisible();
+    await expect(page.getByRole('link', { name: /Ver diseño y presupuesto/i }).first()).toBeVisible();
   });
 
   test('loads the personalization page directly', async ({ page }) => {
@@ -30,13 +30,13 @@ test.describe('Storefront', () => {
 
     await expect(page).toHaveURL(/\/personalizar$/);
     await expect(
-      page.getByRole('heading', { name: /Personaliza tu tapete a tu manera/i })
+      page.getByRole('heading', { name: /Crea tu alfombra personalizada/i })
     ).toBeVisible();
   });
 
   test('opens the customization form from the personalization page', async ({ page }) => {
     await page.goto('/personalizar');
-    await page.getByRole('button', { name: /Personaliza tu tapete a tu manera/i }).click();
+    await page.getByRole('button', { name: /Crea tu alfombra personalizada/i }).click();
 
     await expect(
       page.getByRole('heading', { name: /Crea tu alfombra personalizada/i })
@@ -46,7 +46,7 @@ test.describe('Storefront', () => {
 
   test('opens the AI guide from the personalization page', async ({ page }) => {
     await page.goto('/personalizar');
-    await page.getByRole('button', { name: /tengo acceso a una IA/i }).click();
+    await page.getByRole('button', { name: /Crear referencia con IA/i }).click();
 
     await expect(
       page.getByRole('dialog', { name: /Crea tu idea antes de completar el pedido/i })
@@ -54,7 +54,7 @@ test.describe('Storefront', () => {
     await expect(page.getByLabel(/Prompt listo para copiar/i)).toBeVisible();
     await expect(page.getByRole('button', { name: /Copiar prompt/i })).toBeVisible();
     await expect(
-      page.getByRole('link', { name: /continuar por WhatsApp/i })
+      page.getByRole('link', { name: /Enviar referencia y pedir presupuesto/i })
     ).toHaveAttribute('href', /wa\.me/);
   });
 
@@ -63,8 +63,10 @@ test.describe('Storefront', () => {
 
     await expect(page).toHaveURL(/\/producto\/bola-ocho$/);
     await expect(page.getByRole('heading', { name: /Bola Ocho/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /Pedir por WhatsApp/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /Volver al catálogo/i })).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: 'Solicitar presupuesto por WhatsApp', exact: true })
+    ).toBeVisible();
+    await expect(page.getByRole('link', { name: /Ver alfombras disponibles/i })).toBeVisible();
   });
 
   test('switches the storefront language between ES and PT', async ({ page }) => {
@@ -73,12 +75,12 @@ test.describe('Storefront', () => {
     await page.getByRole('button', { name: /Cambiar idioma a portugués/i }).click();
 
     await expect(page.getByText(/Tapetes sob encomenda/i)).toBeVisible();
-    await expect(page.getByRole('link', { name: /^Personalizados$/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /^Criar tapete$/i })).toBeVisible();
 
     await page.getByRole('button', { name: /Mudar idioma para espanhol/i }).click();
 
     await expect(page.getByText(/Rugs made to order/i)).toBeVisible();
-    await expect(page.getByRole('link', { name: /^Personalizadas$/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /^Crear alfombra$/i })).toBeVisible();
   });
 
   test('renders the internal not found page for unknown routes', async ({ page }) => {
@@ -86,7 +88,7 @@ test.describe('Storefront', () => {
 
     await expect(page).toHaveURL(/\/ruta-inexistente$/);
     await expect(page.getByRole('heading', { name: /No encontramos esta página/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /Ver catálogo/i })).toBeVisible();
+    await expect(page.getByRole('link', { name: /Ver alfombras disponibles/i })).toBeVisible();
   });
 });
 
