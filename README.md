@@ -45,7 +45,7 @@ una integracion frontend futura.
 - Vitest
 - Supertest para pruebas HTTP reales
 
-## Modos de operación
+## Modos de operacion
 
 | Modo | Estado | Descripcion |
 | --- | --- | --- |
@@ -70,6 +70,14 @@ cd frontend
 npm run dev
 npm run build
 npm run test -- --run
+```
+
+Comandos verificados de salud del proyecto:
+
+```powershell
+npm test -- --runInBand
+cd frontend; npm run build
+cd frontend; npm test -- --run
 ```
 
 La salida publicada es:
@@ -275,7 +283,7 @@ slug: alfombra-100-personalizada
 type: FULL_CUSTOM
 basePriceCents: 22000
 sizeCategory: CUSTOM
-sizeLabel: Sob orçamento
+sizeLabel: Sob orcamento
 format: CUSTOM
 ```
 
@@ -661,6 +669,13 @@ Storefront publico actual:
 - datos mock para catalogo, personalizacion y flujo de pedidos;
 - guia de IA externa para ayudar a crear referencias visuales;
 - contacto y continuidad del pedido orientados a WhatsApp.
+
+### Modo frontend-only en produccion
+
+El deploy publico actual opera sin backend activo. En produccion, los clientes consultan el
+catalogo estatico y envian pedidos por WhatsApp. Los mocks y clientes API legacy del frontend no
+deben activarse contra servicios reales hasta configurar y validar un backend disponible. Vercel
+debe seguir usando el build del frontend con salida en `frontend/dist`.
 
 Backend disponible en el repo:
 
