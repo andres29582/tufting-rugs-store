@@ -19,76 +19,28 @@ const productCopyBySlug: Record<string, Record<Language, LocalizedProductCopy>> 
         'Tapete tufting circular inspirado na bola oito, com textura alta e contraste grafico para espacos com atitude.',
     },
   },
-  'ondas-abstractas': {
+  'gatos-yin-yang': {
     es: {
-      name: 'Ondas Abstractas',
+      name: 'Gatos Yin Yang',
       description:
-        'Alfombra tufting hecha a mano con ondas libres, volumen suave y acabado premium para espacios con personalidad.',
+        'Alfombra tufting ovalada con gatos en composicion yin yang, contraste blanco y negro y siluetas suaves.',
     },
     pt: {
-      name: 'Ondas Abstratas',
+      name: 'Gatos Yin Yang',
       description:
-        'Tapete tufting feito a mao com ondas livres, volume macio e acabamento premium para espacos com personalidade.',
+        'Tapete tufting oval com gatos em composicao yin yang, contraste preto e branco e silhuetas suaves.',
     },
   },
-  'geometria-moderna': {
+  sharingan: {
     es: {
-      name: 'Geometria Moderna',
+      name: 'Sharingan',
       description:
-        'Composicion de bloques geometricos con contraste elegante, pensada para salas, estudios y rincones creativos.',
+        'Alfombra tufting circular inspirada en un emblema rojo y negro de estetica anime, con lineas definidas y alto impacto visual.',
     },
     pt: {
-      name: 'Geometria Moderna',
+      name: 'Sharingan',
       description:
-        'Composicao de blocos geometricos com contraste elegante, pensada para salas, estudios e cantos criativos.',
-    },
-  },
-  'terreno-natural': {
-    es: {
-      name: 'Terreno Natural',
-      description:
-        'Formas inspiradas en mapas de tierra, fibras calidas y una paleta serena para interiores naturales.',
-    },
-    pt: {
-      name: 'Terreno Natural',
-      description:
-        'Formas inspiradas em mapas de terra, fibras acolhedoras e uma paleta serena para interiores naturais.',
-    },
-  },
-  'circulos-organicos': {
-    es: {
-      name: 'Circulos Organicos',
-      description:
-        'Pieza circular con capas tonales y ritmo suave, ideal para vestir espacios pequenos con presencia escultorica.',
-    },
-    pt: {
-      name: 'Circulos Organicos',
-      description:
-        'Peca circular com camadas tonais e ritmo suave, ideal para vestir espacos pequenos com presenca escultorica.',
-    },
-  },
-  'arcos-y-lineas': {
-    es: {
-      name: 'Arcos y Lineas',
-      description:
-        'Arcos graficos sobre base clara, una alfombra sobria con gesto artistico para ambientes contemporaneos.',
-    },
-    pt: {
-      name: 'Arcos e Linhas',
-      description:
-        'Arcos graficos sobre base clara, um tapete sobrio com gesto artistico para ambientes contemporaneos.',
-    },
-  },
-  'bruma-suave': {
-    es: {
-      name: 'Bruma Suave',
-      description:
-        'Base abstracta de tonos suaves preparada para adaptar medidas, colores y formas al espacio del cliente.',
-    },
-    pt: {
-      name: 'Bruma Suave',
-      description:
-        'Base abstrata de tons suaves pronta para adaptar medidas, cores e formas ao espaco do cliente.',
+        'Tapete tufting circular inspirado em um emblema vermelho e preto de estetica anime, com linhas definidas e alto impacto visual.',
     },
   },
 };
@@ -99,6 +51,7 @@ const categoryLabels: Record<string, Record<Language, string>> = {
   minimalistas: { es: 'Minimalistas', pt: 'Minimalistas' },
   organicas: { es: 'Organicas', pt: 'Organicos' },
   decorativas: { es: 'Decorativas', pt: 'Decorativos' },
+  geek: { es: 'Geek', pt: 'Geek' },
   personalizadas: { es: 'Personalizadas', pt: 'Personalizados' },
 };
 
@@ -139,7 +92,10 @@ const featureLabels: Record<string, Record<Language, string>> = {
   'paleta natural': { es: 'Paleta natural', pt: 'Paleta natural' },
   'borde reforzado': { es: 'Borde reforzado', pt: 'Borda reforcada' },
   'formato circular': { es: 'Formato circular', pt: 'Formato circular' },
+  'formato ovalado': { es: 'Formato ovalado', pt: 'Formato oval' },
   'acabado elevado': { es: 'Acabado elevado', pt: 'Acabamento elevado' },
+  'alto contraste': { es: 'Alto contraste', pt: 'Alto contraste' },
+  'diseno geek': { es: 'Diseno geek', pt: 'Design geek' },
   'colores a eleccion': { es: 'Colores a eleccion', pt: 'Cores a escolha' },
   'base firme': { es: 'Base firme', pt: 'Base firme' },
   minimalista: { es: 'Minimalista', pt: 'Minimalista' },
