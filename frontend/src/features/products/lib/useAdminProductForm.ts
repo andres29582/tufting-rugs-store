@@ -5,14 +5,14 @@ import {
   createAdminProduct,
   getAdminProductById,
   updateAdminProduct,
-  uploadAdminProductImage
+  uploadAdminProductImage,
 } from '../api/productsApi';
 import {
   createInitialProductForm,
   mapAdminProductFormToPayload,
   mapProductToAdminForm,
   slugifyAdminProduct,
-  type ProductFormState
+  type ProductFormState,
 } from './adminProductFormHelpers';
 
 export function useAdminProductForm(productId: string) {
@@ -89,7 +89,7 @@ export function useAdminProductForm(productId: string) {
     try {
       const payload = mapAdminProductFormToPayload({
         ...form,
-        slug: slugPreview
+        slug: slugPreview,
       });
 
       if (isEditing) {
@@ -100,7 +100,9 @@ export function useAdminProductForm(productId: string) {
         navigate('/admin/productos');
       }
     } catch (submitError) {
-      setStatus(submitError instanceof Error ? submitError.message : 'No se pudo guardar el producto.');
+      setStatus(
+        submitError instanceof Error ? submitError.message : 'No se pudo guardar el producto.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -127,7 +129,9 @@ export function useAdminProductForm(productId: string) {
         updateForm({ imageUrl: upload.url });
         setUploadStatus('Imagen subida correctamente.');
       } catch (uploadError) {
-        setUploadStatus(uploadError instanceof Error ? uploadError.message : 'No se pudo subir la imagen.');
+        setUploadStatus(
+          uploadError instanceof Error ? uploadError.message : 'No se pudo subir la imagen.'
+        );
       } finally {
         setIsUploading(false);
       }
@@ -154,6 +158,6 @@ export function useAdminProductForm(productId: string) {
     title,
     updateForm,
     uploadProductImage,
-    uploadStatus
+    uploadStatus,
   };
 }

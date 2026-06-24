@@ -6,7 +6,7 @@ import { loadProducts } from '../../features/products/services/productsService';
 import {
   AppErrorState,
   AppLoadingState,
-  getFriendlyErrorMessage
+  getFriendlyErrorMessage,
 } from '../../shared/components/AppState/AppState';
 import { useTranslation } from '../../shared/i18n';
 

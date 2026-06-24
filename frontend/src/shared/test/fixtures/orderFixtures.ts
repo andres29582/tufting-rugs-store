@@ -15,7 +15,7 @@ export const pendingOrderFixture = buildOrder({
   productionPossible: true,
   product: customizableProductFixture,
   customization: pendingCustomizationFixture,
-  adminReviews: []
+  adminReviews: [],
 });
 
 export const reviewedApprovedOrderFixture = buildOrder({
@@ -40,7 +40,7 @@ export const reviewedApprovedOrderFixture = buildOrder({
       finalPriceCents: 20000,
       depositAmountCents: 10000,
       comment: 'Pedido aprobado para produccion.',
-      createdAt: '2026-05-10T04:00:00.000Z'
-    }
-  ]
+      createdAt: '2026-05-10T04:00:00.000Z',
+    },
+  ],
 });

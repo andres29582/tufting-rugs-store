@@ -8,7 +8,7 @@ export const adminProductEditPayloadFixture: Partial<AdminProductPayload> =
     name: 'Alfombra admin editada',
     slug: 'alfombra-admin-editada',
     basePriceCents: 17500,
-    isFeatured: true
+    isFeatured: true,
   });
 
 export const orderReviewPayloadFixture = buildOrderReviewPayload();

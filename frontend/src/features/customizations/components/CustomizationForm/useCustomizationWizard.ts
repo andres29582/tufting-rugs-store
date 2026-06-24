@@ -6,7 +6,7 @@ import {
   getRecommendedStyles,
   shapeOptions,
   sizeBaseOptions,
-  steps
+  steps,
 } from './customizationWizardConfig';
 import { getFirstInvalidStep, getStepValidationMessage } from './customizationWizardCopy';
 import { buildSummary } from './customizationWizardSummary';
@@ -14,7 +14,7 @@ import type {
   ColorAvoidId,
   GuidedDraft,
   IntentionId,
-  PlacementId
+  PlacementId,
 } from './customizationWizardTypes';
 
 type UseCustomizationWizardParams = {
@@ -28,7 +28,7 @@ export function useCustomizationWizard({
   product,
   initialDraft,
   language,
-  t
+  t,
 }: UseCustomizationWizardParams) {
   const [draft, setDraft] = useState<GuidedDraft>(() => createInitialGuidedDraft(initialDraft));
   const [currentStep, setCurrentStep] = useState(0);
@@ -37,10 +37,7 @@ export function useCustomizationWizard({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestId] = useState(() => generateLocalRugCode());
 
-  const recommendedStyles = useMemo(
-    () => getRecommendedStyles(draft.placement),
-    [draft.placement]
-  );
+  const recommendedStyles = useMemo(() => getRecommendedStyles(draft.placement), [draft.placement]);
   const displayProduct = useMemo(
     () => (product ? localizeProduct(product, language) : null),
     [language, product]
@@ -56,7 +53,7 @@ export function useCustomizationWizard({
   function updateDraft(patch: Partial<GuidedDraft>) {
     setDraft((current) => ({
       ...current,
-      ...patch
+      ...patch,
     }));
     setStatus('');
   }
@@ -66,7 +63,7 @@ export function useCustomizationWizard({
       ...current,
       intentions: current.intentions.includes(intention)
         ? current.intentions.filter((item) => item !== intention)
-        : [...current.intentions, intention]
+        : [...current.intentions, intention],
     }));
     setStatus('');
   }
@@ -76,7 +73,7 @@ export function useCustomizationWizard({
       ...current,
       colorsToAvoid: current.colorsToAvoid.includes(color)
         ? current.colorsToAvoid.filter((item) => item !== color)
-        : [...current.colorsToAvoid, color]
+        : [...current.colorsToAvoid, color],
     }));
     setStatus('');
   }
@@ -89,7 +86,7 @@ export function useCustomizationWizard({
       placement,
       visualStyle: nextRecommendedStyles.some((option) => option.value === current.visualStyle)
         ? current.visualStyle
-        : ''
+        : '',
     }));
     setStatus('');
   }
@@ -160,12 +157,13 @@ export function useCustomizationWizard({
     summary,
     toggleColorToAvoid,
     toggleIntention,
-    updateDraft
+    updateDraft,
   };
 }
 
 function createInitialGuidedDraft(initialDraft: Partial<CustomizationDraft>): GuidedDraft {
-  const initialShape = shapeOptions.find((option) => option.format === initialDraft.format)?.value || '';
+  const initialShape =
+    shapeOptions.find((option) => option.format === initialDraft.format)?.value || '';
   const initialSize =
     sizeBaseOptions.find((option) => option.sizeLabel === initialDraft.sizeLabel)?.value ||
     sizeBaseOptions.find((option) => option.sizeCategory === initialDraft.sizeCategory)?.value ||
@@ -179,7 +177,7 @@ function createInitialGuidedDraft(initialDraft: Partial<CustomizationDraft>): Gu
     sizeBase: initialSize,
     colorsToAvoid: [],
     referenceMode: initialDraft.referenceUrl ? 'LINK' : '',
-    referenceUrl: initialDraft.referenceUrl || ''
+    referenceUrl: initialDraft.referenceUrl || '',
   };
 }
 
@@ -199,7 +197,7 @@ function generateLocalRugCode(date = new Date()): string {
   const datePart = [
     date.getFullYear(),
     String(date.getMonth() + 1).padStart(2, '0'),
-    String(date.getDate()).padStart(2, '0')
+    String(date.getDate()).padStart(2, '0'),
   ].join('');
 
   return 'RUG-' + datePart + '-' + suffix;

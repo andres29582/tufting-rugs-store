@@ -17,13 +17,18 @@ export function buildCustomizationDraftFromWizard(
     customerName: '',
     customerEmail: '',
     customerPhone: '',
-    description: buildCustomizationDescription(summary, product, selectedShape?.format || 'CUSTOM', t),
+    description: buildCustomizationDescription(
+      summary,
+      product,
+      selectedShape?.format || 'CUSTOM',
+      t
+    ),
     preferredColors: [],
     sizeCategory: selectedSize?.sizeCategory || 'CUSTOM',
     sizeLabel: selectedSize?.sizeLabel || '',
     format: selectedShape?.format || 'CUSTOM',
     referenceUrl: draft.referenceMode === 'LINK' ? draft.referenceUrl : '',
-    notes: ''
+    notes: '',
   };
 }
 
@@ -48,7 +53,7 @@ function buildCustomizationDescription(
     `${summary.labels.size}: ${valueOrPending(summary.sizeBase, t)}`,
     `${t('custom.lead.backendFormat')}: ${backendFormat}`,
     `${summary.labels.colorsAvoid}: ${summary.colorsToAvoid}`,
-    `${summary.labels.reference}: ${summary.reference}`
+    `${summary.labels.reference}: ${summary.reference}`,
   ].join('\n');
 }
 

@@ -2,15 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { clearAdminToken, getAdminToken } from '../../admin/lib/adminAuth';
 import { getAdminCustomizations } from '../../customizations/api/customizationsApi';
-import {
-  confirmAdminOrderDeposit,
-  getAdminOrders,
-  reviewAdminOrder
-} from '../api/ordersApi';
+import { confirmAdminOrderDeposit, getAdminOrders, reviewAdminOrder } from '../api/ordersApi';
 import {
   buildAdminOrderReviewPayload,
   createOrderReviewForm,
-  type ReviewFormState
+  type ReviewFormState,
 } from './adminOrderHelpers';
 import type { AdminCustomization, Order } from '../../../shared/types';
 
@@ -108,7 +104,9 @@ export function useAdminOrdersPage() {
       replaceOrder(updatedOrder);
       setStatus('Pedido actualizado.');
     } catch (reviewError) {
-      setStatus(reviewError instanceof Error ? reviewError.message : 'No se pudo actualizar el pedido.');
+      setStatus(
+        reviewError instanceof Error ? reviewError.message : 'No se pudo actualizar el pedido.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -134,7 +132,9 @@ export function useAdminOrdersPage() {
       replaceOrder(updatedOrder);
       setStatus('Pago confirmado.');
     } catch (depositError) {
-      setStatus(depositError instanceof Error ? depositError.message : 'No se pudo confirmar el pago.');
+      setStatus(
+        depositError instanceof Error ? depositError.message : 'No se pudo confirmar el pago.'
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -162,6 +162,6 @@ export function useAdminOrdersPage() {
     setSelectedOrderId,
     status,
     submitReview,
-    updateReviewForm
+    updateReviewForm,
   };
 }

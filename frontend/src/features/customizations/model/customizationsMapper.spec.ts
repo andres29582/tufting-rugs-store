@@ -3,7 +3,7 @@ import type { ApiCustomization, CustomizationDraft } from '../../../shared/types
 import {
   mapAdminCustomizationFromApi,
   mapCustomizationDraftToApi,
-  mapCustomizationFromApi
+  mapCustomizationFromApi,
 } from './customizationsMapper';
 
 describe('customizationsMapper', () => {
@@ -19,7 +19,7 @@ describe('customizationsMapper', () => {
       sizeLabel: '',
       format: 'ORGANIC',
       referenceUrl: 'https://example.com/reference.png',
-      notes: 'Internal note ignored by payload'
+      notes: 'Internal note ignored by payload',
     };
 
     expect(mapCustomizationDraftToApi(draft)).toEqual({
@@ -36,9 +36,9 @@ describe('customizationsMapper', () => {
         {
           kind: 'CUSTOMER_REFERENCE',
           url: 'https://example.com/reference.png',
-          originalName: 'Referencia visual del cliente'
-        }
-      ]
+          originalName: 'Referencia visual del cliente',
+        },
+      ],
     });
   });
 
@@ -48,7 +48,7 @@ describe('customizationsMapper', () => {
       customerName: 'Cliente',
       customerEmail: 'cliente@example.com',
       preferredColors: null,
-      designReferences: null
+      designReferences: null,
     });
 
     expect(customization).toMatchObject({
@@ -63,7 +63,7 @@ describe('customizationsMapper', () => {
       sizeLabel: 'A medida',
       format: 'CUSTOM',
       designReferences: [],
-      createdAt: null
+      createdAt: null,
     });
   });
 
@@ -75,7 +75,7 @@ describe('customizationsMapper', () => {
       customerEmail: 'cliente@example.com',
       product: {
         id: 'product-1',
-        name: 'Produto'
+        name: 'Produto',
       },
       order: {
         id: 'order-1',
@@ -83,8 +83,8 @@ describe('customizationsMapper', () => {
         customerName: 'Cliente',
         customerEmail: 'cliente@example.com',
         status: 'WAITING_ANALYSIS',
-        createdAt: '2026-05-10T03:00:00.000Z'
-      }
+        createdAt: '2026-05-10T03:00:00.000Z',
+      },
     };
 
     const customization = mapAdminCustomizationFromApi(apiCustomization);
@@ -94,7 +94,7 @@ describe('customizationsMapper', () => {
       id: 'order-1',
       publicCode: 'order-1',
       status: 'WAITING_ANALYSIS',
-      createdAt: '2026-05-10T03:00:00.000Z'
+      createdAt: '2026-05-10T03:00:00.000Z',
     });
   });
 
@@ -107,11 +107,11 @@ describe('customizationsMapper', () => {
         product: {
           id: 'product-1',
           name: 'Produto',
-          imageUrl: '/uploads/product.png'
-        }
+          imageUrl: '/uploads/product.png',
+        },
       },
       {
-        resolveAssetUrl: (url) => 'https://api.example.com' + url
+        resolveAssetUrl: (url) => 'https://api.example.com' + url,
       }
     );
 

@@ -18,7 +18,7 @@ export function AiPromptGuide({ onClose }: AiPromptGuideProps) {
     t('ai.guide.step.readGuide'),
     t('ai.guide.step.answer'),
     t('ai.guide.step.generate'),
-    t('ai.guide.step.return')
+    t('ai.guide.step.return'),
   ];
 
   useEffect(() => {
@@ -55,12 +55,7 @@ export function AiPromptGuide({ onClose }: AiPromptGuideProps) {
         <label className="ai-prompt-label" htmlFor="ai-rug-prompt">
           {t('ai.prompt.label')}
         </label>
-        <textarea
-          id="ai-rug-prompt"
-          className="ai-prompt-textarea"
-          readOnly
-          value={prompt}
-        />
+        <textarea id="ai-rug-prompt" className="ai-prompt-textarea" readOnly value={prompt} />
         <div className="ai-guide-actions">
           <CopyPromptButton prompt={prompt} />
           <ButtonLink

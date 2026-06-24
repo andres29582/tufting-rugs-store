@@ -6,7 +6,7 @@ type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'light' | 'dark';
 
 const variantAliases: Record<string, 'primary' | 'secondary' | 'ghost'> = {
   dark: 'secondary',
-  light: 'primary'
+  light: 'primary',
 };
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -113,14 +113,24 @@ export function IconLink({
 
   if (to) {
     return (
-      <Link className={getClassName('icon-button', className)} to={to} aria-label={ariaLabel} {...props}>
+      <Link
+        className={getClassName('icon-button', className)}
+        to={to}
+        aria-label={ariaLabel}
+        {...props}
+      >
         {content}
       </Link>
     );
   }
 
   return (
-    <a className={getClassName('icon-button', className)} href={href || '#'} aria-label={ariaLabel} {...props}>
+    <a
+      className={getClassName('icon-button', className)}
+      href={href || '#'}
+      aria-label={ariaLabel}
+      {...props}
+    >
       {content}
     </a>
   );

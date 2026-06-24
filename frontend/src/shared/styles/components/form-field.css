@@ -55,7 +55,7 @@ textarea.form-field-control {
     0 0 0 3px var(--color-control-ring);
 }
 
-.form-field-control[aria-invalid="true"] {
+.form-field-control[aria-invalid='true'] {
   border-color: var(--color-danger-line);
   box-shadow:
     var(--shadow-inset-soft),

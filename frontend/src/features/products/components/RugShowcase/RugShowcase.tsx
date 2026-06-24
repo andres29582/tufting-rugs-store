@@ -41,7 +41,7 @@ export function RugShowcase({ rug, hero = false, index = 0, onAction }: RugShowc
     '--rug-a': rug.colors[0],
     '--rug-b': rug.colors[1],
     '--rug-c': rug.colors[2],
-    '--rug-deep': rug.colors[0]
+    '--rug-deep': rug.colors[0],
   };
   const innerClassName =
     index % 2 === 1 && !hero ? 'showcase-inner showcase-inner-reverse' : 'showcase-inner';
@@ -114,7 +114,7 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
     '--rug-a': activeRug.colors[0],
     '--rug-b': activeRug.colors[1],
     '--rug-c': activeRug.colors[2],
-    '--rug-deep': activeRug.colors[0]
+    '--rug-deep': activeRug.colors[0],
   };
 
   return (
@@ -138,8 +138,14 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
     >
       <div className="showcase-flow__background" aria-hidden="true" />
       <div className="showcase-flow__content">
-        <article className="showcase-flow__text-card" key={'copy-' + activeRug.id} aria-live="polite">
-          <p className="eyebrow">{t('product.handmadeEyebrow', { category: displayRug.category })}</p>
+        <article
+          className="showcase-flow__text-card"
+          key={'copy-' + activeRug.id}
+          aria-live="polite"
+        >
+          <p className="eyebrow">
+            {t('product.handmadeEyebrow', { category: displayRug.category })}
+          </p>
           <h1 className="showcase-flow__title">{displayRug.name}</h1>
           <p className="showcase-flow__description">{displayRug.description}</p>
           <ul className="showcase-flow__features">
@@ -222,7 +228,10 @@ export function RugShowcaseCarousel({ rugs, onAction }: RugShowcaseCarouselProps
               </button>
             ) : null}
           </div>
-          <div className="showcase-flow__mobile-details" aria-label={t('product.mobileDetailsAria')}>
+          <div
+            className="showcase-flow__mobile-details"
+            aria-label={t('product.mobileDetailsAria')}
+          >
             <div>
               <span>{t('product.design')}</span>
               <strong>{displayRug.name}</strong>
@@ -278,7 +287,10 @@ function FloatingSpec({ rug }: { rug: Product }) {
   const displayRug = localizeProduct(rug, language);
 
   return (
-    <aside className="floating-spec glass-panel" aria-label={t('product.quickSpec', { name: displayRug.name })}>
+    <aside
+      className="floating-spec glass-panel"
+      aria-label={t('product.quickSpec', { name: displayRug.name })}
+    >
       <span>{t('product.design')}</span>
       <strong>{displayRug.name}</strong>
       <span>{t('product.size')}</span>

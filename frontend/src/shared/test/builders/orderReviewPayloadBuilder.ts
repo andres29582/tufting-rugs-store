@@ -5,7 +5,7 @@ const baseOrderReviewPayload: OrderReviewPayload = {
   productionPossible: true,
   estimatedPriceCents: 18000,
   finalPriceCents: null,
-  comment: 'Pedido viable para produccion.'
+  comment: 'Pedido viable para produccion.',
 };
 
 export function buildOrderReviewPayload(
@@ -13,6 +13,6 @@ export function buildOrderReviewPayload(
 ): OrderReviewPayload {
   return {
     ...baseOrderReviewPayload,
-    ...overrides
+    ...overrides,
   };
 }

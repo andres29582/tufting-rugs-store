@@ -17,10 +17,7 @@ export function CustomizationSummaryPanel({ summary, t }: CustomizationSummaryPa
   );
 }
 
-function CurrentSelection({
-  summary,
-  t
-}: CustomizationSummaryPanelProps) {
+function CurrentSelection({ summary, t }: CustomizationSummaryPanelProps) {
   return (
     <section className="customization-side-card">
       <div className="customization-side-card__head">

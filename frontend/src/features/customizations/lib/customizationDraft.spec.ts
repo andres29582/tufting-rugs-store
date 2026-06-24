@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   createCustomizationDraft,
   normalizeCustomizationDraft,
-  validateCustomizationDraft
+  validateCustomizationDraft,
 } from '../lib/customizationDraft';
 
 describe('customizationDraft', () => {
@@ -20,7 +20,7 @@ describe('customizationDraft', () => {
       sizeLabel: '100 x 80 cm',
       format: 'ORGANIC',
       referenceUrl: '',
-      notes: ''
+      notes: '',
     });
   });
 
@@ -36,7 +36,7 @@ describe('customizationDraft', () => {
       sizeLabel: '',
       format: 'ROUND',
       referenceUrl: ' https://example.com/ref.png ',
-      notes: ' Nota '
+      notes: ' Nota ',
     });
 
     expect(draft).toEqual({
@@ -50,14 +50,14 @@ describe('customizationDraft', () => {
       sizeLabel: '120 x 160 cm',
       format: 'ROUND',
       referenceUrl: 'https://example.com/ref.png',
-      notes: 'Nota'
+      notes: 'Nota',
     });
   });
 
   it('falls back to default size and format when invalid values are provided', () => {
     const draft = normalizeCustomizationDraft({
       sizeCategory: 'UNKNOWN' as never,
-      format: 'UNKNOWN' as never
+      format: 'UNKNOWN' as never,
     });
 
     expect(draft.sizeCategory).toBe('MEDIUM');
@@ -70,14 +70,14 @@ describe('customizationDraft', () => {
       customerName: '',
       customerEmail: 'not-an-email',
       description: 'short',
-      preferredColors: []
+      preferredColors: [],
     });
 
     expect(validation.isValid).toBe(false);
     expect(Object.keys(validation.errors).sort()).toEqual([
       'customerEmail',
       'customerName',
-      'description'
+      'description',
     ]);
   });
 
@@ -86,7 +86,7 @@ describe('customizationDraft', () => {
       customerName: 'Cliente',
       customerEmail: 'cliente@example.com',
       description: 'Uma descricao suficientemente detalhada.',
-      preferredColors: ['#111111']
+      preferredColors: ['#111111'],
     });
 
     expect(validation.isValid).toBe(true);

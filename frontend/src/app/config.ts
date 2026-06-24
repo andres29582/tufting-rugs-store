@@ -38,6 +38,6 @@ export const appConfig: RuntimeConfig = {
     products: true,
     customizations: true,
     orders: false,
-    admin: false
-  }
+    admin: false,
+  },
 };

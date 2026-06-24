@@ -120,16 +120,25 @@ export function CustomizationForm({ product, initialDraft = {} }: CustomizationF
           </section>
 
           <div className="customization-trust-strip" aria-label={t('custom.trustAria')}>
-            <TrustItem icon="tuftMark" title={t('custom.trustHandmadeTitle')} text={t('custom.trustHandmadeText')} />
-            <TrustItem icon="sparkles" title={t('custom.trustDesignTitle')} text={t('custom.trustDesignText')} />
-            <TrustItem icon="favorite" title={t('custom.trustMaterialTitle')} text={t('custom.trustMaterialText')} />
+            <TrustItem
+              icon="tuftMark"
+              title={t('custom.trustHandmadeTitle')}
+              text={t('custom.trustHandmadeText')}
+            />
+            <TrustItem
+              icon="sparkles"
+              title={t('custom.trustDesignTitle')}
+              text={t('custom.trustDesignText')}
+            />
+            <TrustItem
+              icon="favorite"
+              title={t('custom.trustMaterialTitle')}
+              text={t('custom.trustMaterialText')}
+            />
           </div>
         </div>
 
-        <CustomizationSummaryPanel
-          summary={wizard.summary}
-          t={t}
-        />
+        <CustomizationSummaryPanel summary={wizard.summary} t={t} />
       </form>
     </section>
   );
@@ -138,7 +147,7 @@ export function CustomizationForm({ product, initialDraft = {} }: CustomizationF
 function TrustItem({
   icon,
   title,
-  text
+  text,
 }: {
   icon: 'tuftMark' | 'sparkles' | 'favorite';
   title: string;

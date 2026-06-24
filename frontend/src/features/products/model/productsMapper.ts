@@ -11,7 +11,7 @@ const allowedMotifs = new Set<RugMotif>([
   'organic',
   'circles',
   'arches',
-  'soft'
+  'soft',
 ]);
 
 export function mapProductFromApi(
@@ -44,7 +44,7 @@ export function mapProductFromApi(
     isCustomizable,
     isFeatured: product.isFeatured ?? false,
     isActive: product.isActive ?? true,
-    motif: normalizeMotif(product.motif)
+    motif: normalizeMotif(product.motif),
   };
 }
 

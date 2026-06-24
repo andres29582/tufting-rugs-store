@@ -16,16 +16,11 @@ export function AiPersonalizationGate({ onContinueToForm }: AiPersonalizationGat
   return (
     <section className="ai-gate-section" aria-labelledby="ai-gate-title">
       <div className="ai-choice-grid">
-        <PersonalizationChoiceCard
-          className="ai-choice-card-direct"
-          onSelect={onContinueToForm}
-        >
+        <PersonalizationChoiceCard className="ai-choice-card-direct" onSelect={onContinueToForm}>
           <p className="eyebrow">{t('ai.direct.eyebrow')}</p>
           <h1 id="ai-gate-title">{t('ai.direct.title')}</h1>
           <p>{t('ai.direct.copy')}</p>
-          <span className="ai-choice-action ai-choice-action-primary">
-            {t('ai.direct.cta')}
-          </span>
+          <span className="ai-choice-action ai-choice-action-primary">{t('ai.direct.cta')}</span>
         </PersonalizationChoiceCard>
 
         <PersonalizationChoiceCard onSelect={openGuide}>
@@ -37,17 +32,11 @@ export function AiPersonalizationGate({ onContinueToForm }: AiPersonalizationGat
               <span key={tool}>{tool}</span>
             ))}
           </div>
-          <span className="ai-choice-action ai-choice-action-secondary">
-            {t('ai.choice.cta')}
-          </span>
+          <span className="ai-choice-action ai-choice-action-secondary">{t('ai.choice.cta')}</span>
         </PersonalizationChoiceCard>
       </div>
 
-      {isGuideOpen ? (
-        <AiPromptGuide
-          onClose={() => setIsGuideOpen(false)}
-        />
-      ) : null}
+      {isGuideOpen ? <AiPromptGuide onClose={() => setIsGuideOpen(false)} /> : null}
     </section>
   );
 }
@@ -55,7 +44,7 @@ export function AiPersonalizationGate({ onContinueToForm }: AiPersonalizationGat
 function PersonalizationChoiceCard({
   children,
   className,
-  onSelect
+  onSelect,
 }: {
   children: ReactNode;
   className?: string;

@@ -22,7 +22,7 @@ const baseProduct: Product = {
   isCustomizable: true,
   isFeatured: true,
   isActive: true,
-  motif: 'geometric'
+  motif: 'geometric',
 };
 
 export function buildProduct(overrides: Partial<Product> = {}): Product {
@@ -33,7 +33,7 @@ export function buildProduct(overrides: Partial<Product> = {}): Product {
     ...baseProduct,
     ...overrides,
     colors,
-    features
+    features,
   };
 }
 

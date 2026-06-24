@@ -15,13 +15,13 @@ export function NotFoundPage() {
           {
             to: '/',
             label: t('success.backHome'),
-            variant: 'light'
+            variant: 'light',
           },
           {
             to: '/catalogo',
             label: t('success.viewCatalog'),
-            variant: 'ghost'
-          }
+            variant: 'ghost',
+          },
         ]}
       />
     </AppShell>

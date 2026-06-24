@@ -23,7 +23,7 @@ export function RugCatalog({
   ctaTo = '/personalizar',
   headingTitle,
   showEyebrow = true,
-  showCustomizationCta = true
+  showCustomizationCta = true,
 }: RugCatalogProps) {
   const { language, t } = useTranslation();
   const actionLabel = ctaLabel || t('rugCatalog.cta');

@@ -14,7 +14,7 @@ type AdminLoginResponse = {
 export async function loginAdmin(email: string, password: string): Promise<AdminLoginResponse> {
   const result = await apiRequest<AdminLoginResponse>('/admin/auth/login', {
     method: 'POST',
-    body: JSON.stringify({ email, password })
+    body: JSON.stringify({ email, password }),
   });
 
   setAdminToken(result.accessToken);

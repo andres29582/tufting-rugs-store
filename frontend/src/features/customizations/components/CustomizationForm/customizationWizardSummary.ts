@@ -6,7 +6,7 @@ import {
   intentionOptions,
   placementOptions,
   shapeOptions,
-  visualStyleOptions
+  visualStyleOptions,
 } from './customizationWizardConfig';
 import { buildWhatsAppMessage } from './whatsappMessage';
 import type { CustomizationSummary, GuidedDraft } from './customizationWizardTypes';
@@ -33,27 +33,32 @@ export function buildSummary(
       shape: t('custom.summary.shape'),
       size: t('custom.summary.size'),
       colorsAvoid: t('custom.summary.colorsAvoid'),
-      reference: t('custom.summary.reference')
+      reference: t('custom.summary.reference'),
     },
     intention: joinLabels(
-      intentionOptions.filter((option) => draft.intentions.includes(option.value)).map((option) => t(option.labelKey))
+      intentionOptions
+        .filter((option) => draft.intentions.includes(option.value))
+        .map((option) => t(option.labelKey))
     ),
     placement: getOptionLabel(placementOptions, draft.placement, t),
     visualStyle: getOptionLabel(visualStyleOptions, draft.visualStyle, t),
     shape: getOptionLabel(shapeOptions, draft.shape, t),
     sizeBase: selectedSize?.sizeLabel || '',
-    colorsToAvoid: joinLabels(
-      colorAvoidOptions.filter((option) => draft.colorsToAvoid.includes(option.value)).map((option) => t(option.labelKey))
-    ) || t('custom.colors.noRestrictions'),
+    colorsToAvoid:
+      joinLabels(
+        colorAvoidOptions
+          .filter((option) => draft.colorsToAvoid.includes(option.value))
+          .map((option) => t(option.labelKey))
+      ) || t('custom.colors.noRestrictions'),
     reference,
     referenceUrl: draft.referenceUrl,
     requestId,
-    whatsappMessage: ''
+    whatsappMessage: '',
   };
 
   return {
     ...summary,
-    whatsappMessage: buildWhatsAppMessage(summary, product, t)
+    whatsappMessage: buildWhatsAppMessage(summary, product, t),
   };
 }
 

@@ -7,7 +7,7 @@ export const unpublishedProductFixture = buildProduct({
   slug: 'alfombra-no-publicada',
   name: 'Alfombra no publicada',
   isActive: false,
-  isFeatured: false
+  isFeatured: false,
 });
 
 export const customizableProductFixture = buildProduct({
@@ -31,5 +31,5 @@ export const customizableProductFixture = buildProduct({
   isCustomizable: true,
   isFeatured: true,
   isActive: true,
-  motif: 'soft'
+  motif: 'soft',
 });

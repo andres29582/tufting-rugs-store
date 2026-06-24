@@ -22,13 +22,13 @@ describe('ordersMapper', () => {
       createdAt: '2026-05-10T03:00:00.000Z',
       product: {
         id: 'product-1',
-        name: 'Produto'
+        name: 'Produto',
       },
       customization: {
         id: 'customization-1',
         productId: 'product-1',
         customerName: 'Cliente',
-        customerEmail: 'cliente@example.com'
+        customerEmail: 'cliente@example.com',
       },
       designReferences: null,
       adminReviews: [
@@ -40,9 +40,9 @@ describe('ordersMapper', () => {
           finalPriceCents: null,
           depositAmountCents: 9000,
           comment: null,
-          createdAt: '2026-05-10T04:00:00.000Z'
-        }
-      ]
+          createdAt: '2026-05-10T04:00:00.000Z',
+        },
+      ],
     };
 
     const order = mapOrderFromApi(apiOrder);
@@ -55,7 +55,7 @@ describe('ordersMapper', () => {
       customerPhone: '',
       status: 'WAITING_CUSTOMER_APPROVAL',
       notes: '',
-      designReferences: []
+      designReferences: [],
     });
     expect(order.product?.id).toBe('product-1');
     expect(order.customization?.id).toBe('customization-1');
@@ -68,13 +68,22 @@ describe('ordersMapper', () => {
         finalPriceCents: null,
         depositAmountCents: 9000,
         comment: '',
-        createdAt: '2026-05-10T04:00:00.000Z'
-      }
+        createdAt: '2026-05-10T04:00:00.000Z',
+      },
     ]);
   });
 
   it('maps arrays and ignores non-array inputs', () => {
-    expect(mapOrdersFromApi([{ id: 'order-1', customerName: 'A', customerEmail: 'a@example.com', status: 'WAITING_ANALYSIS' }])).toHaveLength(1);
+    expect(
+      mapOrdersFromApi([
+        {
+          id: 'order-1',
+          customerName: 'A',
+          customerEmail: 'a@example.com',
+          status: 'WAITING_ANALYSIS',
+        },
+      ])
+    ).toHaveLength(1);
     expect(mapOrdersFromApi(undefined)).toEqual([]);
   });
 
@@ -88,11 +97,11 @@ describe('ordersMapper', () => {
         product: {
           id: 'product-asset',
           name: 'Produto',
-          imageUrl: '/uploads/product.png'
-        }
+          imageUrl: '/uploads/product.png',
+        },
       },
       {
-        resolveAssetUrl: (url) => 'https://api.example.com' + url
+        resolveAssetUrl: (url) => 'https://api.example.com' + url,
       }
     );
 

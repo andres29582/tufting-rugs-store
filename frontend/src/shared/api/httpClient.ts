@@ -14,7 +14,7 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
 
   const response = await fetch(appConfig.apiUrl + path, {
     ...options,
-    headers
+    headers,
   });
 
   const payload = (await response.json().catch(() => null)) as unknown;
@@ -22,7 +22,7 @@ export async function apiRequest<T>(path: string, options: RequestInit = {}): Pr
   if (!response.ok) {
     throw new ApiError(getApiErrorMessage(payload), {
       status: response.status,
-      payload
+      payload,
     });
   }
 
@@ -39,7 +39,7 @@ export async function apiFormRequest<T>(
   const response = await fetch(appConfig.apiUrl + path, {
     ...options,
     body: formData,
-    headers
+    headers,
   });
 
   const payload = (await response.json().catch(() => null)) as unknown;
@@ -47,7 +47,7 @@ export async function apiFormRequest<T>(
   if (!response.ok) {
     throw new ApiError(getApiErrorMessage(payload), {
       status: response.status,
-      payload
+      payload,
     });
   }
 

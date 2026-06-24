@@ -7,7 +7,11 @@ type ProductFiltersProps = {
   onCategoryChange: (category: string) => void;
 };
 
-export function ProductFilters({ categories, activeCategory, onCategoryChange }: ProductFiltersProps) {
+export function ProductFilters({
+  categories,
+  activeCategory,
+  onCategoryChange,
+}: ProductFiltersProps) {
   const { language, t } = useTranslation();
 
   return (

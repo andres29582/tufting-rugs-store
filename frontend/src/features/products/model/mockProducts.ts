@@ -6,7 +6,7 @@ export const productCategories = [
   'Minimalistas',
   'Orgánicas',
   'Decorativas',
-  'Personalizadas'
+  'Personalizadas',
 ] as const;
 
 export const mockProducts: Product[] = [
@@ -33,7 +33,7 @@ export const mockProducts: Product[] = [
     isCustomizable: true,
     isFeatured: true,
     isActive: true,
-    motif: 'circles'
+    motif: 'circles',
   },
   {
     id: '1',
@@ -58,7 +58,7 @@ export const mockProducts: Product[] = [
     isCustomizable: true,
     isFeatured: true,
     isActive: true,
-    motif: 'waves'
+    motif: 'waves',
   },
   {
     id: '2',
@@ -83,7 +83,7 @@ export const mockProducts: Product[] = [
     isCustomizable: true,
     isFeatured: true,
     isActive: true,
-    motif: 'geometric'
+    motif: 'geometric',
   },
   {
     id: '3',
@@ -108,7 +108,7 @@ export const mockProducts: Product[] = [
     isCustomizable: true,
     isFeatured: false,
     isActive: true,
-    motif: 'organic'
+    motif: 'organic',
   },
   {
     id: '4',
@@ -133,7 +133,7 @@ export const mockProducts: Product[] = [
     isCustomizable: true,
     isFeatured: false,
     isActive: true,
-    motif: 'circles'
+    motif: 'circles',
   },
   {
     id: '5',
@@ -158,7 +158,7 @@ export const mockProducts: Product[] = [
     isCustomizable: true,
     isFeatured: false,
     isActive: true,
-    motif: 'arches'
+    motif: 'arches',
   },
   {
     id: '6',
@@ -176,13 +176,18 @@ export const mockProducts: Product[] = [
     image: '',
     imageUrl: '',
     colors: ['#6f8a9b', '#d8c7b1', '#b96f73'],
-    features: ['100% personalizable', 'Moodboard incluido', 'Aprobación previa', 'Medidas flexibles'],
+    features: [
+      '100% personalizable',
+      'Moodboard incluido',
+      'Aprobación previa',
+      'Medidas flexibles',
+    ],
     material: 'Lana acrilica',
     productionTime: 'Bajo analisis',
     customizable: true,
     isCustomizable: true,
     isFeatured: true,
     isActive: true,
-    motif: 'soft'
-  }
+    motif: 'soft',
+  },
 ];

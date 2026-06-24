@@ -5,14 +5,14 @@ import { clearAdminToken, getAdminToken } from '../../features/admin/lib/adminAu
 import {
   getAdminProducts,
   publishAdminProduct,
-  unpublishAdminProduct
+  unpublishAdminProduct,
 } from '../../features/products/api/productsApi';
 import type { Product } from '../../shared/types';
 import { Button, ButtonLink } from '../../shared/components/Button/Button';
 import {
   AppErrorState,
   AppLoadingState,
-  getFriendlyErrorMessage
+  getFriendlyErrorMessage,
 } from '../../shared/components/AppState/AppState';
 import { formatPrice } from '../../utils/money';
 
@@ -79,7 +79,9 @@ export function AdminProductsPage() {
       );
       setStatus(updatedProduct.isActive ? 'Producto publicado.' : 'Producto despublicado.');
     } catch (toggleError) {
-      setStatus(toggleError instanceof Error ? toggleError.message : 'No se pudo actualizar el producto.');
+      setStatus(
+        toggleError instanceof Error ? toggleError.message : 'No se pudo actualizar el producto.'
+      );
     }
   }
 
@@ -136,7 +138,9 @@ export function AdminProductsPage() {
                 <tr key={product.id}>
                   <td>
                     <strong>{product.name}</strong>
-                    <span>{product.category || 'Sin categoria'} / {product.size}</span>
+                    <span>
+                      {product.category || 'Sin categoria'} / {product.size}
+                    </span>
                   </td>
                   <td>{formatPrice(product.priceFrom)}</td>
                   <td>{product.type === 'FULL_CUSTOM' ? 'Personalizada' : 'Lista'}</td>
@@ -147,10 +151,17 @@ export function AdminProductsPage() {
                   </td>
                   <td>
                     <div className="admin-row-actions">
-                      <ButtonLink to={'/admin/productos/' + encodeURIComponent(product.id) + '/editar'} variant="ghost">
+                      <ButtonLink
+                        to={'/admin/productos/' + encodeURIComponent(product.id) + '/editar'}
+                        variant="ghost"
+                      >
                         Editar
                       </ButtonLink>
-                      <Button type="button" variant="secondary" onClick={() => void togglePublication(product)}>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() => void togglePublication(product)}
+                      >
                         {product.isActive ? 'Despublicar' : 'Publicar'}
                       </Button>
                     </div>

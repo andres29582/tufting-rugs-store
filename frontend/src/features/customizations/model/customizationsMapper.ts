@@ -3,7 +3,7 @@ import type {
   ApiCustomization,
   Customization,
   CustomizationDraft,
-  DesignReference
+  DesignReference,
 } from '../../../shared/types';
 import { mapProductFromApi, type ProductMapperOptions } from '../../products/model/productsMapper';
 
@@ -37,13 +37,13 @@ export function mapCustomizationDraftToApi(draft: CustomizationDraft): ApiCustom
     format: draft.format,
     designReferences: draft.referenceUrl
       ? [
-        {
-          kind: 'CUSTOMER_REFERENCE',
-          url: draft.referenceUrl,
-          originalName: 'Referencia visual del cliente'
-        }
-      ]
-    : []
+          {
+            kind: 'CUSTOMER_REFERENCE',
+            url: draft.referenceUrl,
+            originalName: 'Referencia visual del cliente',
+          },
+        ]
+      : [],
   };
 }
 
@@ -62,7 +62,7 @@ export function mapCustomizationFromApi(customization: ApiCustomization): Custom
     sizeLabel: customization.sizeLabel || 'A medida',
     format: customization.format || 'CUSTOM',
     designReferences: normalizeReferences(customization.designReferences),
-    createdAt: customization.createdAt || null
+    createdAt: customization.createdAt || null,
   };
 }
 
@@ -78,9 +78,9 @@ export function mapAdminCustomizationFromApi(
           id: customization.order.id,
           publicCode: customization.order.publicCode || customization.order.id,
           status: customization.order.status,
-          createdAt: customization.order.createdAt || null
+          createdAt: customization.order.createdAt || null,
         }
-      : null
+      : null,
   };
 }
 

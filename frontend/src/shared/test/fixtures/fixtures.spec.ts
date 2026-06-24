@@ -8,7 +8,7 @@ import {
   pendingOrderFixture,
   publishedProductFixture,
   reviewedApprovedOrderFixture,
-  unpublishedProductFixture
+  unpublishedProductFixture,
 } from './index';
 
 describe('test data fixtures', () => {
