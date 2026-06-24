@@ -2,7 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './app/App';
 import { I18nProvider } from './shared/i18n';
+import { initWebVitals } from './shared/analytics/vitals';
 import './shared/styles/index.css';
+
+initWebVitals();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
