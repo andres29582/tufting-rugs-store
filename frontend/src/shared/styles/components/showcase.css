@@ -148,6 +148,11 @@
   transition: var(--showcase-rug-image-transition);
 }
 
+.showcase-flow__rug-area .rug-image[src$='gatos-yin-yang.png'] {
+  width: min(86%, 540px);
+  max-height: 80%;
+}
+
 .showcase-flow__rug-area .rug-svg {
   transform: var(--showcase-flow-rug-transform);
   filter: var(--showcase-flow-rug-shadow);
@@ -479,6 +484,11 @@
   max-height: var(--rug-image-max-height);
   object-fit: contain;
   filter: var(--rug-image-shadow);
+}
+
+.rug-image[src$='gatos-yin-yang.png'] {
+  width: min(82%, 470px);
+  max-height: 74%;
 }
 
 .rug-svg {
