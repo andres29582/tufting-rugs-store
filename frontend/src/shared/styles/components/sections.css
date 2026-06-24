@@ -154,6 +154,22 @@
   font-weight: var(--weight-bold);
 }
 
+.footer-whatsapp-link {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: var(--space-3);
+  color: var(--color-text);
+  font-weight: var(--weight-bold);
+  text-decoration: underline;
+  text-decoration-color: var(--color-interactive-border-hover);
+  text-underline-offset: 4px;
+}
+
+.footer-whatsapp-link:hover,
+.footer-whatsapp-link:focus-visible {
+  color: var(--color-text-soft);
+}
+
 .footer-credit {
   margin-top: var(--space-6);
   padding-top: var(--space-4);
