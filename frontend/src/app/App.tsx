@@ -1,4 +1,4 @@
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { CatalogPage } from '../pages/CatalogPage/CatalogPage';
 import { CustomizationSuccessPage } from '../pages/CustomizationSuccessPage/CustomizationSuccessPage';
 import { CustomizePage } from '../pages/CustomizePage/CustomizePage';
@@ -8,7 +8,7 @@ import { ProductDetailPage } from '../pages/ProductDetailPage/ProductDetailPage'
 
 export function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/catalogo" element={<CatalogPage />} />
@@ -19,6 +19,6 @@ export function App() {
         <Route path="/inicio" element={<Navigate to="/" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }

@@ -1,15 +1,15 @@
 const es = {
   'ai.direct.eyebrow': 'Para continuar sin ayuda de IA',
-  'ai.direct.title': 'Personaliza tu tapete a tu manera',
+  'ai.direct.title': 'Crea tu alfombra personalizada',
   'ai.direct.copy':
-    'Puedes ir directo al formulario y responder paso a paso para preparar tu pedido por WhatsApp.',
-  'ai.direct.cta': 'Personalizar mi tapete',
+    'Responde el formulario y sal con un brief claro para solicitar presupuesto por WhatsApp.',
+  'ai.direct.cta': 'Crear mi alfombra personalizada',
   'ai.choice.eyebrow': 'Referencia con IA',
   'ai.choice.title': '¿Tienes acceso a una IA que genere imágenes?',
   'ai.choice.copy':
     'Si usas una de estas herramientas, te damos un prompt para crear una referencia visual antes de completar el formulario.',
   'ai.choice.toolsAria': 'Herramientas de IA de referencia',
-  'ai.choice.cta': 'Sí, tengo acceso a una IA',
+  'ai.choice.cta': 'Crear referencia con IA',
   'ai.guide.eyebrow': 'Usar IA externa',
   'ai.guide.title': 'Crea tu idea antes de completar el pedido',
   'ai.guide.close': 'Cerrar',
@@ -24,21 +24,21 @@ const es = {
   'ai.copy.cta': 'Copiar prompt',
   'ai.copy.success': 'Prompt copiado',
   'ai.copy.error': 'No se pudo copiar. Selecciona el texto manualmente.',
-  'ai.whatsapp.cta': 'Ya tengo mi referencia / continuar por WhatsApp',
+  'ai.whatsapp.cta': 'Enviar referencia y pedir presupuesto',
 } as const;
 
 const pt = {
   'ai.direct.eyebrow': 'Para continuar sem ajuda de IA',
-  'ai.direct.title': 'Personalize seu tapete do seu jeito',
+  'ai.direct.title': 'Crie seu tapete personalizado',
   'ai.direct.copy':
-    'Você pode ir direto ao formulário e responder passo a passo para preparar seu pedido pelo WhatsApp.',
-  'ai.direct.cta': 'Personalizar meu tapete',
+    'Responda o formulário e saia com um briefing claro para solicitar orçamento pelo WhatsApp.',
+  'ai.direct.cta': 'Criar meu tapete personalizado',
   'ai.choice.eyebrow': 'Referência com IA',
   'ai.choice.title': 'Você tem acesso a uma IA que gera imagens?',
   'ai.choice.copy':
     'Se você usa uma dessas ferramentas, damos um prompt para criar uma referência visual antes de completar o formulário.',
   'ai.choice.toolsAria': 'Ferramentas de IA de referência',
-  'ai.choice.cta': 'Sim, tenho acesso a uma IA',
+  'ai.choice.cta': 'Criar referência com IA',
   'ai.guide.eyebrow': 'Usar IA externa',
   'ai.guide.title': 'Crie sua ideia antes de completar o pedido',
   'ai.guide.close': 'Fechar',
@@ -53,7 +53,7 @@ const pt = {
   'ai.copy.cta': 'Copiar prompt',
   'ai.copy.success': 'Prompt copiado',
   'ai.copy.error': 'Não foi possível copiar. Selecione o texto manualmente.',
-  'ai.whatsapp.cta': 'Já tenho minha referência / continuar pelo WhatsApp',
+  'ai.whatsapp.cta': 'Enviar referência e pedir orçamento',
 } satisfies Record<keyof typeof es, string>;
 
 export const aiTranslations = { es, pt } as const;

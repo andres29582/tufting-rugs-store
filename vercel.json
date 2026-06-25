@@ -3,6 +3,12 @@
   "installCommand": "npm --prefix frontend install",
   "buildCommand": "npm --prefix frontend run build",
   "outputDirectory": "frontend/dist",
+  "rewrites": [
+    {
+      "source": "/((?!llms\\.txt$|ai-rug-guide/?$|ai-rug-guide/.*|images/.*|rugs/.*|assets/.*|.*\\..*$).*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

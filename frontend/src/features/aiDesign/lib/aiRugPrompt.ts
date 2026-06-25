@@ -1,13 +1,13 @@
 import type { Language } from '../../../shared/i18n';
 import { buildWhatsappUrl, storeWhatsappNumber } from '../../../shared/config/contact';
 
-export const storeDomain = 'https://tu-dominio-vercel.app';
+export const storeDomain = 'https://tufting-rugs-store.vercel.app';
 export const aiRugGuideUrl = storeDomain + '/ai-rug-guide/';
 export const llmsUrl = storeDomain + '/llms.txt';
 
 const aiReferenceWhatsAppMessages: Record<Language, string> = {
-  es: 'Hola, quiero hablar sobre la referencia que hice con IA. Sigue la imagen:',
-  pt: 'Olá, quero falar sobre a referência que fiz com IA. Segue a imagem:',
+  es: 'Hola! Ya tengo una referencia creada con IA para mi alfombra tufting personalizada. Quiero validar viabilidad y presupuesto. Adjunto la imagen:',
+  pt: 'Olá! Já tenho uma referência criada com IA para meu tapete tufting personalizado. Quero validar viabilidade e orçamento. Segue a imagem:',
 };
 
 export function buildAiReferenceWhatsAppUrl(language: Language): string {
@@ -57,7 +57,7 @@ function buildSpanishPrompt(): string {
     '- Propón una composición simple.',
     '- Crea un prompt final para generar una imagen.',
     '- Ayúdame a generar una referencia visual.',
-    '- Cuando tenga la imagen, recuérdame volver al sitio o contactar por WhatsApp al número: ' +
+    '- Cuando tenga la imagen, recuérdame volver al sitio o pedir presupuesto por WhatsApp al número: ' +
       storeWhatsappNumber +
       '.',
   ].join('\n');
@@ -102,7 +102,7 @@ function buildPortuguesePrompt(): string {
     '- Proponha uma composição simples.',
     '- Crie um prompt final para gerar uma imagem.',
     '- Ajude-me a gerar uma referência visual.',
-    '- Quando eu tiver a imagem, lembre-me de voltar ao site ou chamar no WhatsApp pelo número: ' +
+    '- Quando eu tiver a imagem, lembre-me de voltar ao site ou pedir orçamento pelo WhatsApp no número: ' +
       storeWhatsappNumber +
       '.',
   ].join('\n');

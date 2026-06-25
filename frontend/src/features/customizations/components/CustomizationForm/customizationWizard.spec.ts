@@ -74,10 +74,12 @@ describe('customizationWizard', () => {
     expect(summary.whatsappMessage).not.toContain('WhatsApp:');
     expect(summary.whatsappMessage).toContain('Código RUG: RUG-20260526-TEST');
     expect(summary.whatsappMessage).toContain('Origen: Personalización manual');
-    expect(summary.whatsappMessage).toContain('Tipo/base: Base premium');
-    expect(summary.whatsappMessage).toContain('Referencia: https://example.com/reference.png');
+    expect(summary.whatsappMessage).toContain('Base de inspiración: Base premium');
     expect(summary.whatsappMessage).toContain(
-      'Observaciones: Validar viabilidad, plazo y presupuesto por WhatsApp.'
+      'Referencia visual: https://example.com/reference.png'
+    );
+    expect(summary.whatsappMessage).toContain(
+      'Solicitud: Validar viabilidad, plazo de producción y presupuesto final por WhatsApp.'
     );
     expect(decodeURIComponent(buildWhatsAppUrl(summary).split('?text=')[1] || '')).toBe(
       summary.whatsappMessage
@@ -98,7 +100,9 @@ describe('customizationWizard', () => {
 
     expect(summary.colorsToAvoid).toBe(translations.es['custom.colors.noRestrictions']);
     expect(summary.reference).toBe(translations.es['custom.reference.none']);
-    expect(summary.whatsappMessage).toContain('Tipo/base: Alfombra personalizada');
+    expect(summary.whatsappMessage).toContain(
+      'Base de inspiración: Alfombra 100% personalizada'
+    );
   });
 
   it('maps guided answers to the backend customization draft contract', () => {

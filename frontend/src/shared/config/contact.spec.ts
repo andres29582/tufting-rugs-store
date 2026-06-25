@@ -33,12 +33,14 @@ describe('contact config', () => {
     const portugueseGeneralMessage = buildGeneralContactMessage('pt');
     const portugueseProductMessage = buildProductContactMessage('Bola Oito', 'pt');
 
+    expect(generalMessage).toContain('solicitar presupuesto');
     expect(generalMessage).toContain('alfombra tufting personalizada');
-    expect(productMessage).toContain('Producto de referencia: Bola Ocho');
+    expect(productMessage).toContain('Producto/base de referencia: Bola Ocho');
     expect(productMessage).toContain('WhatsApp');
+    expect(portugueseGeneralMessage).toContain('solicitar orçamento');
     expect(portugueseGeneralMessage).toContain('tapete tufting personalizado');
-    expect(portugueseProductMessage).toContain('Produto de referência: Bola Oito');
-    expect(portugueseProductMessage).toContain('orçamento pelo WhatsApp');
+    expect(portugueseProductMessage).toContain('Produto/base de referência: Bola Oito');
+    expect(portugueseProductMessage).toContain('orçamento final pelo WhatsApp');
     expect(generalMessage).not.toContain(storeWhatsappNumber);
     expect(productMessage).not.toContain(storeWhatsappNumber);
     expect(portugueseGeneralMessage).not.toContain(storeWhatsappNumber);
