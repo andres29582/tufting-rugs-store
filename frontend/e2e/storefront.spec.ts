@@ -22,7 +22,9 @@ test.describe('Storefront', () => {
 
     await expect(page).toHaveURL(/\/catalogo$/);
     await expect(page.getByRole('heading', { name: /^Catálogo$/i })).toBeVisible();
-    await expect(page.getByRole('link', { name: /Ver diseño y presupuesto/i }).first()).toBeVisible();
+    await expect(
+      page.getByRole('link', { name: /Ver diseño y presupuesto/i }).first()
+    ).toBeVisible();
   });
 
   test('loads the personalization page directly', async ({ page }) => {
@@ -46,7 +48,7 @@ test.describe('Storefront', () => {
 
   test('opens the AI guide from the personalization page', async ({ page }) => {
     await page.goto('/personalizar');
-    await page.getByRole('button', { name: /Crear referencia con IA/i }).click();
+    await page.getByRole('button', { name: /Referencia con IA/i }).click();
 
     await expect(
       page.getByRole('dialog', { name: /Crea tu idea antes de completar el pedido/i })

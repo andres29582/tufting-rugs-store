@@ -6,7 +6,7 @@ type AiPersonalizationGateProps = {
   onContinueToForm: () => void;
 };
 
-const aiTools = ['ChatGPT', 'Gemini', 'Copilot', 'Canva AI', 'Leonardo AI', 'Midjourney'];
+const aiTools = ['ChatGPT', 'Gemini', 'Copilot'];
 
 export function AiPersonalizationGate({ onContinueToForm }: AiPersonalizationGateProps) {
   const { t } = useTranslation();
@@ -20,7 +20,6 @@ export function AiPersonalizationGate({ onContinueToForm }: AiPersonalizationGat
           <p className="eyebrow">{t('ai.direct.eyebrow')}</p>
           <h1 id="ai-gate-title">{t('ai.direct.title')}</h1>
           <p>{t('ai.direct.copy')}</p>
-          <span className="ai-choice-action ai-choice-action-primary">{t('ai.direct.cta')}</span>
         </PersonalizationChoiceCard>
 
         <PersonalizationChoiceCard onSelect={openGuide}>
@@ -32,7 +31,6 @@ export function AiPersonalizationGate({ onContinueToForm }: AiPersonalizationGat
               <span key={tool}>{tool}</span>
             ))}
           </div>
-          <span className="ai-choice-action ai-choice-action-secondary">{t('ai.choice.cta')}</span>
         </PersonalizationChoiceCard>
       </div>
 
