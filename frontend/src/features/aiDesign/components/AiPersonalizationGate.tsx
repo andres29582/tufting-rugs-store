@@ -6,7 +6,7 @@ type AiPersonalizationGateProps = {
   onContinueToForm: () => void;
 };
 
-const aiTools = ['ChatGPT', 'Gemini', 'Copilot'];
+const aiTools = ['Gemini'];
 
 export function AiPersonalizationGate({ onContinueToForm }: AiPersonalizationGateProps) {
   const { t } = useTranslation();
