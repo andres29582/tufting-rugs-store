@@ -83,45 +83,6 @@
   margin: 0;
 }
 
-.ai-choice-action {
-  display: inline-flex;
-  align-self: flex-start;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--control-size-md);
-  margin-top: auto;
-  padding: 0 var(--space-4);
-  border: 1px solid transparent;
-  border-radius: var(--radius-button);
-  font-weight: var(--weight-bold);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease;
-}
-
-.ai-choice-action-primary {
-  color: var(--color-text-inverse);
-  background: var(--color-surface-inverse);
-}
-
-.ai-choice-action-secondary {
-  color: var(--color-text);
-  border-color: var(--color-interactive-border-muted);
-  background: var(--color-glass-medium);
-}
-
-.ai-choice-card:hover .ai-choice-action,
-.ai-choice-card:focus-visible .ai-choice-action {
-  transform: translateY(-1px);
-}
-
-.ai-choice-card:hover .ai-choice-action-secondary,
-.ai-choice-card:focus-visible .ai-choice-action-secondary {
-  border-color: var(--color-interactive-border-hover);
-  background: var(--color-interactive-surface-strong-hover);
-}
-
 .ai-choice-card:hover .ai-tool-list span,
 .ai-choice-card:focus-visible .ai-tool-list span {
   border-color: rgba(255, 255, 255, 0.34);
