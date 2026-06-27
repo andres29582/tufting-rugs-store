@@ -100,9 +100,7 @@ describe('customizationWizard', () => {
 
     expect(summary.colorsToAvoid).toBe(translations.es['custom.colors.noRestrictions']);
     expect(summary.reference).toBe(translations.es['custom.reference.none']);
-    expect(summary.whatsappMessage).toContain(
-      'Base de inspiración: Alfombra 100% personalizada'
-    );
+    expect(summary.whatsappMessage).toContain('Base de inspiración: Alfombra 100% personalizada');
   });
 
   it('maps guided answers to the backend customization draft contract', () => {
